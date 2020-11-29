@@ -1,6 +1,7 @@
 function Square(props) {
+  const content = props.viewState.board[props.row][props.col];
   return (
-    <div className={`square square-${props.size}`}>S{props.i}</div> 
+    <div className={`square square-${props.size}`}>{content}</div> 
   );
 }
 
@@ -23,7 +24,7 @@ function HSquare(props) {
 function FSquare(props) {
   let content = "";
   if (props.i > 0 && (props.i < props.size+1)) {
-    content = `CS${props.i-1}`; // i-1 i-1 i-1 i-1!!!! its i minus 1.
+    content = props.viewState.colSums[props.i-1];
   }
 
   return (
@@ -39,8 +40,12 @@ function RowStartSquare(props) {
 }
 
 function RowEndSquare(props) {
+  
+  const content = props.viewState.rowSums[props.row];
+
+  
   return (
-    <div className={`square row-end-square square-${props.size}`}>RS{props.row}</div> 
+    <div className={`square row-end-square square-${props.size}`}>{content}</div> 
   );
 }
 
@@ -72,7 +77,7 @@ function Squares(props) {
     } else if (col === (props.size + 1)) {
       result.push(<RowEndSquare key={`res${row}`} row={row} {...props} />);    
     } else {
-      result.push(<Square key={`reg${i}`} i={i} {...props} />);
+      result.push(<Square key={`reg${i}`} i={i} row={row} col={col-1} {...props} />);
     }
   }
   return [...result, <Footer key={"footerSquares"} {...props} />];
