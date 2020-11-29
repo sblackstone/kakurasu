@@ -64,11 +64,15 @@ export class GameModel {
   export() {
     return {
       size: this.size,
+      sigma: ((this.size) * (this.size + 1)) / 2,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
       rowSums: this.rowSums("playerBoard", "*"),
       colSums: this.colSums("playerBoard", "*"),
       targetRowSums: this.rowSums("targetBoard", "*"),
-      targetColSums: this.colSums("targetBoard", "*")
+      targetColSums: this.colSums("targetBoard", "*"),
+      antiTargetRowSums: this.rowSums("targetBoard", "x"),
+      antiTargetColSums: this.colSums("targetBoard", "x"),
+
     }
   }
   
