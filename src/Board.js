@@ -41,9 +41,9 @@ function FSquare(props) {
     const antiPlayerVal = props.viewState.antiColSums[props.i -1];
     const antiTargetVal = props.viewState.antiTargetColSums[props.i - 1];
 
-    const content1 = `${playerVal} / ${targetVal}`;
-    const content2 = `${antiPlayerVal} / ${antiTargetVal}`;
-
+    const content1 = targetVal - playerVal;
+    const content2 = antiTargetVal- antiPlayerVal;
+    
     return (
       <div className={`square footer-square square-${props.size}`}>{content1}<br/>{content2}</div> 
     );
@@ -70,8 +70,8 @@ function RowEndSquare(props) {
   const antiTargetVal = props.viewState.antiTargetRowSums[props.row];
 
 
-  const content1 = `${playerVal} / ${targetVal}`;
-  const content2 = `${antiPlayerVal} / ${antiTargetVal}`;
+  const content1 = targetVal - playerVal;
+  const content2 = antiTargetVal- antiPlayerVal;
 
   return (
     <div className={`square row-end-square square-${props.size}`}>{content1}<br/>{content2}</div> 
