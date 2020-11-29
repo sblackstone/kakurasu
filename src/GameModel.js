@@ -52,12 +52,25 @@ export class GameModel {
     }
   }
   
-  setSquare(x,y,z) {
-    this.playerBoard[x][y] = z; 
+  debug() {
+    for (let i = 0; i < this.size; i++) {
+      let row = [];
+      for (let j = 0; j < this.size; j++) {
+        row.push(this.playerBoard[i][j]);
+      }
+      console.log(row);
+    }
   }
-
-  getSquare(x,y) {
-    return this.playerBoard[x][y];
+  
+  toggleSquare(x,y) {
+    if (this.playerBoard[x][y] === "*") {
+      this.playerBoard[x][y] = "X";
+    } else if (this.playerBoard[x][y] === "X") {
+      this.playerBoard[x][y] = "";
+    } else if (this.playerBoard[x][y] === "") {
+      this.playerBoard[x][y] = "*";
+    }
+      
   }
 
 }

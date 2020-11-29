@@ -1,7 +1,7 @@
 function Square(props) {
   const content = props.viewState.playerBoard[props.row][props.col];
   return (
-    <div className={`square square-${props.size}`}>{content}</div> 
+    <div onClick={()=> { props.onSquareClick(props.row, props.col)}} className={`square square-${props.size}`}>{content}</div> 
   );
 }
 
