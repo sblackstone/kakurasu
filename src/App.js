@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 
 function App() {
-  const model = new GameModel(6);
+  const model = new GameModel(4);
   const [ gm, setGm ] = useState(model);
   const [ viewState, setViewState ] = useState(model.export());
 

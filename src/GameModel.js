@@ -32,7 +32,7 @@ export class GameModel {
     }
   }
   
-  rowSums(boardName="playerBoard", targetChar="*") {
+  rowSums(boardName, targetChar) {
     let result = [];
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
@@ -46,7 +46,7 @@ export class GameModel {
     return result;
   }
   
-  colSums(boardName = "playerBoard", targetChar="*") {
+  colSums(boardName, targetChar) {
     let result = [];
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
@@ -65,10 +65,10 @@ export class GameModel {
     return {
       size: this.size,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
-      rowSums: this.rowSums(),
-      colSums: this.colSums(),
-      targetRowSums: this.rowSums("targetBoard"),
-      targetColSums: this.colSums("targetBoard")
+      rowSums: this.rowSums("playerBoard", "*"),
+      colSums: this.colSums("playerBoard", "*"),
+      targetRowSums: this.rowSums("targetBoard", "*"),
+      targetColSums: this.colSums("targetBoard", "*")
     }
   }
   
