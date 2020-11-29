@@ -1,6 +1,7 @@
 import './App.css';
 import { Board } from './Board';
 import { NewGameScreen } from './NewGameScreen';
+import { PlayerWinScreen } from './PlayerWinScreen';
 import { GameModel } from './GameModel';
 import { useState } from 'react';
 
@@ -30,6 +31,16 @@ function App() {
       </div>
     );
   }
+  
+  if (viewState.wonGame) {
+    return (
+      <div className="container">
+        <PlayerWinScreen viewState={viewState} />
+      </div>
+      
+    )
+  }
+  
   return (
     <div className="container">
       <Board size={viewState.size} onSquareClick={onSquareClick} viewState={viewState} />

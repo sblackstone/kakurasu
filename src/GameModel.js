@@ -61,8 +61,24 @@ export class GameModel {
     
   }
   
+  checkWin(state) {
+      for ( let i = 0; i < state.size; i++) {
+        let a = state.rowSums[i];
+        let b = state.targetRowSums[i];
+        if (a !== b) {
+          return false;
+        }
+        let c = state.colSums[i];
+        let d = state.targetColSums[i];
+        if (c !== d) {
+          return false;
+        }
+      }
+      return true;
+  }
+  
   export() {
-    return {
+    const result = {
       size: this.size,
       sigma: ((this.size) * (this.size + 1)) / 2,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
@@ -74,8 +90,13 @@ export class GameModel {
       targetColSums: this.colSums("targetBoard", "*"),
       antiTargetRowSums: this.rowSums("targetBoard", "x"),
       antiTargetColSums: this.colSums("targetBoard", "x"),
-
     }
+
+    result.wonGame = this.checkWin(result);
+    
+    return result;
+    
+    
   }
   
   debug(boardName="playerBoard") {

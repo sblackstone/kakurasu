@@ -21,6 +21,7 @@ body, html {
   align-content: space-between;
 }
 
+.player-win-screen,
 .new-game-screen {
   flex-direction: column;
   display: flex;
