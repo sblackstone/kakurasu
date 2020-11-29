@@ -11,6 +11,11 @@ function App() {
   const [ gm, setGm ] = useState(null);
   const [ viewState, setViewState ] = useState(null);
 
+
+  const onGotoNewGameClick = function() {
+    setGm(null);
+    setViewState(null);
+  }
   const onSquareClick = function(i,j) {
     gm.toggleSquare(i,j);
     gm.debug();
@@ -35,7 +40,7 @@ function App() {
   if (viewState.wonGame) {
     return (
       <div className="container">
-        <PlayerWinScreen viewState={viewState} />
+        <PlayerWinScreen viewState={viewState} onGotoNewGameClick={onGotoNewGameClick} />
       </div>
       
     )
