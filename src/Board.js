@@ -46,9 +46,9 @@ function FSquare(props) {
     
     return (
       <div className={`square footer-square square-${props.size}`}>
-      <span className="score-on">{content1}</span>
+      <div className="score-on">{content1}</div>
       <br/>
-      <span className="score-off">{content2}</span>
+      <div className="score-off">{content2}</div>
       </div> 
     );
 
@@ -79,9 +79,9 @@ function RowEndSquare(props) {
 
   return (
     <div className={`square row-end-square square-${props.size}`}>
-    <span className="score-on">{content1}</span>
+    <div className="score-on">{content1}</div>
     <br/>
-    <span className="score-off">{content2}</span>
+    <div className="score-off">{content2}</div>
     </div> 
   );
 }
