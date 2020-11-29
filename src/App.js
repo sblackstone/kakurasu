@@ -4,10 +4,10 @@ import { Board } from './Board';
 import { GameModel } from './GameModel';
 import { useState } from 'react';
 
-const gm = new GameModel(4);
 
 function App() {
-  
+  const [ gm, setGm ] = useState(new GameModel(6));
+    
   const [ viewState, setViewState ] = useState(gm.export());
 
   const onSquareClick = function(i,j) {
