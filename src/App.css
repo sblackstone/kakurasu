@@ -1,38 +1,87 @@
-.App {
-  text-align: center;
+body, html {
+  background: #000;
+  overflow: none;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.board {
+  display: flex;  
+  width: 55vmin;
+  height: 55vmin;
+  flex-wrap: wrap;
+  flex-direction: row;
+  flex-grow: 1;
+  border: 1px solid red;
+  align-content: space-between;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.square {
+  border: 1px solid #333;
+  box-sizing: border-box;
+  color: #fff;
 }
 
-.App-link {
-  color: #61dafb;
+.square-2 {
+  width: calc(100% / 4);
+  height: calc(100% / 4);  
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.square-3 {
+  width: calc(100% / 5);
+  height: calc(100% / 5);  
 }
+
+.square-4 {
+  width: calc(100% / 6);
+  height: calc(100% / 6);  
+}
+
+.square-5 {
+  width: calc(100% / 7);
+  height: calc(100% / 7);  
+}
+
+.square-6 {
+  width: calc(100% / 8);
+  height: calc(100% / 8);  
+}
+
+.square-7 {
+  width: calc(100% / 9);
+  height: calc(100% / 9);  
+}
+
+.square-8 {
+  width: calc(100% / 10);
+  height: calc(100% / 10);  
+}
+
+
+.square-9 {
+  width: calc(100% / 11);
+  height: calc(100% / 11);  
+}
+
+.square-10 {
+  width: calc(100% / 12);
+  height: calc(100% / 12);  
+}
+
+
+.square-11 {
+  width: calc(100% / 13);
+  height: calc(100% / 13);  
+}
+
+.square-12 {
+  width: calc(100% / 14);
+  height: calc(100% / 14);  
+}
+
+
+
+
+
