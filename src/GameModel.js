@@ -2,7 +2,24 @@ export class GameModel {
   constructor(size) {
     this.size = size;
     this.initPlayerBoard();    
+    this.initTargetBoard();
   }
+
+  initTargetBoard() {
+    this.targetBoard = [];    
+    for (let i = 0; i < this.size; i++) {
+      let row = [];
+      for (let j = 0; j < this.size; j++) {
+        if (Math.random() > 0.40) {
+          row.push('*');          
+        } else {
+          row.push('');                    
+        }
+      }
+      this.targetBoard.push(row);
+    }
+  }
+
 
   initPlayerBoard() {
     this.playerBoard = [];    
@@ -15,12 +32,12 @@ export class GameModel {
     }
   }
   
-  rowSums() {
+  rowSums(boardName="playerBoard") {
     let result = [];
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
       for (let j = 0; j < this.size; j++) {
-        if (this.playerBoard[i][j] === "*") {
+        if (this[boardName][i][j] === "*") {
           sum += (j+1);
         }
       }
@@ -29,12 +46,12 @@ export class GameModel {
     return result;
   }
   
-  colSums() {
+  colSums(boardName = "playerBoard") {
     let result = [];
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
       for (let j = 0; j < this.size; j++) {
-        if (this.playerBoard[j][i] === "*") {
+        if (this[boardName][j][i] === "*") {
           sum += (j+1);
         }
       }
@@ -48,15 +65,17 @@ export class GameModel {
     return {
       playerBoard: this.playerBoard.map(x => x.slice(0)),
       rowSums: this.rowSums(),
-      colSums: this.colSums()
+      colSums: this.colSums(),
+      targetRowSums: this.rowSums("targetBoard"),
+      targetColSums: this.colSums("targetBoard")
     }
   }
   
-  debug() {
+  debug(boardName="playerBoard") {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        row.push(this.playerBoard[i][j]);
+        row.push(this[boardName][i][j]);
       }
       console.log(row);
     }
