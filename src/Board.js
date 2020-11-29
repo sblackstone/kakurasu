@@ -33,7 +33,7 @@ function HSquare(props) {
 
 
 function FSquare(props) {
-  let content = "";
+  
   if (props.i > 0 && (props.i < props.size+1)) {
     const playerVal = props.viewState.colSums[props.i-1];
     const targetVal = props.viewState.targetColSums[props.i-1];
@@ -41,13 +41,18 @@ function FSquare(props) {
     const antiPlayerVal = props.viewState.antiColSums[props.i -1];
     const antiTargetVal = props.viewState.antiTargetColSums[props.i - 1];
 
+    const content1 = `${playerVal} / ${targetVal}`;
+    const content2 = `${antiPlayerVal} / ${antiTargetVal}`;
 
-    content = `${playerVal} / ${targetVal}, ${antiPlayerVal} / ${antiTargetVal}`;
+    return (
+      <div className={`square footer-square square-${props.size}`}>{content1}<br/>{content2}</div> 
+    );
+
   }
 
 
   return (
-    <div className={`square footer-square square-${props.size}`}>{content}</div> 
+    <div className={`square footer-square square-${props.size}`}></div> 
   );
 }
 
@@ -65,10 +70,11 @@ function RowEndSquare(props) {
   const antiTargetVal = props.viewState.antiTargetRowSums[props.row];
 
 
-  const content = `${playerVal} / ${targetVal}, ${antiPlayerVal} / ${antiTargetVal}`;
+  const content1 = `${playerVal} / ${targetVal}`;
+  const content2 = `${antiPlayerVal} / ${antiTargetVal}`;
 
   return (
-    <div className={`square row-end-square square-${props.size}`}>{content}</div> 
+    <div className={`square row-end-square square-${props.size}`}>{content1}<br/>{content2}</div> 
   );
 }
 

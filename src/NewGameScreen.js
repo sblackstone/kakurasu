@@ -18,6 +18,7 @@ export function NewGameScreen(props) {
       <option>10</option>
       <option>11</option>
       <option>12</option>
+      <option>13</option>
     </select>
 
     <button onClick={()=> { props.onNewGame(newLevel)}}>Go!</button>

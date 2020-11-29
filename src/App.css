@@ -89,6 +89,12 @@ body, html {
   height: calc(100% / 14);  
 }
 
+.square-13 {
+  width: calc(100% / 15);
+  height: calc(100% / 15);  
+}
+
+
 /* These are the one for the reference values.. */
 .header-square,
 .row-start-square {
