@@ -8,9 +8,10 @@ body, html {
 }
 
 .board {
-  display: flex;  
-  width: 55vmin;
-  height: 55vmin;
+  display: flex;
+  margin: 2.5vmin auto;  
+  width: 90vmin;
+  height: 90vmin;
   flex-wrap: wrap;
   flex-direction: row;
   flex-grow: 1;

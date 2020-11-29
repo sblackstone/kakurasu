@@ -20,7 +20,7 @@ function HSquare(props) {
 function FSquare(props) {
   let content = "";
   if (props.i > 0 && (props.i < props.size+1)) {
-    content = `F${props.i}`;
+    content = `CS${props.i-1}`; // i-1 i-1 i-1 i-1!!!! its i minus 1.
   }
 
   return (
@@ -37,7 +37,7 @@ function RowStartSquare(props) {
 
 function RowEndSquare(props) {
   return (
-    <div className={`square row-end-square square-${props.size}`}>G{props.i}</div> 
+    <div className={`square row-end-square square-${props.size}`}>RS{props.row}</div> 
   );
 }
 
@@ -68,10 +68,9 @@ function Squares(props) {
     if (col === 0) {
       result.push(<RowStartSquare i={row+1} {...props} />);    
     } else if (col === (props.size + 1)) {
-      result.push(<RowEndSquare i={col} {...props} />);    
+      result.push(<RowEndSquare row={row} {...props} />);    
     } else {
       result.push(<Square i={i} {...props} />);
-      
     }
   }
   return [...result, <Footer {...props} />];
