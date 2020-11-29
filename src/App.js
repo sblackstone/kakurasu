@@ -6,9 +6,9 @@ import { useState } from 'react';
 
 
 function App() {
-  const [ gm, setGm ] = useState(new GameModel(6));
-    
-  const [ viewState, setViewState ] = useState(gm.export());
+  const model = new GameModel(6);
+  const [ gm, setGm ] = useState(model);
+  const [ viewState, setViewState ] = useState(model.export());
 
   const onSquareClick = function(i,j) {
     gm.toggleSquare(i,j);
@@ -17,10 +17,18 @@ function App() {
     console.log(i,j);
   } 
  
+ const newGame = function(newSize) {
+   const newGm = new GameModel(newSize);
+   setGm(newGm);
+   setViewState(newGm.export());
+ }
+ 
+ window.newGame = newGame.bind(this);
+ 
   window.gm = gm;
   return (
     <div className="container">
-      <Board size={gm.size} onSquareClick={onSquareClick} viewState={viewState} />
+      <Board size={viewState.size} onSquareClick={onSquareClick} viewState={viewState} />
     </div>
   );
 }

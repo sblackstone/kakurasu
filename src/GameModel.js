@@ -63,6 +63,7 @@ export class GameModel {
   
   export() {
     return {
+      size: this.size,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
       rowSums: this.rowSums(),
       colSums: this.colSums(),
