@@ -35,7 +35,10 @@ function HSquare(props) {
 function FSquare(props) {
   let content = "";
   if (props.i > 0 && (props.i < props.size+1)) {
-    content = props.viewState.colSums[props.i-1];
+    console.log(props);
+    const playerVal = props.viewState.colSums[props.i-1];
+    const targetVal = props.viewState.targetColSums[props.i-1];
+    content = `${playerVal} of ${targetVal}`;
   }
 
   return (
@@ -51,10 +54,13 @@ function RowStartSquare(props) {
 }
 
 function RowEndSquare(props) {
-  
-  const content = props.viewState.rowSums[props.row];
+  console.log("shit");
+  console.log(props.viewState);
 
-  
+  const playerVal = props.viewState.rowSums[props.row];
+  const targetVal = props.viewState.targetRowSums[props.row];
+  const content = `${playerVal} of ${targetVal}`;
+
   return (
     <div className={`square row-end-square square-${props.size}`}>{content}</div> 
   );
