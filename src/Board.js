@@ -45,7 +45,11 @@ function FSquare(props) {
     const content2 = antiTargetVal- antiPlayerVal;
     
     return (
-      <div className={`square footer-square square-${props.size}`}>{content1}<br/>{content2}</div> 
+      <div className={`square footer-square square-${props.size}`}>
+      <span className="score-on">{content1}</span>
+      <br/>
+      <span className="score-off">{content2}</span>
+      </div> 
     );
 
   }
@@ -74,7 +78,11 @@ function RowEndSquare(props) {
   const content2 = antiTargetVal- antiPlayerVal;
 
   return (
-    <div className={`square row-end-square square-${props.size}`}>{content1}<br/>{content2}</div> 
+    <div className={`square row-end-square square-${props.size}`}>
+    <span className="score-on">{content1}</span>
+    <br/>
+    <span className="score-off">{content2}</span>
+    </div> 
   );
 }
 

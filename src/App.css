@@ -118,3 +118,11 @@ body, html {
 .piece-off {
   background-color: red;
 }
+
+.score-on {
+  color: green;
+}
+
+.score-off {
+  color: red;
+}
