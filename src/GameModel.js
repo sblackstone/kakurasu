@@ -68,6 +68,8 @@ export class GameModel {
       playerBoard: this.playerBoard.map(x => x.slice(0)),
       rowSums: this.rowSums("playerBoard", "*"),
       colSums: this.colSums("playerBoard", "*"),
+      antiRowSums: this.rowSums("playerBoard", "x"),
+      antiColSums: this.colSums("playerBoard", "x"),
       targetRowSums: this.rowSums("targetBoard", "*"),
       targetColSums: this.colSums("targetBoard", "*"),
       antiTargetRowSums: this.rowSums("targetBoard", "x"),
