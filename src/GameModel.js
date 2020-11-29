@@ -13,7 +13,7 @@ export class GameModel {
         if (Math.random() > 0.40) {
           row.push('*');          
         } else {
-          row.push('');                    
+          row.push('x');                    
         }
       }
       this.targetBoard.push(row);
@@ -32,12 +32,12 @@ export class GameModel {
     }
   }
   
-  rowSums(boardName="playerBoard") {
+  rowSums(boardName="playerBoard", targetChar="*") {
     let result = [];
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
       for (let j = 0; j < this.size; j++) {
-        if (this[boardName][i][j] === "*") {
+        if (this[boardName][i][j] === targetChar) {
           sum += (j+1);
         }
       }
@@ -46,12 +46,12 @@ export class GameModel {
     return result;
   }
   
-  colSums(boardName = "playerBoard") {
+  colSums(boardName = "playerBoard", targetChar="*") {
     let result = [];
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
       for (let j = 0; j < this.size; j++) {
-        if (this[boardName][j][i] === "*") {
+        if (this[boardName][j][i] === targetChar) {
           sum += (j+1);
         }
       }
