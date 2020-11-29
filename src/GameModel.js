@@ -1,10 +1,10 @@
 export class GameModel {
   constructor(size) {
     this.size = size;
-    this.initBoard();    
+    this.initPlayerBoard();    
   }
 
-  initBoard() {
+  initPlayerBoard() {
     this.playerBoard = [];    
     for (let i = 0; i < this.size; i++) {
       let row = [];
@@ -64,8 +64,8 @@ export class GameModel {
   
   toggleSquare(x,y) {
     if (this.playerBoard[x][y] === "*") {
-      this.playerBoard[x][y] = "X";
-    } else if (this.playerBoard[x][y] === "X") {
+      this.playerBoard[x][y] = "x";
+    } else if (this.playerBoard[x][y] === "x") {
       this.playerBoard[x][y] = "";
     } else if (this.playerBoard[x][y] === "") {
       this.playerBoard[x][y] = "*";

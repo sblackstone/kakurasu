@@ -91,3 +91,16 @@ body, html {
 .row-end-square {
   background-color: rgba(255,0,0, 0.07);
 }
+
+.piece {
+  width: 25px;
+  height: 25px;  
+}
+
+.piece-on {
+  background-color: green;
+}
+
+.piece-off {
+  background-color: red;
+}

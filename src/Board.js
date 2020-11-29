@@ -1,7 +1,18 @@
 function Square(props) {
   const content = props.viewState.playerBoard[props.row][props.col];
+  let className = "";
+  if (content == "*") {
+    className = "piece piece-on";
+  } else if (content == "x") {
+    className = "piece piece-off";
+  } else {
+    className = "piece piece-blank"
+  }
+
   return (
-    <div onClick={()=> { props.onSquareClick(props.row, props.col)}} className={`square square-${props.size}`}>{content}</div> 
+    <div onClick={()=> { props.onSquareClick(props.row, props.col)}} className={`square square-${props.size}`}>
+      <div onClick={()=> { props.onSquareClick(props.row, props.col)}} className={`piece ${className}`}></div>
+    </div> 
   );
 }
 
