@@ -1,9 +1,9 @@
 function Square(props) {
   const content = props.viewState.playerBoard[props.row][props.col];
   let className = "";
-  if (content == "*") {
+  if (content === "*") {
     className = "piece piece-on";
-  } else if (content == "x") {
+  } else if (content === "x") {
     className = "piece piece-off";
   } else {
     className = "piece piece-blank"
@@ -35,7 +35,6 @@ function HSquare(props) {
 function FSquare(props) {
   let content = "";
   if (props.i > 0 && (props.i < props.size+1)) {
-    console.log(props);
     const playerVal = props.viewState.colSums[props.i-1];
     const targetVal = props.viewState.targetColSums[props.i-1];
 
@@ -44,12 +43,6 @@ function FSquare(props) {
 
 
     content = `${playerVal} / ${targetVal}, ${antiPlayerVal} / ${antiTargetVal}`;
-    console.log(content);
-    console.log(content);
-    console.log(content);
-    console.log(content);
-    console.log(content);
-
   }
 
 
@@ -66,9 +59,6 @@ function RowStartSquare(props) {
 }
 
 function RowEndSquare(props) {
-  console.log("shit");
-  console.log(props.viewState);
-
   const playerVal = props.viewState.rowSums[props.row];
   const targetVal = props.viewState.targetRowSums[props.row];
   const antiPlayerVal = props.viewState.antiRowSums[props.row];
