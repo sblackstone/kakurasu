@@ -18,6 +18,14 @@ body, html {
   align-content: space-between;
 }
 
+.new-game-screen {
+  margin: 2.5vmin auto;  
+  width: 90vmin;
+  height: 90vmin;
+  color: #fff;
+  border: 1px dashed #fff !important;
+}
+
 .square {
   border: 1px solid #333;
   box-sizing: border-box;
