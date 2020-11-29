@@ -9,7 +9,7 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        row.push(`*`);
+        row.push('');
       }
       this.playerBoard.push(row);
     }
