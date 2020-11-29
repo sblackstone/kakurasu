@@ -4,8 +4,8 @@ import { Board } from './Board';
 import { GameModel } from './GameModel';
 function App() {
   
-  const gm = new GameModel();
-
+  const gm = new GameModel(5);
+  window.gm = gm;
   return (
     <div className="container">
       <Board size={5} gm={gm} />

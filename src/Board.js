@@ -49,7 +49,7 @@ function RowEndSquare(props) {
 function Header(props) {
   let result = [];
   for (let i = 0; i < props.size +2; i++) {
-    result.push(<HSquare i={i} {...props} />);
+    result.push(<HSquare key={`hs${i}`} i={i} {...props} />);
   }
   return result;
 };
@@ -57,29 +57,26 @@ function Header(props) {
 function Footer(props) {
   let result = [];
   for (let i = 0; i < props.size +2; i++) {
-    result.push(<FSquare i={i} {...props} />);
+    result.push(<FSquare key={`fs${i}`} i={i} {...props} />);
   }
   return result;
 };
 
-
 function Squares(props) {
-  let result = [ <Header {...props} />];
+  let result = [ <Header key={"headerSquares"} {...props} />];
   for (let i = 0; i < (props.size + 2)*(props.size); i++) {
     const col = i % (props.size + 2);
     const row = (i - col) / (props.size + 2);
     if (col === 0) {
-      result.push(<RowStartSquare i={row+1} {...props} />);    
+      result.push(<RowStartSquare key={`rss${i}`} i={row+1} {...props} />);    
     } else if (col === (props.size + 1)) {
-      result.push(<RowEndSquare row={row} {...props} />);    
+      result.push(<RowEndSquare key={`res${row}`} row={row} {...props} />);    
     } else {
-      result.push(<Square i={i} {...props} />);
+      result.push(<Square key={`reg${i}`} i={i} {...props} />);
     }
   }
-  return [...result, <Footer {...props} />];
+  return [...result, <Footer key={"footerSquares"} {...props} />];
 }
-
-
 
 export function Board(props) {
   return (
