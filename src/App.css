@@ -1,5 +1,5 @@
 body, html {
-  background: rgba(0,0,0,1);
+  background: #000;
   overflow: none;
   font-weight: bold;
   font-size: 115%;
@@ -34,7 +34,7 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #333;
+  border: 1px solid rgba(255,255,255,0.15);
   box-sizing: border-box;
   color: #fff;
 }
@@ -114,16 +114,17 @@ body, html {
 }
 
 .piece {
-  width: 25px;
-  height: 25px;  
+  border-radius: 75%;
+  width: 75%;
+  height: 75%;  
 }
 
 .piece-on {
-  background-color: green;
+  background-color: #90EE90;
 }
 
 .piece-off {
-  background-color: red;
+  background-color:  rgba(255, 64, 0);
 }
 
 .score-on {
