@@ -79,12 +79,18 @@ function RowEndSquare(props) {
 }
 
 
+function SigmaSquare(props) {
+  return (
+    <div className={`square header-square square-${props.size}`}>&Sigma; {props.viewState.sigma}</div>    
+  );
+}
 
 function Header(props) {
   let result = [];
-  for (let i = 0; i < props.size +2; i++) {
+  for (let i = 0; i < props.size +1; i++) {
     result.push(<HSquare key={`hs${i}`} i={i} {...props} />);
   }
+  result.push(<SigmaSquare {...props} />);
   return result;
 };
 
