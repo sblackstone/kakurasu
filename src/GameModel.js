@@ -5,39 +5,59 @@ export class GameModel {
   }
 
   initBoard() {
-    this.board = [];    
+    this.playerBoard = [];    
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        row.push(`${i}:${j}`);
+        row.push(`*`);
       }
-      this.board.push(row);
+      this.playerBoard.push(row);
     }
   }
   
   rowSums() {
-    return [11,22,33,44,55];
+    let result = [];
+    for (let i = 0; i < this.size; i++) {
+      let sum = 0;
+      for (let j = 0; j < this.size; j++) {
+        if (this.playerBoard[i][j] === "*") {
+          sum += (j+1);
+        }
+      }
+      result.push(sum);
+    };
+    return result;
   }
   
   colSums() {
-    return [111,222,333,444,555];
+    let result = [];
+    for (let i = 0; i < this.size; i++) {
+      let sum = 0;
+      for (let j = 0; j < this.size; j++) {
+        if (this.playerBoard[j][i] === "*") {
+          sum += (j+1);
+        }
+      }
+      result.push(sum);
+    };
+    return result;
     
   }
   
   export() {
     return {
-      board: this.board.map(x => x.slice(0)),
+      playerBoard: this.playerBoard.map(x => x.slice(0)),
       rowSums: this.rowSums(),
       colSums: this.colSums()
     }
   }
   
   setSquare(x,y,z) {
-    this.board[x][y] = z; 
+    this.playerBoard[x][y] = z; 
   }
 
   getSquare(x,y) {
-    return this.board[x][y];
+    return this.playerBoard[x][y];
   }
 
 }
