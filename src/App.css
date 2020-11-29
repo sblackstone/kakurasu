@@ -1,6 +1,10 @@
 body, html {
   background: rgba(0,0,0,1);
   overflow: none;
+  font-weight: bold;
+  font-size: 115%;
+  font-family: Arial;
+  text-align: center;
 }
 
 .container {
@@ -9,9 +13,9 @@ body, html {
 
 .board {
   display: flex;
-  margin: 2.5vmin auto;  
-  width: 90vmin;
-  height: 90vmin;
+  margin: 1vmin auto;  
+  width: 98vmin;
+  height: 98vmin;
   flex-wrap: wrap;
   flex-direction: row;
   flex-grow: 1;
@@ -98,12 +102,12 @@ body, html {
 /* These are the one for the reference values.. */
 .header-square,
 .row-start-square {
-  background-color: rgba(255,255,255,0.07);
+  background-color: rgba(255,255,255,0.15);
 }
 
 .footer-square,
 .row-end-square {
-  background-color: rgba(255,0,0, 0.07);
+  background-color: rgba(255,255,255, 0.15);
 }
 
 .piece {
@@ -120,9 +124,9 @@ body, html {
 }
 
 .score-on {
-  color: green;
+  color: #90EE90;
 }
 
 .score-off {
-  color: red;
+  color: rgba(255, 64, 0);
 }
