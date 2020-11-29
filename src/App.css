@@ -1,5 +1,5 @@
 body, html {
-  background: #000;
+  background: rgba(0,0,0,1);
   overflow: none;
 }
 
@@ -15,7 +15,6 @@ body, html {
   flex-wrap: wrap;
   flex-direction: row;
   flex-grow: 1;
-  border: 1px solid red;
   align-content: space-between;
 }
 
@@ -82,7 +81,13 @@ body, html {
   height: calc(100% / 14);  
 }
 
+/* These are the one for the reference values.. */
+.header-square,
+.row-start-square {
+  background-color: rgba(255,255,255,0.07);
+}
 
-
-
-
+.footer-square,
+.row-end-square {
+  background-color: rgba(255,0,0, 0.07);
+}

@@ -1,3 +1,11 @@
-export default class GameModel {
+const STATE = Symbol();
+
+export class GameModel {
+
+  constructor(size) {
+    this[STATE] = {
+      size
+    }
+  }
 
 }

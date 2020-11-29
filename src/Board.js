@@ -9,11 +9,14 @@ function HSquare(props) {
   
   if (props.i > 0 && (props.i < props.size+1)) {
     content = props.i;
+    return (
+      <div className={`square header-square square-${props.size}`}>{content}</div>
+    );
+  } else {
+    return (
+      <div className={`square header-square square-${props.size}`}>{content}</div>
+    );    
   }
-
-  return (
-    <div className={`square header-square square-${props.size}`}>{content}</div> 
-  );
 }
 
 
