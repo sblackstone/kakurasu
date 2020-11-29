@@ -4,7 +4,7 @@ import { Board } from './Board';
 import { GameModel } from './GameModel';
 import { useState } from 'react';
 
-const gm = new GameModel(12);
+const gm = new GameModel(4);
 
 function App() {
   
@@ -20,7 +20,7 @@ function App() {
   window.gm = gm;
   return (
     <div className="container">
-      <Board size={12} onSquareClick={onSquareClick} viewState={viewState} />
+      <Board size={gm.size} onSquareClick={onSquareClick} viewState={viewState} />
     </div>
   );
 }
