@@ -13,7 +13,6 @@ function App() {
     gm.toggleSquare(i,j);
     gm.debug();
     setViewState(gm.export());
-    console.log(i,j);
   } 
  
  const newGame = function(newSize) {
