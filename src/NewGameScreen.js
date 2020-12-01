@@ -16,14 +16,14 @@ function LevelOptions(props) {
 
 export function NewGameForm(props) {
   
-  const defaultLevel = Cookies.get('defaultLevel') || 5;
+  const defaultLevel = Cookies.get('defaultLevel') || 6;
   
   const [ newLevel, setNewLevel ] = useState(parseFloat(defaultLevel));
 
     return (
       <React.Fragment>
         <select value={newLevel} onChange={(e)=> { setNewLevel(parseFloat(e.currentTarget.value)); Cookies.set('defaultLevel', e.currentTarget.value) }} >
-          <LevelOptions min={3} max={13} />
+          <LevelOptions min={4} max={13} />
         </select>
         <button onClick={()=> { props.onNewGame(newLevel)}}>Play</button>
       </React.Fragment>
