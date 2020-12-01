@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 function Square(props) {
   const content = props.viewState.playerBoard[props.row][props.col];
   let className = "";
@@ -26,7 +28,7 @@ function HSquare(props) {
     );
   } else {
     return (
-      <div className={`square header-square row-start-square square-${props.size}`}>{content}</div>
+      <div onClick={props.toggleBoardMode} className={`square header-square row-start-square square-${props.size}`}>&#x27f3;</div>
     );    
   }
 }
@@ -44,14 +46,22 @@ function FSquare(props) {
     const content1 = targetVal - playerVal;
     const content2 = antiTargetVal- antiPlayerVal;
     
-    return (
-      <div className={`square footer-square square-${props.size}`}>
-      <div className="score-on">{content1}</div>
-      <br/>
-      <div className="score-off">{content2}</div>
-      </div> 
-    );
-
+    if (props.boardMode) {
+      return (
+        <div className={`square footer-square square-${props.size}`}>
+          <div className="score-on">{content1}</div>
+        </div> 
+      );
+    
+    } else {
+      return (
+        <div className={`square footer-square square-${props.size}`}>
+          <div className="score-off">{content2}</div>
+        </div> 
+      );
+      
+    }
+    
   }
 
 
@@ -83,13 +93,20 @@ function RowEndSquare(props) {
   const content1 = targetVal - playerVal;
   const content2 = antiTargetVal- antiPlayerVal;
 
-  return (
-    <div className={`square row-end-square square-${props.size}`}>
-    <div className="score-on">{content1}</div>
-    <br/>
-    <div className="score-off">{content2}</div>
-    </div> 
-  );
+  if (props.boardMode) {
+    return (
+      <div className={`square row-end-square square-${props.size}`}>
+        <div className="score-on">{content1}</div>
+      </div> 
+    );    
+  } else {
+    return (
+      <div className={`square row-end-square square-${props.size}`}>
+        <div className="score-off">{content2}</div>
+      </div> 
+    );        
+  }
+
 }
 
 
@@ -133,9 +150,17 @@ function Squares(props) {
 }
 
 export function Board(props) {
+  
+  const [ boardMode, setBoardMode ] = useState(true);
+  
+  const toggleBoardMode = () => {
+    setBoardMode(!boardMode);
+  };
+  
+  
   return (
     <div className="board">
-      <Squares {...props} />
+      <Squares {...props} boardMode={boardMode} toggleBoardMode={toggleBoardMode} />
     </div>
   )
 }
