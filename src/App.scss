@@ -1,3 +1,5 @@
+@import './squares.scss';
+
 body, html {
   background: #000;
   overflow: none;
@@ -53,78 +55,36 @@ body, html {
   border: 1px solid rgba(255,255,255,0.15);
   box-sizing: border-box;
   color: #fff;
-}
 
-.square-2 {
-  width: calc(100% / 4);
-  height: calc(100% / 4);  
-}
-
-.square-3 {
-  width: calc(100% / 5);
-  height: calc(100% / 5);  
-}
-
-.square-4 {
-  width: calc(100% / 6);
-  height: calc(100% / 6);  
-}
-
-.square-5 {
-  width:  calc(calc(100% - calc(100% / 7)) / 5);
-  height: calc(calc(100% - calc(100% / 7)) / 5);
-  &.footer-square,
-  &.header-square {
-    height: calc(100% / 14) !important;
-  }
-
-  &.row-start-square,
-  &.row-end-square {
-    width: calc(100% / 14) !important;
-  }  
-}
-
-.square-6 {
-  width: calc(100% / 8);
-  height: calc(100% / 8);  
-}
-
-.square-7 {
-  width: calc(100% / 9);
-  height: calc(100% / 9);  
-}
-
-.square-8 {
-  width: calc(100% / 10);
-  height: calc(100% / 10);  
 }
 
 
-.square-9 {
-  width: calc(100% / 11);
-  height: calc(100% / 11);  
+
+// Outside radius
+
+.square:first-child {
+  border-radius: 15px 0 0 0;
+};
+
+.sigma-square {
+  border-radius: 0 15px 0 0;
 }
 
-.square-10 {
-  width: calc(100% / 12);
-  height: calc(100% / 12);  
-}
 
 
-.square-11 {
-  width: calc(100% / 13);
-  height: calc(100% / 13);  
+.footer-square {
+  &.row-start-square {
+    border-radius: 0 0 0 15px;
+  } 
 }
 
-.square-12 {
-  width: calc(100% / 14);
-  height: calc(100% / 14);  
-}
+.square:last-child {
+  border-radius: 0 0 15px 0;
+};
 
-.square-13 {
-  width: calc(100% / 15);
-  height: calc(100% / 15);  
-}
+
+
+
 
 /* These are the one for the reference values.. */
 .header-square,

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { NewGameForm } from './NewGameScreen';
 
 export function PlayerWinScreen(props) {
 
@@ -9,7 +9,7 @@ export function PlayerWinScreen(props) {
     <div className="player-win-screen">
     <h1>YOU WIN!</h1>
     <h5>Again?</h5>
-    <button onClick={props.onGotoNewGameClick}>One more game?</button>
+    <NewGameForm {...props} />
     </div>
 
 

@@ -40,7 +40,7 @@ function App() {
   if (viewState.wonGame) {
     return (
       <div className="container">
-        <PlayerWinScreen viewState={viewState} onGotoNewGameClick={onGotoNewGameClick} />
+        <PlayerWinScreen viewState={viewState} onNewGame={onNewGame} />
       </div>
       
     )

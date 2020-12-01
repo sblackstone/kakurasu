@@ -1,0 +1,195 @@
+
+  .square-2 {
+    width:  calc(calc(100% - calc(100% / 4)) / 2);
+    height: calc(calc(100% - calc(100% / 4)) / 2);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 8) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 8) !important;
+    }  
+  }
+
+
+  .square-3 {
+    width:  calc(calc(100% - calc(100% / 5)) / 3);
+    height: calc(calc(100% - calc(100% / 5)) / 3);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 10) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 10) !important;
+    }  
+  }
+
+
+  .square-4 {
+    width:  calc(calc(100% - calc(100% / 6)) / 4);
+    height: calc(calc(100% - calc(100% / 6)) / 4);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 12) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 12) !important;
+    }  
+  }
+
+
+  .square-5 {
+    width:  calc(calc(100% - calc(100% / 7)) / 5);
+    height: calc(calc(100% - calc(100% / 7)) / 5);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 14) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 14) !important;
+    }  
+  }
+
+
+  .square-6 {
+    width:  calc(calc(100% - calc(100% / 8)) / 6);
+    height: calc(calc(100% - calc(100% / 8)) / 6);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 16) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 16) !important;
+    }  
+  }
+
+
+  .square-7 {
+    width:  calc(calc(100% - calc(100% / 9)) / 7);
+    height: calc(calc(100% - calc(100% / 9)) / 7);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 18) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 18) !important;
+    }  
+  }
+
+
+  .square-8 {
+    width:  calc(calc(100% - calc(100% / 10)) / 8);
+    height: calc(calc(100% - calc(100% / 10)) / 8);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 20) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 20) !important;
+    }  
+  }
+
+
+  .square-9 {
+    width:  calc(calc(100% - calc(100% / 11)) / 9);
+    height: calc(calc(100% - calc(100% / 11)) / 9);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 22) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 22) !important;
+    }  
+  }
+
+
+  .square-10 {
+    width:  calc(calc(100% - calc(100% / 12)) / 10);
+    height: calc(calc(100% - calc(100% / 12)) / 10);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 24) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 24) !important;
+    }  
+  }
+
+
+  .square-11 {
+    width:  calc(calc(100% - calc(100% / 13)) / 11);
+    height: calc(calc(100% - calc(100% / 13)) / 11);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 26) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 26) !important;
+    }  
+  }
+
+
+  .square-12 {
+    width:  calc(calc(100% - calc(100% / 14)) / 12);
+    height: calc(calc(100% - calc(100% / 14)) / 12);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 28) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 28) !important;
+    }  
+  }
+
+
+  .square-13 {
+    width:  calc(calc(100% - calc(100% / 15)) / 13);
+    height: calc(calc(100% - calc(100% / 15)) / 13);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 30) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 30) !important;
+    }  
+  }
+
+
+  .square-14 {
+    width:  calc(calc(100% - calc(100% / 16)) / 14);
+    height: calc(calc(100% - calc(100% / 16)) / 14);
+    &.footer-square,
+    &.header-square {
+      height: calc(100% / 32) !important;
+    }
+
+    &.row-start-square,
+    &.row-end-square {
+      width: calc(100% / 32) !important;
+    }  
+  }
+
