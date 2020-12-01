@@ -4,11 +4,12 @@ export class GameModel {
     this.initPlayerBoard();    
     this.initTargetBoard();
     this.meta = {
+      size,
+      sigma: ((this.size) * (this.size + 1)) / 2,
       targetRowSums: this.rowSums("targetBoard", "*"),
       targetColSums: this.colSums("targetBoard", "*"),
       antiTargetRowSums: this.rowSums("targetBoard", "x"),
-      antiTargetColSums: this.colSums("targetBoard", "x"),
-      
+      antiTargetColSums: this.colSums("targetBoard", "x"), 
     }
   }
 
@@ -107,8 +108,6 @@ export class GameModel {
   export() {
     const result = {
       ...this.meta,
-      size: this.size,
-      sigma: ((this.size) * (this.size + 1)) / 2,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
       rowSums:     this.rowSums("playerBoard", "*"),
       colSums:     this.colSums("playerBoard", "*"),
