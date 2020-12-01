@@ -10,6 +10,10 @@ export class GameModel {
       targetColSums: this.colSums("targetBoard", "*"),
       antiTargetRowSums: this.rowSums("targetBoard", "x"),
       antiTargetColSums: this.colSums("targetBoard", "x"), 
+      rowSums:     Array(this.size).fill(0),
+      colSums:     Array(this.size).fill(0),
+      antiRowSums: Array(this.size).fill(0),
+      antiColSums: Array(this.size).fill(0),      
     }
   }
 
@@ -109,10 +113,6 @@ export class GameModel {
     const result = {
       ...this.meta,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
-      rowSums:     this.rowSums("playerBoard", "*"),
-      colSums:     this.colSums("playerBoard", "*"),
-      antiRowSums: this.rowSums("playerBoard", "x"),
-      antiColSums: this.colSums("playerBoard", "x"),
     }
 
     result.wonGame = this.checkWin(result);
@@ -132,11 +132,24 @@ export class GameModel {
   }
     
   toggleSquare(x,y) {
+    console.log(x,y);
     if (this.playerBoard[x][y] === "*") {
+
+      this.meta.rowSums[x]     -= (y+1);
+      this.meta.colSums[y]     -= (x+1);
+      this.meta.antiRowSums[x] += (y+1);
+      this.meta.antiColSums[y] += (x+1);    
       this.playerBoard[x][y] = "x";
+
     } else if (this.playerBoard[x][y] === "x") {
+      this.meta.antiRowSums[x] -= (y+1);
+      this.meta.antiColSums[y] -= (x+1);    
+
       this.playerBoard[x][y] = "";
     } else if (this.playerBoard[x][y] === "") {
+      this.meta.rowSums[x]     += (y+1);
+      this.meta.colSums[y]     += (x+1);
+
       this.playerBoard[x][y] = "*";
     }
       
