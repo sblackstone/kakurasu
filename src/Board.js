@@ -121,7 +121,7 @@ function Header(props) {
   for (let i = 0; i < props.size +1; i++) {
     result.push(<HSquare key={`hs${i}`} i={i} {...props} />);
   }
-  result.push(<SigmaSquare {...props} />);
+  result.push(<SigmaSquare key={`hssigma`} {...props} />);
   return result;
 };
 
