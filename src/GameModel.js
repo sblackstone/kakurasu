@@ -10,7 +10,7 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        if (Math.random() > 0.65) {
+        if (Math.random() > 0.55) {
           row.push('*');          
         } else {
           row.push('x');                    

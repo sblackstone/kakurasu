@@ -1,11 +1,15 @@
 @import './squares.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 
 body, html {
   background: #000;
   overflow: none;
-  font-weight: bold;
-  font-size: 115%;
-  font-family: Arial;
+  font-family: 'Roboto Slab', serif;
+}
+
+button, select {
+  font-family: 'Roboto Slab', serif;
+  
 }
 
 .container {
