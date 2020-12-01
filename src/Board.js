@@ -11,7 +11,7 @@ function Square(props) {
 
   return (
     <div onClick={()=> { props.onSquareClick(props.row, props.col)}} className={`square square-${props.size}`}>
-      <div onClick={()=> { props.onSquareClick(props.row, props.col)}} className={`piece ${className}`}></div>
+      <div className={`piece ${className}`}></div>
     </div> 
   );
 }
@@ -26,7 +26,7 @@ function HSquare(props) {
     );
   } else {
     return (
-      <div className={`square header-square square-${props.size}`}>{content}</div>
+      <div className={`square header-square row-start-square square-${props.size}`}>{content}</div>
     );    
   }
 }
@@ -55,8 +55,14 @@ function FSquare(props) {
   }
 
 
+  if (props.i === 0) {
+    return (
+      <div className={`square footer-square row-start-square square-${props.size}`}></div> 
+    ); 
+  }
+
   return (
-    <div className={`square footer-square square-${props.size}`}></div> 
+    <div className={`square footer-square row-end-square square-${props.size}`}></div> 
   );
 }
 
@@ -89,7 +95,7 @@ function RowEndSquare(props) {
 
 function SigmaSquare(props) {
   return (
-    <div className={`square header-square square-${props.size}`}>&Sigma; {props.viewState.sigma}</div>    
+    <div className={`square sigma-square row-end-square header-square square-${props.size}`}>&Sigma;{props.viewState.sigma}</div>    
   );
 }
 

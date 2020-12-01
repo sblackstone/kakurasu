@@ -69,8 +69,17 @@ body, html {
 }
 
 .square-5 {
-  width: calc(100% / 7);
-  height: calc(100% / 7);  
+  width:  calc(calc(100% - calc(100% / 7)) / 5);
+  height: calc(calc(100% - calc(100% / 7)) / 5);
+  &.footer-square,
+  &.header-square {
+    height: calc(100% / 14) !important;
+  }
+
+  &.row-start-square,
+  &.row-end-square {
+    width: calc(100% / 14) !important;
+  }  
 }
 
 .square-6 {
@@ -115,16 +124,17 @@ body, html {
   height: calc(100% / 15);  
 }
 
-
 /* These are the one for the reference values.. */
 .header-square,
 .row-start-square {
   background-color: rgba(255,255,255,0.15);
+  border: 0;
 }
 
 .footer-square,
 .row-end-square {
   background-color: rgba(255,255,255, 0.15);
+  border: 0;
 }
 
 .piece {
@@ -138,13 +148,21 @@ body, html {
 }
 
 .piece-off {
-  background-color:  rgba(255, 64, 0);
+  background-color:  rgba(255, 64, 0, 1.0);
+}
+
+.sigma-square {
+  color: #111;
 }
 
 .score-on {
   color: #90EE90;
+  padding: 3px;
+  text-align: center;
 }
 
 .score-off {
-  color: rgba(255, 64, 0);
+  text-align: center;
+  padding: 3px;
+  color: rgba(255, 64, 0, 1.0);
 }

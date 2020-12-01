@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { Board } from './Board';
 import { NewGameScreen } from './NewGameScreen';
 import { PlayerWinScreen } from './PlayerWinScreen';

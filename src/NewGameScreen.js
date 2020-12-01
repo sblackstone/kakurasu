@@ -17,7 +17,7 @@ export function NewGameScreen(props) {
 
   return (
     <div className="new-game-screen">
-    <h1>New Game Level </h1>
+    <h1>New Game</h1>
     
     <select value={newLevel} onChange={(e)=> { setNewLevel(parseFloat(e.currentTarget.value)); }} >
       <LevelOptions min={2} max={13} />
