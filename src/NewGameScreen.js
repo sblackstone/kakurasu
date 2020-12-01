@@ -7,7 +7,7 @@ function LevelOptions(props) {
   let result = [];
   for (let i = props.min; i <= props.max; i++) {
       result.push(
-        <option value={i}>{i}x{i}</option>
+        <option key={i} value={i}>{i}x{i}</option>
       )
   }
   return result;

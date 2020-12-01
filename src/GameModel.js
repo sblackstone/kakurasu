@@ -110,15 +110,11 @@ export class GameModel {
   }
   
   export() {
-    const result = {
+    return {
       ...this.meta,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
-    }
-
-    result.wonGame = this.checkWin(result);
-    
-    return result;
-    
+      wonGame: this.checkWin(this.meta)
+    }    
   }
   
   debug(boardName="playerBoard") {
