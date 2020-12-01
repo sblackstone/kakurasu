@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import React from 'react';
+import Cookies from 'js-cookie';
+
 
 function LevelOptions(props) {
   let result = [];
@@ -13,11 +15,14 @@ function LevelOptions(props) {
 
 
 export function NewGameForm(props) {
-  const [ newLevel, setNewLevel ] = useState(5);
+  
+  const defaultLevel = Cookies.get('defaultLevel') || 5;
+  
+  const [ newLevel, setNewLevel ] = useState(parseFloat(defaultLevel));
 
     return (
       <React.Fragment>
-        <select value={newLevel} onChange={(e)=> { setNewLevel(parseFloat(e.currentTarget.value)); }} >
+        <select value={newLevel} onChange={(e)=> { setNewLevel(parseFloat(e.currentTarget.value)); Cookies.set('defaultLevel', e.currentTarget.value) }} >
           <LevelOptions min={3} max={13} />
         </select>
         <button onClick={()=> { props.onNewGame(newLevel)}}>Go!</button>

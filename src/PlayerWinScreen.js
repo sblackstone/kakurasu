@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import { NewGameForm } from './NewGameScreen';
 
 export function PlayerWinScreen(props) {
-
-  const [ newLevel, setNewLevel ] = useState(5);
 
   return (
     <div className="player-win-screen">
@@ -11,7 +8,5 @@ export function PlayerWinScreen(props) {
     <h5>Again?</h5>
     <NewGameForm {...props} />
     </div>
-
-
   )
 }
