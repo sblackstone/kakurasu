@@ -28,10 +28,8 @@ function App() {
     const newGm = new GameModel(newSize);
     setGm(newGm);
     setViewState(newGm.export());
-    clearInterval(timeout);
-    timeout = setInterval(() => { 
-      setViewState(newGm.export());
-    }, 1000);
+    //clearInterval(timeout);
+    //timeout = setInterval(() => { setViewState(newGm.export()); }, 50);
   }
    
   window.gm = gm;

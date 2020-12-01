@@ -33,7 +33,29 @@ export class GameModel {
   }
 
   // todo
-  solve() {
+  solve(depth = 0) {
+    if (this.shouldReject()) {
+      return;
+    }
+
+    if (this.checkWinSolver()) {
+      console.log("solution");
+      this.debug();
+    }
+
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.playerBoard[i][j] === "") {
+          this.toggleSquareSolver(i,j);
+          this.solve(depth+1);
+          this.toggleSquareSolver(i,j);
+        }      
+      }      
+    }
+    
+    if (depth === 0) {
+      console.log("Solver Complete");
+    }
     
   }
 
@@ -78,30 +100,63 @@ export class GameModel {
     
   }
   
-  checkWin(state) {
-      for ( let i = 0; i < state.size; i++) {
+  
+  
+  shouldReject() {
+      for ( let i = 0; i < this.meta.rowSums.length; i++) {
 
-        let a = state.rowSums[i];
-        let b = state.targetRowSums[i];
+        let a = this.meta.rowSums[i];
+        let b = this.meta.targetRowSums[i];
+        if (b-a < 0) {
+          return true;
+        }
+
+        let c = this.meta.colSums[i];
+        let d = this.meta.targetColSums[i];
+        if (d-c < 0) {
+          return true;
+        }
+
+        let e = this.meta.antiRowSums[i];
+        let f = this.meta.antiTargetRowSums[i];
+        if (f-e < 0) {
+          return true;
+        }
+
+
+        let g = this.meta.antiColSums[i];
+        let h = this.meta.antiTargetColSums[i];
+        if (h-g < 0) {
+          return true;
+        }
+      }
+      return false;
+  }
+  
+  checkWin() {
+      for ( let i = 0; i < this.meta.rowSums.length; i++) {
+
+        let a = this.meta.rowSums[i];
+        let b = this.meta.targetRowSums[i];
         if (a !== b) {
           return false;
         }
 
-        let c = state.colSums[i];
-        let d = state.targetColSums[i];
+        let c = this.meta.colSums[i];
+        let d = this.meta.targetColSums[i];
         if (c !== d) {
           return false;
         }
 
-        let e = state.antiRowSums[i];
-        let f = state.antiTargetRowSums[i];
+        let e = this.meta.antiRowSums[i];
+        let f = this.meta.antiTargetRowSums[i];
         if (e !== f) {
           return false;
         }
 
 
-        let g = state.antiColSums[i];
-        let h = state.antiTargetColSums[i];
+        let g = this.meta.antiColSums[i];
+        let h = this.meta.antiTargetColSums[i];
         if (g !== h) {
           return false;
         }
@@ -110,11 +165,32 @@ export class GameModel {
       return true;
   }
   
+  
+  checkWinSolver() {
+      for ( let i = 0; i < this.meta.rowSums.length; i++) {
+
+        let a = this.meta.rowSums[i];
+        let b = this.meta.targetRowSums[i];
+        if (a !== b) {
+          return false;
+        }
+
+        let c = this.meta.colSums[i];
+        let d = this.meta.targetColSums[i];
+        if (c !== d) {
+          return false;
+        }
+
+      }
+      return true;
+  }
+  
+  
   export() {
     return {
       ...this.meta,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
-      wonGame: this.checkWin(this.meta)
+      wonGame: this.checkWin()
     }    
   }
   
