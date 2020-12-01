@@ -127,7 +127,19 @@ export class GameModel {
       console.log(row);
     }
   }
-    
+  
+  toggleSquareSolver(x,y) {
+    if (this.playerBoard[x][y] === "") {
+      this.playerBoard[x][y] = "*";
+      this.meta.rowSums[x]     += (y+1);
+      this.meta.colSums[y]     += (x+1);      
+    } else {
+      this.playerBoard[x][y] = "";
+      this.meta.rowSums[x]     -= (y+1);
+      this.meta.colSums[y]     -= (x+1);            
+    }
+  }
+  
   toggleSquare(x,y) {
     console.log(x,y);
     if (this.playerBoard[x][y] === "*") {
