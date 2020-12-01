@@ -6,6 +6,8 @@ import { GameModel } from './GameModel';
 import { useState } from 'react';
 
 
+let timeout = null;
+
 function App() {
   const model = null;
   const [ gm, setGm ] = useState(null);
@@ -26,6 +28,10 @@ function App() {
     const newGm = new GameModel(newSize);
     setGm(newGm);
     setViewState(newGm.export());
+    clearInterval(timeout);
+    timeout = setInterval(() => { 
+      setViewState(newGm.export());
+    }, 1000);
   }
    
   window.gm = gm;
