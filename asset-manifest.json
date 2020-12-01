@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/kakurasu/static/css/main.f676f2e2.chunk.css",
-    "main.js": "/kakurasu/static/js/main.a50e2165.chunk.js",
-    "main.js.map": "/kakurasu/static/js/main.a50e2165.chunk.js.map",
+    "main.css": "/kakurasu/static/css/main.47e37f57.chunk.css",
+    "main.js": "/kakurasu/static/js/main.5f43b8c9.chunk.js",
+    "main.js.map": "/kakurasu/static/js/main.5f43b8c9.chunk.js.map",
     "runtime-main.js": "/kakurasu/static/js/runtime-main.ca7c7637.js",
     "runtime-main.js.map": "/kakurasu/static/js/runtime-main.ca7c7637.js.map",
     "static/js/2.1c04418e.chunk.js": "/kakurasu/static/js/2.1c04418e.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.0dc7eef5.chunk.js": "/kakurasu/static/js/3.0dc7eef5.chunk.js",
     "static/js/3.0dc7eef5.chunk.js.map": "/kakurasu/static/js/3.0dc7eef5.chunk.js.map",
     "index.html": "/kakurasu/index.html",
-    "static/css/main.f676f2e2.chunk.css.map": "/kakurasu/static/css/main.f676f2e2.chunk.css.map",
+    "static/css/main.47e37f57.chunk.css.map": "/kakurasu/static/css/main.47e37f57.chunk.css.map",
     "static/js/2.1c04418e.chunk.js.LICENSE.txt": "/kakurasu/static/js/2.1c04418e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ca7c7637.js",
     "static/js/2.1c04418e.chunk.js",
-    "static/css/main.f676f2e2.chunk.css",
-    "static/js/main.a50e2165.chunk.js"
+    "static/css/main.47e37f57.chunk.css",
+    "static/js/main.5f43b8c9.chunk.js"
   ]
 }
