@@ -32,6 +32,7 @@ export class GameModel {
     }
   }
 
+  // todo
   solve() {
     
   }
