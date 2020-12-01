@@ -25,7 +25,7 @@ export function NewGameForm(props) {
         <select value={newLevel} onChange={(e)=> { setNewLevel(parseFloat(e.currentTarget.value)); Cookies.set('defaultLevel', e.currentTarget.value) }} >
           <LevelOptions min={3} max={13} />
         </select>
-        <button onClick={()=> { props.onNewGame(newLevel)}}>Go!</button>
+        <button onClick={()=> { props.onNewGame(newLevel)}}>Play</button>
       </React.Fragment>
       
     )

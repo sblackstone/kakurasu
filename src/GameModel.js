@@ -63,16 +63,32 @@ export class GameModel {
   
   checkWin(state) {
       for ( let i = 0; i < state.size; i++) {
+
         let a = state.rowSums[i];
         let b = state.targetRowSums[i];
         if (a !== b) {
           return false;
         }
+
         let c = state.colSums[i];
         let d = state.targetColSums[i];
         if (c !== d) {
           return false;
         }
+
+        let e = state.antiRowSums[i];
+        let f = state.antiTargetRowSums[i];
+        if (e !== f) {
+          return false;
+        }
+
+
+        let g = state.antiColSums[i];
+        let h = state.antiTargetColSums[i];
+        if (g !== h) {
+          return false;
+        }
+
       }
       return true;
   }

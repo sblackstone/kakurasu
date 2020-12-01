@@ -36,16 +36,17 @@ body, html {
   height: 90vmin;
   color: #fff;
   border: 1px dashed #fff !important;
+
+  button, select {
+    font-size: 200%;
+  }
+  button {
+    margin-top: 15px;
+  }
+
 }
 
-.new-game-screen button{
-  margin-top: 5px;
-  font-size: 5vmin;
-}
 
-.new-game-screen select {
-  font-size: 5vmin;
-}
 
 
 .square {
