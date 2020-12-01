@@ -28,7 +28,7 @@ function HSquare(props) {
     );
   } else {
     return (
-      <div onClick={props.toggleBoardMode} className={`square header-square row-start-square square-${props.size}`}>&#x27f3;</div>
+      <div onClick={props.toggleBoardMode} className={`square flipper-square header-square row-start-square square-${props.size}`}>Flip</div>
     );    
   }
 }

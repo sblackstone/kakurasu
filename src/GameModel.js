@@ -3,6 +3,13 @@ export class GameModel {
     this.size = size;
     this.initPlayerBoard();    
     this.initTargetBoard();
+    this.meta = {
+      targetRowSums: this.rowSums("targetBoard", "*"),
+      targetColSums: this.colSums("targetBoard", "*"),
+      antiTargetRowSums: this.rowSums("targetBoard", "x"),
+      antiTargetColSums: this.colSums("targetBoard", "x"),
+      
+    }
   }
 
   initTargetBoard() {
@@ -10,7 +17,7 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        if (Math.random() > 0.55) {
+        if (Math.random() > 0.70) {
           row.push('*');          
         } else {
           row.push('x');                    
@@ -18,6 +25,10 @@ export class GameModel {
       }
       this.targetBoard.push(row);
     }
+  }
+
+  solve() {
+    
   }
 
 
@@ -95,23 +106,19 @@ export class GameModel {
   
   export() {
     const result = {
+      ...this.meta,
       size: this.size,
       sigma: ((this.size) * (this.size + 1)) / 2,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
-      rowSums: this.rowSums("playerBoard", "*"),
-      colSums: this.colSums("playerBoard", "*"),
+      rowSums:     this.rowSums("playerBoard", "*"),
+      colSums:     this.colSums("playerBoard", "*"),
       antiRowSums: this.rowSums("playerBoard", "x"),
       antiColSums: this.colSums("playerBoard", "x"),
-      targetRowSums: this.rowSums("targetBoard", "*"),
-      targetColSums: this.colSums("targetBoard", "*"),
-      antiTargetRowSums: this.rowSums("targetBoard", "x"),
-      antiTargetColSums: this.colSums("targetBoard", "x"),
     }
 
     result.wonGame = this.checkWin(result);
     
     return result;
-    
     
   }
   
@@ -124,7 +131,7 @@ export class GameModel {
       console.log(row);
     }
   }
-  
+    
   toggleSquare(x,y) {
     if (this.playerBoard[x][y] === "*") {
       this.playerBoard[x][y] = "x";
