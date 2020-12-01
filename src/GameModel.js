@@ -32,14 +32,51 @@ export class GameModel {
     }
   }
 
+  // Takes the previous move and sees if we can short-circuit some options...
+  solveFill(x,y) {
+    const points = [];
+    if (this.meta.rowSums[x] === this.meta.targetRowSums[x]) {
+      for (let i = 0; i < this.size; i++) {
+        if (this.playerBoard[x][i] === "") {
+          this.playerBoard[x][i] = "x";
+          points.push([x,i]);
+        }
+      }  
+    }
+
+    if (this.meta.colSums[y] === this.meta.targetColSums[y]) {
+      for (let i = 0; i < this.size; i++) {
+        if (this.playerBoard[i][y] === "") {
+          this.playerBoard[i][y] = "x";
+          points.push([i,y]);
+        }
+      }  
+    }
+    return points;
+  }
+  
+  
+  unSolveFill(points) {
+    for (let i = 0; i < points.length; i++) {
+      this.playerBoard[points[i][0]][points[i][1]] = "";
+    }
+  }
+
   // todo
   solve(depth = 0) {
+    if (depth === 0) {
+      for (let i = 0; i < this.size; i++) {
+        this.solveFill(0,i);
+      }
+    }
+    
     if (this.shouldReject()) {
       return;
     }
 
     if (this.checkWinSolver()) {
       console.log("solution");
+      throw Error("BLARG");
       this.debug();
     }
 
@@ -47,7 +84,9 @@ export class GameModel {
       for (let j = 0; j < this.size; j++) {
         if (this.playerBoard[i][j] === "") {
           this.toggleSquareSolver(i,j);
+          const points = this.solveFill(i,j);
           this.solve(depth+1);
+          this.unSolveFill(points);
           this.toggleSquareSolver(i,j);
         }      
       }      
