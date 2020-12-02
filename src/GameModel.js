@@ -40,7 +40,7 @@ export class GameModel {
   // Takes the previous move and sees if we can short-circuit some options...
   solveFill(x,y) {
     const points = [];
-    if (this.meta.rowSums[x] === this.meta.targetRowSums[x]) {
+    if (this.meta.rowSumRemaining[x] === 0) {
       for (let i = 0; i < this.size; i++) {
         if (this.playerBoard[x][i] === "") {
           this.playerBoard[x][i] = "x";
@@ -49,7 +49,7 @@ export class GameModel {
       }  
     }
 
-    if (this.meta.colSums[y] === this.meta.targetColSums[y]) {
+    if (this.meta.colSumRemaining[y] === 0) {
       for (let i = 0; i < this.size; i++) {
         if (this.playerBoard[i][y] === "") {
           this.playerBoard[i][y] = "x";
@@ -147,86 +147,57 @@ export class GameModel {
   
   
   shouldReject() {
-      for ( let i = 0; i < this.meta.rowSums.length; i++) {
-
-        let a = this.meta.rowSums[i];
-        let b = this.meta.targetRowSums[i];
-        if (b-a < 0) {
-          return true;
-        }
-
-        let c = this.meta.colSums[i];
-        let d = this.meta.targetColSums[i];
-        if (d-c < 0) {
-          return true;
-        }
-
-        let e = this.meta.antiRowSums[i];
-        let f = this.meta.antiTargetRowSums[i];
-        if (f-e < 0) {
-          return true;
-        }
-
-
-        let g = this.meta.antiColSums[i];
-        let h = this.meta.antiTargetColSums[i];
-        if (h-g < 0) {
-          return true;
-        }
-      }
+    
+    if (this.meta.rowSumRemaining.some(x => x < 0)) {
       return false;
+    }
+
+    if (this.meta.colSumRemaining.some(x => x < 0)) {
+      return false;
+    }
+
+    if (this.meta.antiRowSumRemaining.some(x => x < 0)) {
+      return false;
+    }
+
+    if (this.meta.antiColSumRemaining.some(x => x < 0)) {
+      return false;
+    }
+
+    return false;
   }
   
   checkWin() {
-      for ( let i = 0; i < this.meta.rowSums.length; i++) {
+    
+    if (this.meta.rowSumRemaining.some(x => x !== 0)) {
+      return false;
+    }
 
-        let a = this.meta.rowSums[i];
-        let b = this.meta.targetRowSums[i];
-        if (a !== b) {
-          return false;
-        }
+    if (this.meta.colSumRemaining.some(x => x !== 0)) {
+      return false;
+    }
 
-        let c = this.meta.colSums[i];
-        let d = this.meta.targetColSums[i];
-        if (c !== d) {
-          return false;
-        }
+    if (this.meta.antiRowSumRemaining.some(x => x !== 0)) {
+      return false;
+    }
 
-        let e = this.meta.antiRowSums[i];
-        let f = this.meta.antiTargetRowSums[i];
-        if (e !== f) {
-          return false;
-        }
-
-
-        let g = this.meta.antiColSums[i];
-        let h = this.meta.antiTargetColSums[i];
-        if (g !== h) {
-          return false;
-        }
-
-      }
-      return true;
+    if (this.meta.antiColSumRemaining.some(x => x !== 0)) {
+      return false;
+    }
+    
+    return true;
   }
   
   
   checkWinSolver() {
-      for ( let i = 0; i < this.meta.rowSums.length; i++) {
+    if (this.meta.rowSumRemaining.some(x => x !== 0)) {
+      return false;
+    }
 
-        let a = this.meta.rowSums[i];
-        let b = this.meta.targetRowSums[i];
-        if (a !== b) {
-          return false;
-        }
-
-        let c = this.meta.colSums[i];
-        let d = this.meta.targetColSums[i];
-        if (c !== d) {
-          return false;
-        }
-
-      }
-      return true;
+    if (this.meta.colSumRemaining.some(x => x !== 0)) {
+      return false;
+    }
+    return true;
   }
   
   
