@@ -12,8 +12,13 @@ export class GameModel {
       antiTargetColSums: this.colSums("targetBoard", "x"), 
       rowSums:     Array(this.size).fill(0),
       colSums:     Array(this.size).fill(0),
+      rowSumRemaining: this.rowSums("targetBoard", "*"),
+      colSumRemaining: this.colSums("targetBoard", "*"),
       antiRowSums: Array(this.size).fill(0),
       antiColSums: Array(this.size).fill(0),      
+      antiRowSumRemaining: this.rowSums("targetBoard", "x"),
+      antiColSumRemaining: this.colSums("targetBoard", "x"), 
+
     }
   }
 
@@ -248,31 +253,51 @@ export class GameModel {
       this.playerBoard[x][y] = "*";
       this.meta.rowSums[x]     += (y+1);
       this.meta.colSums[y]     += (x+1);      
+      this.meta.rowSumRemaining[x]     -= (y+1);
+      this.meta.colSumRemaining[y]     -= (x+1);      
+
+
     } else {
       this.playerBoard[x][y] = "";
-      this.meta.rowSums[x]     -= (y+1);
-      this.meta.colSums[y]     -= (x+1);            
+      this.meta.rowSums[x]          -= (y+1);
+      this.meta.colSums[y]          -= (x+1);            
+      this.meta.rowSumRemaining[x]  += (y+1);
+      this.meta.colSumRemaining[y]  += (x+1);      
+
     }
   }
   
   toggleSquare(x,y) {
     console.log(x,y);
+    
+    // * -> x
     if (this.playerBoard[x][y] === "*") {
+      this.meta.rowSums[x]             -= (y+1);
+      this.meta.colSums[y]             -= (x+1);
+      this.meta.rowSumRemaining[x]     += (y+1);
+      this.meta.colSumRemaining[y]     += (x+1);      
 
-      this.meta.rowSums[x]     -= (y+1);
-      this.meta.colSums[y]     -= (x+1);
-      this.meta.antiRowSums[x] += (y+1);
-      this.meta.antiColSums[y] += (x+1);    
+      this.meta.antiRowSums[x]         += (y+1);
+      this.meta.antiColSums[y]         += (x+1);    
+      this.meta.antiRowSumRemaining[x] -= (y+1);
+      this.meta.antiColSumRemaining[y] -= (x+1);      
       this.playerBoard[x][y] = "x";
-
+      
     } else if (this.playerBoard[x][y] === "x") {
+      // x -> ""
       this.meta.antiRowSums[x] -= (y+1);
       this.meta.antiColSums[y] -= (x+1);    
+      this.meta.antiRowSumRemaining[x] += (y+1);
+      this.meta.antiColSumRemaining[y] += (x+1);      
+
 
       this.playerBoard[x][y] = "";
     } else if (this.playerBoard[x][y] === "") {
       this.meta.rowSums[x]     += (y+1);
       this.meta.colSums[y]     += (x+1);
+
+      this.meta.rowSumRemaining[x] -= (y+1);
+      this.meta.colSumRemaining[y] -= (x+1);      
 
       this.playerBoard[x][y] = "*";
     }
@@ -280,3 +305,22 @@ export class GameModel {
   }
 
 }
+
+
+/*
+
+      sigma: ((this.size) * (this.size + 1)) / 2,
+      targetRowSums: this.rowSums("targetBoard", "*"),
+      targetColSums: this.colSums("targetBoard", "*"),
+      antiTargetRowSums: this.rowSums("targetBoard", "x"),
+      antiTargetColSums: this.colSums("targetBoard", "x"), 
+      rowSums:     Array(this.size).fill(0),
+      colSums:     Array(this.size).fill(0),
+      rowSumRemaining: this.rowSums("targetBoard", "*"),
+      colSumRemaining: this.colSums("targetBoard", "*"),
+      antiRowSums: Array(this.size).fill(0),
+      antiColSums: Array(this.size).fill(0),      
+      antiRowSumRemaining: this.rowSums("targetBoard", "x"),
+      antiColSumRemaining: this.colSums("targetBoard", "x"), 
+
+*/

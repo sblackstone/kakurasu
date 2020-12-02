@@ -36,27 +36,18 @@ function HSquare(props) {
 
 function FSquare(props) {
   
-  if (props.i > 0 && (props.i < props.size+1)) {
-    const playerVal = props.viewState.colSums[props.i-1];
-    const targetVal = props.viewState.targetColSums[props.i-1];
-
-    const antiPlayerVal = props.viewState.antiColSums[props.i -1];
-    const antiTargetVal = props.viewState.antiTargetColSums[props.i - 1];
-
-    const content1 = targetVal - playerVal;
-    const content2 = antiTargetVal- antiPlayerVal;
-    
+  if (props.col >= 0 && (props.col < props.size)) {
     if (props.boardMode) {
       return (
         <div className={`square footer-square square-${props.size}`}>
-          <div className="score-on">{content1}</div>
+          <div className="score-on">{props.viewState.colSumRemaining[props.col]}</div>
         </div> 
       );
     
     } else {
       return (
         <div className={`square footer-square square-${props.size}`}>
-          <div className="score-off">{content2}</div>
+          <div className="score-off">{props.viewState.antiColSumRemaining[props.col]}</div>
         </div> 
       );
       
@@ -84,25 +75,16 @@ function RowStartSquare(props) {
 }
 
 function RowEndSquare(props) {
-  const playerVal = props.viewState.rowSums[props.row];
-  const targetVal = props.viewState.targetRowSums[props.row];
-  const antiPlayerVal = props.viewState.antiRowSums[props.row];
-  const antiTargetVal = props.viewState.antiTargetRowSums[props.row];
-
-
-  const content1 = targetVal - playerVal;
-  const content2 = antiTargetVal- antiPlayerVal;
-
   if (props.boardMode) {
     return (
       <div className={`square row-end-square square-${props.size}`}>
-        <div className="score-on">{content1}</div>
+        <div className="score-on">{props.viewState.rowSumRemaining[props.row]}</div>
       </div> 
     );    
   } else {
     return (
       <div className={`square row-end-square square-${props.size}`}>
-        <div className="score-off">{content2}</div>
+        <div className="score-off">{props.viewState.antiRowSumRemaining[props.row]}</div>
       </div> 
     );        
   }
@@ -128,7 +110,7 @@ function Header(props) {
 function Footer(props) {
   let result = [];
   for (let i = 0; i < props.size +2; i++) {
-    result.push(<FSquare key={`fs${i}`} i={i} {...props} />);
+    result.push(<FSquare key={`fs${i}`} col={i-1} {...props} />);
   }
   return result;
 };
