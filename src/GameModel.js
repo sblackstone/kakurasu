@@ -1,3 +1,7 @@
+const math = require('mathjs');
+
+
+
 export class GameModel {
   constructor(size) {
     this.size = size;
@@ -21,6 +25,110 @@ export class GameModel {
 
     }
   }
+    
+/*
+  solveLinearProgramming() {
+    let constraints = [];
+
+    let objective = [];
+    
+    let bounds = [];
+    
+    let generals = [];
+    
+    for (let i = 0; i < this.size*this.size; i++) {
+      generals.push(`x${i}`);
+      objective.push(`+ x${i}`);
+      bounds.push(`0 <= x${i} <= 1`);
+    }
+    
+
+    // For each row...
+    for (let i = 0; i < this.size; i++) {
+      let line = [];
+      for (let j = 0; j < this.size; j++) {
+        const square = i*this.size + j;
+        line.push(`${j+1} x${square}`)
+      }      
+      constraints.push(`RC${i}: + ${line.join(" + ")} = ${this.meta.targetRowSums[i]}`);      
+    }
+
+    // For Each col
+    for (let i = 0; i < this.size; i++) {
+      let line = [];
+      for (let j = 0; j < this.size; j++) {
+        const square = j*this.size + i;
+        line.push(`${i+1} x${square}`)
+      }      
+      constraints.push(`CC${i}: + ${line.join(" + ")} = ${this.meta.targetColSums[i]}`);      
+    }
+
+    let program = `
+Minimize
+obj: ${objective.join(" ")}
+    
+Subject To
+${constraints.join("\n")}
+
+Bounds
+${bounds.join("\n")}
+
+Generals
+${generals.join("\n")}
+
+End
+
+`;
+
+console.log(program);
+
+const log = console.log;
+
+const stop = () => console.log("STOP");
+
+const job = new Worker(process.env.PUBLIC_URL + '/main.js');
+
+window.blarg = job;
+job.onmessage = function (e) {
+    var obj = e.data;
+    switch (obj.action){
+        case 'log':
+            log(obj.message);
+            break;
+        case 'done':
+            stop();
+            log(JSON.stringify(obj.result));
+            break;
+    }
+};
+
+job.onerror = function(message) {
+  console.log(message);
+};
+
+
+job.postMessage({action: 'load', data: program, mip: true});
+    
+  }
+*/
+
+  solveLinearAlgebra() {
+    const mData = Array(this.size*this.size).fill(0).map(x => Array(this.size*this.size).fill(0));
+
+    // For Each Row...
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        mData[i][i*this.size +j] = j+1;
+        mData[i+this.size][j*this.size + i] = j+1;
+
+      }
+    }
+    
+    const b = [ ...this.meta.targetRowSums, ...this.meta.targetColSums];
+    
+    // Unfinished... At this point, we would like to solve this matrix...
+
+  }
 
   initTargetBoard() {
     this.targetBoard = [];    
@@ -36,29 +144,23 @@ export class GameModel {
       this.targetBoard.push(row);
     }
   }
-
-  // Takes the previous move and sees if we can short-circuit some options...
-  solveFill(x,y) {
-    const points = [];
-    if (this.meta.rowSumRemaining[x] === 0) {
-      for (let i = 0; i < this.size; i++) {
-        if (this.playerBoard[x][i] === "") {
-          this.playerBoard[x][i] = "x";
-          points.push([x,i]);
+  
+  solveFill() {
+    const points = []; 
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.playerBoard[i][j] !== '') {
+          continue;
         }
-      }  
-    }
-
-    if (this.meta.colSumRemaining[y] === 0) {
-      for (let i = 0; i < this.size; i++) {
-        if (this.playerBoard[i][y] === "") {
-          this.playerBoard[i][y] = "x";
-          points.push([i,y]);
+        if ((j+1) > this.meta.rowSumRemaining[i] || (i+1) > this.meta.colSumRemaining[j]) {
+          this.playerBoard[i][j] = "x";
+          points.push([i,j]);          
         }
-      }  
+      }
     }
     return points;
   }
+
   
   
   unSolveFill(points) {
@@ -70,9 +172,7 @@ export class GameModel {
   // todo
   solve(depth = 0) {
     if (depth === 0) {
-      for (let i = 0; i < this.size; i++) {
-        this.solveFill(0,i);
-      }
+      this.solveFill();
     }
     
     if (this.shouldReject()) {
@@ -88,11 +188,11 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
         if (this.playerBoard[i][j] === "") {
-          this.toggleSquareSolver(i,j);
-          const points = this.solveFill(i,j);
+          this.markSquare(i,j, '*');
+          const points = this.solveFill();
           this.solve(depth+1);
           this.unSolveFill(points);
-          this.toggleSquareSolver(i,j);
+          this.markSquare(i,j, '');
         }      
       }      
     }
@@ -218,61 +318,58 @@ export class GameModel {
       console.log(row);
     }
   }
-  
-  toggleSquareSolver(x,y) {
-    if (this.playerBoard[x][y] === "") {
-      this.playerBoard[x][y] = "*";
-      this.meta.rowSums[x]     += (y+1);
-      this.meta.colSums[y]     += (x+1);      
-      this.meta.rowSumRemaining[x]     -= (y+1);
-      this.meta.colSumRemaining[y]     -= (x+1);      
-
-
-    } else {
-      this.playerBoard[x][y] = "";
-      this.meta.rowSums[x]          -= (y+1);
-      this.meta.colSums[y]          -= (x+1);            
-      this.meta.rowSumRemaining[x]  += (y+1);
-      this.meta.colSumRemaining[y]  += (x+1);      
-
-    }
-  }
-  
-  toggleSquare(x,y) {
-    console.log(x,y);
     
-    // * -> x
-    if (this.playerBoard[x][y] === "*") {
+  markSquare(x,y,val) {
+    switch(this.playerBoard[x][y]) {
+    case '*':
       this.meta.rowSums[x]             -= (y+1);
       this.meta.colSums[y]             -= (x+1);
       this.meta.rowSumRemaining[x]     += (y+1);
       this.meta.colSumRemaining[y]     += (x+1);      
-
-      this.meta.antiRowSums[x]         += (y+1);
-      this.meta.antiColSums[y]         += (x+1);    
-      this.meta.antiRowSumRemaining[x] -= (y+1);
-      this.meta.antiColSumRemaining[y] -= (x+1);      
-      this.playerBoard[x][y] = "x";
-      
-    } else if (this.playerBoard[x][y] === "x") {
-      // x -> ""
+      break;
+    case 'x':
       this.meta.antiRowSums[x] -= (y+1);
       this.meta.antiColSums[y] -= (x+1);    
       this.meta.antiRowSumRemaining[x] += (y+1);
       this.meta.antiColSumRemaining[y] += (x+1);      
+      break;
+    case '':
+      break; 
+    }
 
-
-      this.playerBoard[x][y] = "";
-    } else if (this.playerBoard[x][y] === "") {
+    switch(val) {
+    case '*':
       this.meta.rowSums[x]     += (y+1);
       this.meta.colSums[y]     += (x+1);
-
       this.meta.rowSumRemaining[x] -= (y+1);
       this.meta.colSumRemaining[y] -= (x+1);      
-
-      this.playerBoard[x][y] = "*";
+      break;
+    case 'x':
+      this.meta.antiRowSums[x]         += (y+1);
+      this.meta.antiColSums[y]         += (x+1);    
+      this.meta.antiRowSumRemaining[x] -= (y+1);
+      this.meta.antiColSumRemaining[y] -= (x+1);      
+      break;
+    case '':
+      break; 
     }
-      
+
+    this.playerBoard[x][y] = val;
+
+  }
+  
+  toggleSquare(x,y) {
+    switch(this.playerBoard[x][y]) {
+    case '*':
+      this.markSquare(x,y, "x");    
+      break;
+    case 'x':
+      this.markSquare(x,y, "");    
+      break;
+    case '':
+      this.markSquare(x,y, '*');
+      break;
+    }      
   }
 
 }
