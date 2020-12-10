@@ -18,8 +18,8 @@ export class GameModel {
       colSums:     Array(this.size).fill(0),
 
       // How much they need to complete green.
-      rowSumRemaining: this.rowSums("targetBoard", "*"),
-      colSumRemaining: this.colSums("targetBoard", "*"),
+      rowNeeded: this.rowSums("targetBoard", "*"),
+      colNeeded: this.colSums("targetBoard", "*"),
 
 
       ///////
@@ -27,8 +27,8 @@ export class GameModel {
       antiTargetColSums: this.colSums("targetBoard", "x"), 
       antiRowSums: Array(this.size).fill(0),
       antiColSums: Array(this.size).fill(0),      
-      antiRowSumRemaining: this.rowSums("targetBoard", "x"),
-      antiColSumRemaining: this.colSums("targetBoard", "x"), 
+      antiRowNeeded: this.rowSums("targetBoard", "x"),
+      antiColNeeded: this.colSums("targetBoard", "x"), 
 
     }
   }
@@ -74,7 +74,7 @@ export class GameModel {
         if (this.playerBoard[i][j] !== '') {
           continue;
         }
-        if ((j+1) > this.meta.rowSumRemaining[i] || (i+1) > this.meta.colSumRemaining[j]) {
+        if ((j+1) > this.meta.rowNeeded[i] || (i+1) > this.meta.colNeeded[j]) {
           this.playerBoard[i][j] = "x";
           points.push([i,j]);          
         }
@@ -170,19 +170,19 @@ export class GameModel {
   
   shouldReject() {
     
-    if (this.meta.rowSumRemaining.some(x => x < 0)) {
+    if (this.meta.rowNeeded.some(x => x < 0)) {
       return false;
     }
 
-    if (this.meta.colSumRemaining.some(x => x < 0)) {
+    if (this.meta.colNeeded.some(x => x < 0)) {
       return false;
     }
 
-    if (this.meta.antiRowSumRemaining.some(x => x < 0)) {
+    if (this.meta.antiRowNeeded.some(x => x < 0)) {
       return false;
     }
 
-    if (this.meta.antiColSumRemaining.some(x => x < 0)) {
+    if (this.meta.antiColNeeded.some(x => x < 0)) {
       return false;
     }
 
@@ -191,19 +191,19 @@ export class GameModel {
   
   checkWin() {
     
-    if (this.meta.rowSumRemaining.some(x => x !== 0)) {
+    if (this.meta.rowNeeded.some(x => x !== 0)) {
       return false;
     }
 
-    if (this.meta.colSumRemaining.some(x => x !== 0)) {
+    if (this.meta.colNeeded.some(x => x !== 0)) {
       return false;
     }
 
-    if (this.meta.antiRowSumRemaining.some(x => x !== 0)) {
+    if (this.meta.antiRowNeeded.some(x => x !== 0)) {
       return false;
     }
 
-    if (this.meta.antiColSumRemaining.some(x => x !== 0)) {
+    if (this.meta.antiColNeeded.some(x => x !== 0)) {
       return false;
     }
     
@@ -212,11 +212,11 @@ export class GameModel {
   
   
   checkWinSolver() {
-    if (this.meta.rowSumRemaining.some(x => x !== 0)) {
+    if (this.meta.rowNeeded.some(x => x !== 0)) {
       return false;
     }
 
-    if (this.meta.colSumRemaining.some(x => x !== 0)) {
+    if (this.meta.colNeeded.some(x => x !== 0)) {
       return false;
     }
     return true;
@@ -246,14 +246,14 @@ export class GameModel {
     case '*':
       this.meta.rowSums[x]             -= (y+1);
       this.meta.colSums[y]             -= (x+1);
-      this.meta.rowSumRemaining[x]     += (y+1);
-      this.meta.colSumRemaining[y]     += (x+1);      
+      this.meta.rowNeeded[x]     += (y+1);
+      this.meta.colNeeded[y]     += (x+1);      
       break;
     case 'x':
       this.meta.antiRowSums[x] -= (y+1);
       this.meta.antiColSums[y] -= (x+1);    
-      this.meta.antiRowSumRemaining[x] += (y+1);
-      this.meta.antiColSumRemaining[y] += (x+1);      
+      this.meta.antiRowNeeded[x] += (y+1);
+      this.meta.antiColNeeded[y] += (x+1);      
       break;
     case '':
       break; 
@@ -263,14 +263,14 @@ export class GameModel {
     case '*':
       this.meta.rowSums[x]     += (y+1);
       this.meta.colSums[y]     += (x+1);
-      this.meta.rowSumRemaining[x] -= (y+1);
-      this.meta.colSumRemaining[y] -= (x+1);      
+      this.meta.rowNeeded[x] -= (y+1);
+      this.meta.colNeeded[y] -= (x+1);      
       break;
     case 'x':
       this.meta.antiRowSums[x]         += (y+1);
       this.meta.antiColSums[y]         += (x+1);    
-      this.meta.antiRowSumRemaining[x] -= (y+1);
-      this.meta.antiColSumRemaining[y] -= (x+1);      
+      this.meta.antiRowNeeded[x] -= (y+1);
+      this.meta.antiColNeeded[y] -= (x+1);      
       break;
     case '':
       break; 
@@ -306,12 +306,12 @@ export class GameModel {
       antiTargetColSums: this.colSums("targetBoard", "x"), 
       rowSums:     Array(this.size).fill(0),
       colSums:     Array(this.size).fill(0),
-      rowSumRemaining: this.rowSums("targetBoard", "*"),
-      colSumRemaining: this.colSums("targetBoard", "*"),
+      rowNeeded: this.rowSums("targetBoard", "*"),
+      colNeeded: this.colSums("targetBoard", "*"),
       antiRowSums: Array(this.size).fill(0),
       antiColSums: Array(this.size).fill(0),      
-      antiRowSumRemaining: this.rowSums("targetBoard", "x"),
-      antiColSumRemaining: this.colSums("targetBoard", "x"), 
+      antiRowNeeded: this.rowSums("targetBoard", "x"),
+      antiColNeeded: this.colSums("targetBoard", "x"), 
 
 
 

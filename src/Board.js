@@ -40,14 +40,14 @@ function FSquare(props) {
     if (props.boardMode) {
       return (
         <div className={`square footer-square square-${props.size}`}>
-          <div className="score-on">{props.viewState.colSumRemaining[props.col]}</div>
+          <div className="score-on">{props.viewState.colNeeded[props.col]}</div>
         </div> 
       );
     
     } else {
       return (
         <div className={`square footer-square square-${props.size}`}>
-          <div className="score-off">{props.viewState.antiColSumRemaining[props.col]}</div>
+          <div className="score-off">{props.viewState.antiColNeeded[props.col]}</div>
         </div> 
       );
       
@@ -78,13 +78,13 @@ function RowEndSquare(props) {
   if (props.boardMode) {
     return (
       <div className={`square row-end-square square-${props.size}`}>
-        <div className="score-on">{props.viewState.rowSumRemaining[props.row]}</div>
+        <div className="score-on">{props.viewState.rowNeeded[props.row]}</div>
       </div> 
     );    
   } else {
     return (
       <div className={`square row-end-square square-${props.size}`}>
-        <div className="score-off">{props.viewState.antiRowSumRemaining[props.row]}</div>
+        <div className="score-off">{props.viewState.antiRowNeeded[props.row]}</div>
       </div> 
     );        
   }
