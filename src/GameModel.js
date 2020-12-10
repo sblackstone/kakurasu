@@ -12,12 +12,19 @@ export class GameModel {
       sigma: ((this.size) * (this.size + 1)) / 2,
       targetRowSums: this.rowSums("targetBoard", "*"),
       targetColSums: this.colSums("targetBoard", "*"),
-      antiTargetRowSums: this.rowSums("targetBoard", "x"),
-      antiTargetColSums: this.colSums("targetBoard", "x"), 
+
+      // What the current row/colums add up to.
       rowSums:     Array(this.size).fill(0),
       colSums:     Array(this.size).fill(0),
+
+      // How much they need to complete green.
       rowSumRemaining: this.rowSums("targetBoard", "*"),
       colSumRemaining: this.colSums("targetBoard", "*"),
+
+
+      ///////
+      antiTargetRowSums: this.rowSums("targetBoard", "x"),
+      antiTargetColSums: this.colSums("targetBoard", "x"), 
       antiRowSums: Array(this.size).fill(0),
       antiColSums: Array(this.size).fill(0),      
       antiRowSumRemaining: this.rowSums("targetBoard", "x"),
@@ -26,91 +33,6 @@ export class GameModel {
     }
   }
     
-/*
-  solveLinearProgramming() {
-    let constraints = [];
-
-    let objective = [];
-    
-    let bounds = [];
-    
-    let generals = [];
-    
-    for (let i = 0; i < this.size*this.size; i++) {
-      generals.push(`x${i}`);
-      objective.push(`+ x${i}`);
-      bounds.push(`0 <= x${i} <= 1`);
-    }
-    
-
-    // For each row...
-    for (let i = 0; i < this.size; i++) {
-      let line = [];
-      for (let j = 0; j < this.size; j++) {
-        const square = i*this.size + j;
-        line.push(`${j+1} x${square}`)
-      }      
-      constraints.push(`RC${i}: + ${line.join(" + ")} = ${this.meta.targetRowSums[i]}`);      
-    }
-
-    // For Each col
-    for (let i = 0; i < this.size; i++) {
-      let line = [];
-      for (let j = 0; j < this.size; j++) {
-        const square = j*this.size + i;
-        line.push(`${i+1} x${square}`)
-      }      
-      constraints.push(`CC${i}: + ${line.join(" + ")} = ${this.meta.targetColSums[i]}`);      
-    }
-
-    let program = `
-Minimize
-obj: ${objective.join(" ")}
-    
-Subject To
-${constraints.join("\n")}
-
-Bounds
-${bounds.join("\n")}
-
-Generals
-${generals.join("\n")}
-
-End
-
-`;
-
-console.log(program);
-
-const log = console.log;
-
-const stop = () => console.log("STOP");
-
-const job = new Worker(process.env.PUBLIC_URL + '/main.js');
-
-window.blarg = job;
-job.onmessage = function (e) {
-    var obj = e.data;
-    switch (obj.action){
-        case 'log':
-            log(obj.message);
-            break;
-        case 'done':
-            stop();
-            log(JSON.stringify(obj.result));
-            break;
-    }
-};
-
-job.onerror = function(message) {
-  console.log(message);
-};
-
-
-job.postMessage({action: 'load', data: program, mip: true});
-    
-  }
-*/
 
   solveLinearAlgebra() {
     const mData = Array(this.size*this.size).fill(0).map(x => Array(this.size*this.size).fill(0));
@@ -391,4 +313,93 @@ job.postMessage({action: 'load', data: program, mip: true});
       antiRowSumRemaining: this.rowSums("targetBoard", "x"),
       antiColSumRemaining: this.colSums("targetBoard", "x"), 
 
+
+
+/*
+  solveLinearProgramming() {
+    let constraints = [];
+
+    let objective = [];
+    
+    let bounds = [];
+    
+    let generals = [];
+    
+    for (let i = 0; i < this.size*this.size; i++) {
+      generals.push(`x${i}`);
+      objective.push(`+ x${i}`);
+      bounds.push(`0 <= x${i} <= 1`);
+    }
+    
+
+    // For each row...
+    for (let i = 0; i < this.size; i++) {
+      let line = [];
+      for (let j = 0; j < this.size; j++) {
+        const square = i*this.size + j;
+        line.push(`${j+1} x${square}`)
+      }      
+      constraints.push(`RC${i}: + ${line.join(" + ")} = ${this.meta.targetRowSums[i]}`);      
+    }
+
+    // For Each col
+    for (let i = 0; i < this.size; i++) {
+      let line = [];
+      for (let j = 0; j < this.size; j++) {
+        const square = j*this.size + i;
+        line.push(`${i+1} x${square}`)
+      }      
+      constraints.push(`CC${i}: + ${line.join(" + ")} = ${this.meta.targetColSums[i]}`);      
+    }
+
+    let program = `
+Minimize
+obj: ${objective.join(" ")}
+    
+Subject To
+${constraints.join("\n")}
+
+Bounds
+${bounds.join("\n")}
+
+Generals
+${generals.join("\n")}
+
+End
+
+`;
+
+console.log(program);
+
+const log = console.log;
+
+const stop = () => console.log("STOP");
+
+const job = new Worker(process.env.PUBLIC_URL + '/main.js');
+
+window.blarg = job;
+job.onmessage = function (e) {
+    var obj = e.data;
+    switch (obj.action){
+        case 'log':
+            log(obj.message);
+            break;
+        case 'done':
+            stop();
+            log(JSON.stringify(obj.result));
+            break;
+    }
+};
+
+job.onerror = function(message) {
+  console.log(message);
+};
+
+
+job.postMessage({action: 'load', data: program, mip: true});
+    
+  }
 */
+
+
+
