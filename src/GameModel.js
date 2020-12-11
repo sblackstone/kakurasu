@@ -1,3 +1,5 @@
+const TARGET_BOARD_FILL_RATIO = 0.3;
+
 export class GameModel {
   constructor(size) {
     this.size = size;
@@ -42,7 +44,7 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        if (Math.random() > 0.70) {
+        if (Math.random() > (1 - TARGET_BOARD_FILL_RATIO)) {
           row.push('*');          
         } else {
           row.push('x');                    
@@ -113,6 +115,8 @@ export class GameModel {
       }
     }
     
+    return points; /////////////////////////////////////////////////////////////////////////////
+    
     for (let i = 0; i < this.size; i++) {
       if (this.meta.rowNeeded[i] > 0) {
         const waysToCompleteRow = this.waysToMake(this.availableInRow(i), this.meta.rowNeeded[i]);
@@ -171,19 +175,28 @@ export class GameModel {
   }
 
   // todo
-  solve(depth = 0) {
+  solve(maxDepth=Infinity, timeout = Infinity, depth = 0, startTs = (+new Date())) {  
+    let initialPoints = null;
+    
+    if (depth > maxDepth) {
+      console.log(`MaxDepth Reached`);
+      return false;
+    }
+    if ((+new Date()) - startTs > timeout) {
+      console.log(`Timeout Reached`);
+      return false;
+    }
+    
     if (depth === 0) {
-      this.solveFill();
+      initialPoints = this.solveFill();
     }
     
     if (this.shouldReject()) {
-      return;
+      return false;
     }
 
     if (this.checkWinSolver()) {
-      console.log("solution");
-      throw Error("BLARG");
-      this.debug();
+      return this.export();
     }
 
     for (let i = 0; i < this.size; i++) {
@@ -191,16 +204,21 @@ export class GameModel {
         if (this.getSquare(i,j) === "") {
           this.markSquare(i,j, '*');
           const points = this.solveFill();
-          this.solve(depth+1);
+          const answer = this.solve(maxDepth, timeout, depth+1, startTs);
           this.unSolveFill(points);
           this.markSquare(i,j, '');
+          if (answer) {
+            return answer;
+          }
         }      
       }      
     }
     
     if (depth === 0) {
+      this.unSolveFill(initialPoints);
       console.log("Solver Complete");
     }
+    return false;
     
   }
 
@@ -337,10 +355,11 @@ export class GameModel {
       this.meta.antiRowNeeded[x] += (y+1);
       this.meta.antiColNeeded[y] += (x+1);      
       break;
-    case '':
+    default:
       break; 
     }
 
+    // Put in the new piece!
     switch(val) {
     case '*':
       this.meta.rowSums[x]       += (y+1);
@@ -354,7 +373,7 @@ export class GameModel {
       this.meta.antiRowNeeded[x] -= (y+1);
       this.meta.antiColNeeded[y] -= (x+1);      
       break;
-    case '':
+    default:
       break; 
     }
     
@@ -370,7 +389,7 @@ export class GameModel {
     case 'x':
       this.markSquare(x,y, "");    
       break;
-    case '':
+    default:
       this.markSquare(x,y, '*');
       break;
     }      
