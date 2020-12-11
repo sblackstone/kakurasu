@@ -93,14 +93,10 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       if (this.meta.rowNeeded[i] > 0) {
         const waysToCompleteRow = this.waysToMake(this.availableInRow(i), this.meta.rowNeeded[i]);
-        console.log("waysToCompleteRow");
-        console.log(waysToCompleteRow);
-        console.log("---");
         if (waysToCompleteRow.length === 1) {
           for (const p of waysToCompleteRow[0]) {
             points.push([i, p-1]);
             this.markSquare(i, p-1, '*');
-            console.log(p);
           }
         }
       }
@@ -110,14 +106,10 @@ export class GameModel {
     for (let j = 0; j < this.size; j++) {
       if (this.meta.colNeeded[j] > 0) {
         const waysToCompleteCol = this.waysToMake(this.availableInCol(j), this.meta.colNeeded[j]);
-        console.log("waysToCompleteCol");
-        console.log(waysToCompleteCol);
-        console.log("---");
         if (waysToCompleteCol.length === 1) {
           for (const p of waysToCompleteCol[0]) {
             points.push([p-1,j]);
             this.markSquare(p-1, j, '*');
-            console.log(p);
           }
         }
       }
