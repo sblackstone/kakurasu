@@ -83,11 +83,10 @@ export class GameModel {
       return;
     }
 
-
     const cur = available.pop();
 
     this.waysToMake(available, target, curSum+cur, [ ...candidiate, cur], solutions );
-    this.waysToMake(available, target, curSum, [ ...candidiate ],         solutions);      
+    this.waysToMake(available, target, curSum,     [ ...candidiate ],     solutions);      
 
     available.push(cur);
 
