@@ -52,6 +52,27 @@ export class GameModel {
     }
   }
   
+  availableInRow(i) {
+    let result = [];
+    for (let j = 0; j < this.size; j++) {
+      if (this.getSquare(i,j) === '') {
+        result.push(j+1);
+      }
+    }
+    return result;
+  }
+
+  availableInCol(j) {
+    let result = [];
+    for (let i = 0; i < this.size; i++) {
+      if (this.getSquare(i,j) === '') {
+        result.push(i+1);
+      }
+    }
+    return result;
+  }
+
+  
   solveFill() {
     const points = []; 
     for (let i = 0; i < this.size; i++) {
@@ -68,6 +89,12 @@ export class GameModel {
 
       }
     }
+    
+    for (let i = 0; i < this.size; i++) {
+    
+    }
+    
+    
     return points;
   }
 
@@ -75,18 +102,18 @@ export class GameModel {
   waysToMake(available, target, curSum = 0, candidiate = [], solutions = []) {
 
     if (curSum === target) {
-      solutions.push(candidiate.slice(0));
+      solutions.push([ ...candidiate ]);
       return;
     }
     
-    if (available.length === 0 || curSum > target || available[0] > target) {
+    if (available.length === 0 || curSum > target) {
       return;
     }
 
     const cur = available.pop();
 
     this.waysToMake(available, target, curSum+cur, [ ...candidiate, cur], solutions );
-    this.waysToMake(available, target, curSum,     [ ...candidiate ],     solutions);      
+    this.waysToMake(available, target, curSum,     [ ...candidiate     ], solutions );      
 
     available.push(cur);
 
