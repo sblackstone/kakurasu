@@ -32,25 +32,6 @@ export class GameModel {
 
     }
   }
-    
-
-  solveLinearAlgebra() {
-    const mData = Array(this.size*this.size).fill(0).map(x => Array(this.size*this.size).fill(0));
-
-    // For Each Row...
-    for (let i = 0; i < this.size; i++) {
-      for (let j = 0; j < this.size; j++) {
-        mData[i][i*this.size +j] = j+1;
-        mData[i+this.size][j*this.size + i] = j+1;
-
-      }
-    }
-    
-    const b = [ ...this.meta.targetRowSums, ...this.meta.targetColSums];
-    
-    // Unfinished... At this point, we would like to solve this matrix...
-
-  }
 
   initTargetBoard() {
     this.targetBoard = [];    
