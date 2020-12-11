@@ -1,7 +1,3 @@
-const math = require('mathjs');
-
-
-
 export class GameModel {
   constructor(size) {
     this.size = size;
@@ -30,7 +26,15 @@ export class GameModel {
       antiRowNeeded: this.rowSums("targetBoard", "x"),
       antiColNeeded: this.colSums("targetBoard", "x"), 
 
-    }
+    };
+    
+    window.waysToMake = this.waysToMake.bind(this);
+    
+    
+  }
+  
+  getSquare(x,y) {
+    return this.playerBoard[x][y];
   }
 
   initTargetBoard() {
@@ -52,23 +56,48 @@ export class GameModel {
     const points = []; 
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
-        if (this.playerBoard[i][j] !== '') {
+        if (this.getSquare(i,j) !== '') {
           continue;
         }
+
+        // Remove numbers too large for the column..
         if ((j+1) > this.meta.rowNeeded[i] || (i+1) > this.meta.colNeeded[j]) {
-          this.playerBoard[i][j] = "x";
+          this.markSquare(i,j,'x');
           points.push([i,j]);          
         }
+
       }
     }
     return points;
   }
 
   
+  waysToMake(available, target, curSum = 0, candidiate = [], solutions = []) {
+
+    if (curSum === target) {
+      solutions.push(candidiate.slice(0));
+      return;
+    }
+    
+    if (available.length === 0 || curSum > target || available[0] > target) {
+      return;
+    }
+
+
+    const cur = available.pop();
+
+    this.waysToMake(available, target, curSum+cur, [ ...candidiate, cur], solutions );
+    this.waysToMake(available, target, curSum, [ ...candidiate ],         solutions);      
+
+    available.push(cur);
+
+    return solutions
+  }
+  
   
   unSolveFill(points) {
     for (let i = 0; i < points.length; i++) {
-      this.playerBoard[points[i][0]][points[i][1]] = "";
+      this.markSquare(points[i][0], points[i][1], '');
     }
   }
 
@@ -90,7 +119,7 @@ export class GameModel {
 
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
-        if (this.playerBoard[i][j] === "") {
+        if (this.getSquare(i,j) === "") {
           this.markSquare(i,j, '*');
           const points = this.solveFill();
           this.solve(depth+1);
@@ -152,19 +181,19 @@ export class GameModel {
   shouldReject() {
     
     if (this.meta.rowNeeded.some(x => x < 0)) {
-      return false;
+      return true;
     }
 
     if (this.meta.colNeeded.some(x => x < 0)) {
-      return false;
+      return true;
     }
 
     if (this.meta.antiRowNeeded.some(x => x < 0)) {
-      return false;
+      return true;
     }
 
     if (this.meta.antiColNeeded.some(x => x < 0)) {
-      return false;
+      return true;
     }
 
     return false;
@@ -223,16 +252,19 @@ export class GameModel {
   }
     
   markSquare(x,y,val) {
-    switch(this.playerBoard[x][y]) {
+    
+    
+    // Undo whats currently there!
+    switch(this.getSquare(x,y)) {
     case '*':
-      this.meta.rowSums[x]             -= (y+1);
-      this.meta.colSums[y]             -= (x+1);
+      this.meta.rowSums[x]       -= (y+1);
+      this.meta.colSums[y]       -= (x+1);
       this.meta.rowNeeded[x]     += (y+1);
       this.meta.colNeeded[y]     += (x+1);      
       break;
     case 'x':
-      this.meta.antiRowSums[x] -= (y+1);
-      this.meta.antiColSums[y] -= (x+1);    
+      this.meta.antiRowSums[x]   -= (y+1);
+      this.meta.antiColSums[y]   -= (x+1);    
       this.meta.antiRowNeeded[x] += (y+1);
       this.meta.antiColNeeded[y] += (x+1);      
       break;
@@ -242,22 +274,22 @@ export class GameModel {
 
     switch(val) {
     case '*':
-      this.meta.rowSums[x]     += (y+1);
-      this.meta.colSums[y]     += (x+1);
-      this.meta.rowNeeded[x] -= (y+1);
-      this.meta.colNeeded[y] -= (x+1);      
+      this.meta.rowSums[x]       += (y+1);
+      this.meta.colSums[y]       += (x+1);
+      this.meta.rowNeeded[x]     -= (y+1);
+      this.meta.colNeeded[y]     -= (x+1);      
       break;
     case 'x':
-      this.meta.antiRowSums[x]         += (y+1);
-      this.meta.antiColSums[y]         += (x+1);    
+      this.meta.antiRowSums[x]   += (y+1);
+      this.meta.antiColSums[y]   += (x+1);    
       this.meta.antiRowNeeded[x] -= (y+1);
       this.meta.antiColNeeded[y] -= (x+1);      
       break;
     case '':
       break; 
     }
-
-    this.playerBoard[x][y] = val;
+    
+    this.playerBoard[x][y] = val; // THIS ONE IS OK!
 
   }
   
