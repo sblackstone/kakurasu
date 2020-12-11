@@ -41,7 +41,7 @@ function App() {
     );
   }
   
-  if (viewState.wonGame) {
+  if (viewState.wonGame && false) {
     return (
       <div className="container">
         <PlayerWinScreen viewState={viewState} onNewGame={onNewGame} />
