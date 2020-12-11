@@ -72,6 +72,29 @@ export class GameModel {
     return result;
   }
 
+
+  valuesCommonToAll(arrays) {
+    let data = {};
+    
+    for (let i = 0; i < arrays.length; i++) {
+      for (let j = 0; j < arrays[i].length; j++) {
+        const v = arrays[i][j];
+        data[v] = data[v] || 0;
+        data[v] += 1;
+      }
+    }
+    
+    let result = [];
+    for (const [k,v] of Object.entries(data)) {
+      if (v === arrays.length) {
+        result.push(+k);
+      }
+    }
+    
+    
+    return result;
+    
+  }
   
   solveFill() {
     const points = []; 
