@@ -1,4 +1,4 @@
-const TARGET_BOARD_FILL_RATIO = 0.3;
+const TARGET_BOARD_FILL_RATIO = 0.60;
 
 export class GameModel {
   constructor(size, solverDebugFn) {
@@ -39,7 +39,7 @@ export class GameModel {
   async debugDraw() {
     this.solverDebugFn(this);
     return new Promise((resolve,reject)=> {
-      setTimeout(()=> { resolve(); }, 1000);
+      setTimeout(()=> { resolve(); }, 50);
     });
     
   }
@@ -107,35 +107,44 @@ export class GameModel {
     
   }
   
+  
+  async solveFillTooBigTooSmall(i,j) {
+    let points = [];
+    if ((j+1) > this.meta.rowNeeded[i] || (i+1) > this.meta.colNeeded[j]) {
+      // Remove numbers too large for the row/col..
+      console.log(`(${i},${j}) cant been green because it would overflow the row/col`);
+      this.markSquare(i,j,'x');
+      points.push([i,j]);          
+      await this.debugDraw();
+    } else if ((j+1) > this.meta.antiRowNeeded[i] || (i+1) > this.meta.antiColNeeded[j]) {
+      // Remove numbers too large for the anti row/col..
+      console.log(`(${i},${j}) cant be red because it would overflow the row/col`);
+      this.markSquare(i,j,'*');
+      points.push([i,j]);          
+      await this.debugDraw();
+    }
+    
+    return points;
+    
+  }
+    
   async solveFill() {
-    const points = []; 
+    let points = []; 
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
         if (this.getSquare(i,j) !== '') {
           continue;
         }
-
-        if ((j+1) > this.meta.rowNeeded[i] || (i+1) > this.meta.colNeeded[j]) {
-        // Remove numbers too large for the row/col..
-          console.log(`(${i},${j}) cant been green because it would overflow the row/col`);
-          this.markSquare(i,j,'x');
-          points.push([i,j]);          
-          await this.debugDraw();
-        } else if ((j+1) > this.meta.antiRowNeeded[i] || (i+1) > this.meta.antiColNeeded[j]) {
-          // Remove numbers too large for the anti row/col..
-          console.log(`(${i},${j}) cant be red because it would overflow the row/col`);
-          this.markSquare(i,j,'*');
-          points.push([i,j]);          
-          await this.debugDraw();
-        }
+                
+        points = points.concat(await this.solveFillTooBigTooSmall(i,j));
 
 
       }
     }
     
+    return points.length === 0 ? points : points.concat(await this.solveFill());
     
-    
-    return;
+    return points;
     
     for (let i = 0; i < this.size; i++) {
       if (this.meta.rowNeeded[i] > 0) {
@@ -201,7 +210,7 @@ export class GameModel {
   }
 
   // todo
-  solve(maxDepth=Infinity, timeout = Infinity, depth = 0, startTs = (+new Date())) {  
+  async solve(maxDepth=Infinity, timeout = Infinity, depth = 0, startTs = (+new Date())) {  
     let initialPoints = null;
     
     if (depth > maxDepth) {
@@ -214,14 +223,21 @@ export class GameModel {
     }
     
     if (depth === 0) {
-      initialPoints = this.solveFill();
+      initialPoints = await this.solveFill();
+      if (this.checkWinSolver()) {
+        const result = this.export();
+        this.unSolveFill(initialPoints);
+        return result;
+      }
     }
     
     if (this.shouldReject()) {
+      console.log("REJECT");
       return false;
     }
 
     if (this.checkWinSolver()) {
+      alert(1);
       return this.export();
     }
 
@@ -229,8 +245,8 @@ export class GameModel {
       for (let j = 0; j < this.size; j++) {
         if (this.getSquare(i,j) === "") {
           this.markSquare(i,j, '*');
-          const points = this.solveFill();
-          const answer = this.solve(maxDepth, timeout, depth+1, startTs);
+          const points = await this.solveFill();
+          const answer = await this.solve(maxDepth, timeout, depth+1, startTs);
           this.unSolveFill(points);
           this.markSquare(i,j, '');
           if (answer) {
