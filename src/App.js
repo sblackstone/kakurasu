@@ -13,6 +13,7 @@ function App() {
   const [ gm, setGm ] = useState(null);
   const [ viewState, setViewState ] = useState(null);
 
+  window.App = gm;
 
   const onGotoNewGameClick = function() {
     setGm(null);
@@ -24,8 +25,12 @@ function App() {
     setViewState(gm.export());
   } 
  
+  const solverDebugFn = (passedGm) => {
+    setViewState(passedGm.export());    
+  };
+ 
   const onNewGame = function(newSize) {
-    const newGm = new GameModel(newSize);
+    const newGm = new GameModel(newSize, solverDebugFn);
     setGm(newGm);
     setViewState(newGm.export());
     clearInterval(timeout);

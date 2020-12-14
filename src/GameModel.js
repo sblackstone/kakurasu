@@ -1,8 +1,9 @@
 const TARGET_BOARD_FILL_RATIO = 0.3;
 
 export class GameModel {
-  constructor(size) {
+  constructor(size, solverDebugFn) {
     this.size = size;
+    this.solverDebugFn = solverDebugFn;
     this.initPlayerBoard();    
     this.initTargetBoard();
     this.meta = {
@@ -32,6 +33,14 @@ export class GameModel {
     
     window.waysToMake = this.waysToMake.bind(this);
     
+    
+  }
+  
+  async debugDraw() {
+    this.solverDebugFn(this);
+    return new Promise((resolve,reject)=> {
+      setTimeout(()=> { resolve(); }, 1000);
+    });
     
   }
   
@@ -98,7 +107,7 @@ export class GameModel {
     
   }
   
-  solveFill() {
+  async solveFill() {
     const points = []; 
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
@@ -106,28 +115,45 @@ export class GameModel {
           continue;
         }
 
-        // Remove numbers too large for the column..
         if ((j+1) > this.meta.rowNeeded[i] || (i+1) > this.meta.colNeeded[j]) {
+        // Remove numbers too large for the row/col..
+          console.log(`(${i},${j}) cant been green because it would overflow the row/col`);
           this.markSquare(i,j,'x');
           points.push([i,j]);          
+          await this.debugDraw();
+        } else if ((j+1) > this.meta.antiRowNeeded[i] || (i+1) > this.meta.antiColNeeded[j]) {
+          // Remove numbers too large for the anti row/col..
+          console.log(`(${i},${j}) cant be red because it would overflow the row/col`);
+          this.markSquare(i,j,'*');
+          points.push([i,j]);          
+          await this.debugDraw();
         }
+
 
       }
     }
     
-    return points; /////////////////////////////////////////////////////////////////////////////
+    
+    
+    return;
     
     for (let i = 0; i < this.size; i++) {
       if (this.meta.rowNeeded[i] > 0) {
         const waysToCompleteRow = this.waysToMake(this.availableInRow(i), this.meta.rowNeeded[i]);
         if (waysToCompleteRow.length === 1) {
           for (const p of waysToCompleteRow[0]) {
-            points.push([i, p-1]);
             this.markSquare(i, p-1, '*');
+            points.push([i, p-1]);
+            await this.debugDraw();
+
           }
         }
       }
     }
+
+
+    return points; /////////////////////////////////////////////////////////////////////////////
+
 
 
     for (let j = 0; j < this.size; j++) {
