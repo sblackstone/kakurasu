@@ -144,8 +144,6 @@ export class GameModel {
     
     return points.length === 0 ? points : points.concat(await this.solveFill());
     
-    return points;
-    
     for (let i = 0; i < this.size; i++) {
       if (this.meta.rowNeeded[i] > 0) {
         const waysToCompleteRow = this.waysToMake(this.availableInRow(i), this.meta.rowNeeded[i]);
@@ -160,11 +158,6 @@ export class GameModel {
       }
     }
 
-
-    return points; /////////////////////////////////////////////////////////////////////////////
-
-
-
     for (let j = 0; j < this.size; j++) {
       if (this.meta.colNeeded[j] > 0) {
         const waysToCompleteCol = this.waysToMake(this.availableInCol(j), this.meta.colNeeded[j]);
@@ -177,7 +170,7 @@ export class GameModel {
       }
     }
 
-    return points.length === 0 ? points : [ ...points, ...this.solveFill()];
+    
   }
 
   
@@ -204,13 +197,20 @@ export class GameModel {
   
   
   unSolveFill(points) {
-    for (let i = 0; i < points.length; i++) {
-      this.markSquare(points[i][0], points[i][1], '');
-    }
+    return this.markAllPoints(points, '');
   }
+  
+  markAllPoints(points, newValue) {
+    for (let i = 0; i < points.length; i++) {
+      this.markSquare(points[i][0], points[i][1], newValue);
+    }
+    
+  }
+  
 
   // todo
   async solve(maxDepth=Infinity, timeout = Infinity, depth = 0, startTs = (+new Date())) {  
+    let answer = null;
     let initialPoints = null;
     
     if (depth > maxDepth) {
@@ -224,6 +224,7 @@ export class GameModel {
     
     if (depth === 0) {
       initialPoints = await this.solveFill();
+      // Solvefill can sometimes solve it..
       if (this.checkWinSolver()) {
         const result = this.export();
         this.unSolveFill(initialPoints);
@@ -237,30 +238,34 @@ export class GameModel {
     }
 
     if (this.checkWinSolver()) {
-      alert(1);
+      throw "BLARG";
       return this.export();
     }
 
+
     for (let i = 0; i < this.size; i++) {
-      for (let j = 0; j < this.size; j++) {
-        if (this.getSquare(i,j) === "") {
-          this.markSquare(i,j, '*');
+      if (this.meta.rowNeeded[i] > 0) {
+        const ways = this.waysToMake(this.availableInRow(i), this.meta.rowNeeded[i]);
+        for (let j = 0; j < ways.length; j++) {
+          const curPoints = ways[j].map(x => [i, x-1]);
+          this.markAllPoints(curPoints, '*');
           const points = await this.solveFill();
-          const answer = await this.solve(maxDepth, timeout, depth+1, startTs);
+          answer = await this.solve(maxDepth, timeout, depth+1, startTs);
           this.unSolveFill(points);
-          this.markSquare(i,j, '');
+          this.unSolveFill(curPoints);
           if (answer) {
-            return answer;
+            break;
           }
-        }      
-      }      
-    }
-    
+        }
+      }
+    };
+
+
     if (depth === 0) {
       this.unSolveFill(initialPoints);
       console.log("Solver Complete");
     }
-    return false;
+    return answer;
     
   }
 
