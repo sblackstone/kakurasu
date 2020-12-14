@@ -39,7 +39,7 @@ export class GameModel {
   async debugDraw() {
     this.solverDebugFn(this);
     return new Promise((resolve,reject)=> {
-      setTimeout(()=> { resolve(); }, 50);
+      setTimeout(()=> { resolve(); }, 5);
     });
     
   }
