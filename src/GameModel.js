@@ -4,7 +4,7 @@ export class GameModel {
   constructor(size, solverDebugFn) {
     this.size = size;
     this.solverDebugFn = solverDebugFn;
-    this.initPlayerBoard();    
+    this.initPlayerBoard();
     this.initTargetBoard();
     this.meta = {
       size,
@@ -13,8 +13,8 @@ export class GameModel {
       targetColSums: this.colSums("targetBoard", "*"),
 
       // What the current row/colums add up to.
-      rowSums:     Array(this.size).fill(0),
-      colSums:     Array(this.size).fill(0),
+      rowSums: Array(this.size).fill(0),
+      colSums: Array(this.size).fill(0),
 
       // How much they need to complete green.
       rowNeeded: this.rowSums("targetBoard", "*"),
@@ -23,51 +23,53 @@ export class GameModel {
 
       ///////
       antiTargetRowSums: this.rowSums("targetBoard", "x"),
-      antiTargetColSums: this.colSums("targetBoard", "x"), 
+      antiTargetColSums: this.colSums("targetBoard", "x"),
       antiRowSums: Array(this.size).fill(0),
-      antiColSums: Array(this.size).fill(0),      
+      antiColSums: Array(this.size).fill(0),
       antiRowNeeded: this.rowSums("targetBoard", "x"),
-      antiColNeeded: this.colSums("targetBoard", "x"), 
+      antiColNeeded: this.colSums("targetBoard", "x"),
 
     };
-    
+
     window.waysToMake = this.waysToMake.bind(this);
-    
-    
+
+
   }
-  
+
   async debugDraw() {
     this.solverDebugFn(this);
-    return new Promise((resolve,reject)=> {
-      setTimeout(()=> { resolve(); }, 5);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve();
+      }, 5);
     });
-    
+
   }
-  
-  getSquare(x,y) {
+
+  getSquare(x, y) {
     return this.playerBoard[x][y];
   }
 
   initTargetBoard() {
-    this.targetBoard = [];    
+    this.targetBoard = [];
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
         if (Math.random() > (1 - TARGET_BOARD_FILL_RATIO)) {
-          row.push('*');          
+          row.push('*');
         } else {
-          row.push('x');                    
+          row.push('x');
         }
       }
       this.targetBoard.push(row);
     }
   }
-  
+
   availableInRow(i) {
     let result = [];
     for (let j = 0; j < this.size; j++) {
-      if (this.getSquare(i,j) === '') {
-        result.push(j+1);
+      if (this.getSquare(i, j) === '') {
+        result.push(j + 1);
       }
     }
     return result;
@@ -76,8 +78,8 @@ export class GameModel {
   availableInCol(j) {
     let result = [];
     for (let i = 0; i < this.size; i++) {
-      if (this.getSquare(i,j) === '') {
-        result.push(i+1);
+      if (this.getSquare(i, j) === '') {
+        result.push(i + 1);
       }
     }
     return result;
@@ -86,7 +88,7 @@ export class GameModel {
 
   valuesCommonToAll(arrays) {
     let data = {};
-    
+
     for (let i = 0; i < arrays.length; i++) {
       for (let j = 0; j < arrays[i].length; j++) {
         const v = arrays[i][j];
@@ -94,63 +96,63 @@ export class GameModel {
         data[v] += 1;
       }
     }
-    
+
     let result = [];
-    for (const [k,v] of Object.entries(data)) {
+    for (const [k, v] of Object.entries(data)) {
       if (v === arrays.length) {
         result.push(+k);
       }
     }
-    
-    
+
+
     return result;
-    
+
   }
-  
-  
-  async solveFillTooBigTooSmall(i,j) {
+
+
+  async solveFillTooBigTooSmall(i, j) {
     let points = [];
-    if ((j+1) > this.meta.rowNeeded[i] || (i+1) > this.meta.colNeeded[j]) {
+    if ((j + 1) > this.meta.rowNeeded[i] || (i + 1) > this.meta.colNeeded[j]) {
       // Remove numbers too large for the row/col..
       console.log(`(${i},${j}) cant been green because it would overflow the row/col`);
-      this.markSquare(i,j,'x');
-      points.push([i,j]);          
+      this.markSquare(i, j, 'x');
+      points.push([i, j]);
       await this.debugDraw();
-    } else if ((j+1) > this.meta.antiRowNeeded[i] || (i+1) > this.meta.antiColNeeded[j]) {
+    } else if ((j + 1) > this.meta.antiRowNeeded[i] || (i + 1) > this.meta.antiColNeeded[j]) {
       // Remove numbers too large for the anti row/col..
       console.log(`(${i},${j}) cant be red because it would overflow the row/col`);
-      this.markSquare(i,j,'*');
-      points.push([i,j]);          
+      this.markSquare(i, j, '*');
+      points.push([i, j]);
       await this.debugDraw();
     }
-    
+
     return points;
-    
+
   }
-    
+
   async solveFill() {
-    let points = []; 
+    let points = [];
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
-        if (this.getSquare(i,j) !== '') {
+        if (this.getSquare(i, j) !== '') {
           continue;
         }
-                
-        points = points.concat(await this.solveFillTooBigTooSmall(i,j));
+
+        points = points.concat(await this.solveFillTooBigTooSmall(i, j));
 
 
       }
     }
-    
+
     return points.length === 0 ? points : points.concat(await this.solveFill());
-    
+
     for (let i = 0; i < this.size; i++) {
       if (this.meta.rowNeeded[i] > 0) {
         const waysToCompleteRow = this.waysToMake(this.availableInRow(i), this.meta.rowNeeded[i]);
         if (waysToCompleteRow.length === 1) {
           for (const p of waysToCompleteRow[0]) {
-            this.markSquare(i, p-1, '*');
-            points.push([i, p-1]);
+            this.markSquare(i, p - 1, '*');
+            points.push([i, p - 1]);
             await this.debugDraw();
 
           }
@@ -163,56 +165,56 @@ export class GameModel {
         const waysToCompleteCol = this.waysToMake(this.availableInCol(j), this.meta.colNeeded[j]);
         if (waysToCompleteCol.length === 1) {
           for (const p of waysToCompleteCol[0]) {
-            points.push([p-1,j]);
-            this.markSquare(p-1, j, '*');
+            points.push([p - 1, j]);
+            this.markSquare(p - 1, j, '*');
           }
         }
       }
     }
 
-    
+
   }
 
-  
+
   waysToMake(available, target, curSum = 0, candidiate = [], solutions = []) {
 
     if (curSum === target) {
-      solutions.push([ ...candidiate ]);
+      solutions.push([...candidiate]);
       return;
     }
-    
+
     if (available.length === 0 || curSum > target) {
       return candidiate.length === 0 ? [] : null;
     }
 
     const cur = available.pop();
 
-    this.waysToMake(available, target, curSum+cur, [ ...candidiate, cur], solutions );
-    this.waysToMake(available, target, curSum,     [ ...candidiate     ], solutions );      
+    this.waysToMake(available, target, curSum + cur, [...candidiate, cur], solutions);
+    this.waysToMake(available, target, curSum, [...candidiate], solutions);
 
     available.push(cur);
 
     return solutions
   }
-  
-  
+
+
   unSolveFill(points) {
     return this.markAllPoints(points, '');
   }
-  
+
   markAllPoints(points, newValue) {
     for (let i = 0; i < points.length; i++) {
       this.markSquare(points[i][0], points[i][1], newValue);
     }
-    
+
   }
-  
+
 
   // todo
-  async solve(maxDepth=Infinity, timeout = Infinity, depth = 0, startTs = (+new Date())) {  
+  async solve(maxDepth = Infinity, timeout = Infinity, depth = 0, startTs = (+new Date())) {
     let answer = null;
     let initialPoints = null;
-    
+
     if (depth > maxDepth) {
       console.log(`MaxDepth Reached`);
       return false;
@@ -221,7 +223,7 @@ export class GameModel {
       console.log(`Timeout Reached`);
       return false;
     }
-    
+
     if (depth === 0) {
       initialPoints = await this.solveFill();
       // Solvefill can sometimes solve it..
@@ -231,7 +233,7 @@ export class GameModel {
         return result;
       }
     }
-    
+
     if (this.shouldReject()) {
       console.log("REJECT");
       return false;
@@ -247,10 +249,10 @@ export class GameModel {
       if (this.meta.rowNeeded[i] > 0) {
         const ways = this.waysToMake(this.availableInRow(i), this.meta.rowNeeded[i]);
         for (let j = 0; j < ways.length; j++) {
-          const curPoints = ways[j].map(x => [i, x-1]);
+          const curPoints = ways[j].map(x => [i, x - 1]);
           this.markAllPoints(curPoints, '*');
           const points = await this.solveFill();
-          answer = await this.solve(maxDepth, timeout, depth+1, startTs);
+          answer = await this.solve(maxDepth, timeout, depth + 1, startTs);
           this.unSolveFill(points);
           this.unSolveFill(curPoints);
           if (answer) {
@@ -266,12 +268,12 @@ export class GameModel {
       console.log("Solver Complete");
     }
     return answer;
-    
+
   }
 
 
   initPlayerBoard() {
-    this.playerBoard = [];    
+    this.playerBoard = [];
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
@@ -280,40 +282,40 @@ export class GameModel {
       this.playerBoard.push(row);
     }
   }
-  
+
   rowSums(boardName, targetChar) {
     let result = [];
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
       for (let j = 0; j < this.size; j++) {
         if (this[boardName][i][j] === targetChar) {
-          sum += (j+1);
+          sum += (j + 1);
         }
       }
       result.push(sum);
     };
     return result;
   }
-  
+
   colSums(boardName, targetChar) {
     let result = [];
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
       for (let j = 0; j < this.size; j++) {
         if (this[boardName][j][i] === targetChar) {
-          sum += (j+1);
+          sum += (j + 1);
         }
       }
       result.push(sum);
     };
     return result;
-    
+
   }
-  
-  
-  
+
+
+
   shouldReject() {
-    
+
     if (this.meta.rowNeeded.some(x => x < 0)) {
       return true;
     }
@@ -332,9 +334,9 @@ export class GameModel {
 
     return false;
   }
-  
+
   checkWin() {
-    
+
     if (this.meta.rowNeeded.some(x => x !== 0)) {
       return false;
     }
@@ -350,11 +352,11 @@ export class GameModel {
     if (this.meta.antiColNeeded.some(x => x !== 0)) {
       return false;
     }
-    
+
     return true;
   }
-  
-  
+
+
   checkWinSolver() {
     if (this.meta.rowNeeded.some(x => x !== 0)) {
       return false;
@@ -365,17 +367,17 @@ export class GameModel {
     }
     return true;
   }
-  
-  
-  export() {
+
+
+  export () {
     return {
       ...this.meta,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
       wonGame: this.checkWin()
-    }    
+    }
   }
-  
-  debug(boardName="playerBoard") {
+
+  debug(boardName = "playerBoard") {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
@@ -384,66 +386,62 @@ export class GameModel {
       console.log(row);
     }
   }
-    
-  markSquare(x,y,val) {
-    
-    
+
+  markSquare(x, y, val) {
+
+
     // Undo whats currently there!
-    switch(this.getSquare(x,y)) {
+    switch (this.getSquare(x, y)) {
     case '*':
-      this.meta.rowSums[x]       -= (y+1);
-      this.meta.colSums[y]       -= (x+1);
-      this.meta.rowNeeded[x]     += (y+1);
-      this.meta.colNeeded[y]     += (x+1);      
+      this.meta.rowSums[x] -= (y + 1);
+      this.meta.colSums[y] -= (x + 1);
+      this.meta.rowNeeded[x] += (y + 1);
+      this.meta.colNeeded[y] += (x + 1);
       break;
     case 'x':
-      this.meta.antiRowSums[x]   -= (y+1);
-      this.meta.antiColSums[y]   -= (x+1);    
-      this.meta.antiRowNeeded[x] += (y+1);
-      this.meta.antiColNeeded[y] += (x+1);      
+      this.meta.antiRowSums[x] -= (y + 1);
+      this.meta.antiColSums[y] -= (x + 1);
+      this.meta.antiRowNeeded[x] += (y + 1);
+      this.meta.antiColNeeded[y] += (x + 1);
       break;
     default:
-      break; 
+      break;
     }
 
     // Put in the new piece!
-    switch(val) {
+    switch (val) {
     case '*':
-      this.meta.rowSums[x]       += (y+1);
-      this.meta.colSums[y]       += (x+1);
-      this.meta.rowNeeded[x]     -= (y+1);
-      this.meta.colNeeded[y]     -= (x+1);      
+      this.meta.rowSums[x] += (y + 1);
+      this.meta.colSums[y] += (x + 1);
+      this.meta.rowNeeded[x] -= (y + 1);
+      this.meta.colNeeded[y] -= (x + 1);
       break;
     case 'x':
-      this.meta.antiRowSums[x]   += (y+1);
-      this.meta.antiColSums[y]   += (x+1);    
-      this.meta.antiRowNeeded[x] -= (y+1);
-      this.meta.antiColNeeded[y] -= (x+1);      
+      this.meta.antiRowSums[x] += (y + 1);
+      this.meta.antiColSums[y] += (x + 1);
+      this.meta.antiRowNeeded[x] -= (y + 1);
+      this.meta.antiColNeeded[y] -= (x + 1);
       break;
     default:
-      break; 
+      break;
     }
-    
+
     this.playerBoard[x][y] = val; // THIS ONE IS OK!
 
   }
-  
-  toggleSquare(x,y) {
-    switch(this.playerBoard[x][y]) {
+
+  toggleSquare(x, y) {
+    switch (this.playerBoard[x][y]) {
     case '*':
-      this.markSquare(x,y, "x");    
+      this.markSquare(x, y, "x");
       break;
     case 'x':
-      this.markSquare(x,y, "");    
+      this.markSquare(x, y, "");
       break;
     default:
-      this.markSquare(x,y, '*');
+      this.markSquare(x, y, '*');
       break;
-    }      
+    }
   }
 
 }
-
-
-
-
