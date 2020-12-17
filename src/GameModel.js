@@ -6,8 +6,12 @@ export class GameModel {
     this.solverDebugFn = solverDebugFn;
     this.initPlayerBoard();
     this.initTargetBoard();
+    window.waysToMake = this.waysToMake.bind(this);
+  }
+
+  initMeta() {
     this.meta = {
-      size,
+      size: this.size,
       sigma: ((this.size) * (this.size + 1)) / 2,
       targetRowSums: this.rowSums("targetBoard", "*"),
       targetColSums: this.colSums("targetBoard", "*"),
@@ -30,10 +34,6 @@ export class GameModel {
       antiColNeeded: this.colSums("targetBoard", "x"),
 
     };
-
-    window.waysToMake = this.waysToMake.bind(this);
-
-
   }
 
   async debugDraw() {
@@ -281,6 +281,7 @@ export class GameModel {
       }
       this.playerBoard.push(row);
     }
+    this.initMeta();
   }
 
   rowSums(boardName, targetChar) {
