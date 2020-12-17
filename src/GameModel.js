@@ -112,16 +112,16 @@ export class GameModel {
     let points = [];
     if ((j+1) > this.meta.rowNeeded[i] || (i+1) > this.meta.colNeeded[j]) {
       // Remove numbers too large for the row/col..
-      console.log(`(${i},${j}) cant been green because it would overflow the row/col`);
+      //console.log(`(${i},${j}) cant been green because it would overflow the row/col`);
       this.markSquare(i,j,'x');
       points.push([i,j]);
-      await this.debugDraw();
+      //await this.debugDraw();
     } else if ((j+1) > this.meta.antiRowNeeded[i] || (i+1) > this.meta.antiColNeeded[j]) {
       // Remove numbers too large for the anti row/col..
-      console.log(`(${i},${j}) cant be red because it would overflow the row/col`);
+      //console.log(`(${i},${j}) cant be red because it would overflow the row/col`);
       this.markSquare(i,j,'*');
       points.push([i,j]);
-      await this.debugDraw();
+      //await this.debugDraw();
     }
 
     return points;
@@ -151,8 +151,7 @@ export class GameModel {
           for (const p of waysToCompleteRow[0]) {
             this.markSquare(i, p-1, '*');
             points.push([i, p-1]);
-            await this.debugDraw();
-
+            //await this.debugDraw();
           }
         }
       }
@@ -163,8 +162,9 @@ export class GameModel {
         const waysToCompleteCol = this.waysToMake(this.availableInCol(j), this.meta.colNeeded[j]);
         if (waysToCompleteCol.length === 1) {
           for (const p of waysToCompleteCol[0]) {
-            points.push([p-1,j]);
             this.markSquare(p-1, j, '*');
+            points.push([p-1,j]);
+            //await this.debugDraw();
           }
         }
       }
@@ -210,6 +210,7 @@ export class GameModel {
 
   // todo
   async solve(maxDepth=Infinity, timeout = Infinity, depth = 0, startTs = (+new Date())) {
+    await this.debugDraw();
     let answer = null;
     let initialPoints = null;
 
@@ -233,7 +234,7 @@ export class GameModel {
     }
 
     if (this.shouldReject()) {
-      console.log("REJECT");
+      //console.log("REJECT");
       return false;
     }
 
