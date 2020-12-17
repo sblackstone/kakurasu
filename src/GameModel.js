@@ -4,8 +4,8 @@ export class GameModel {
   constructor(size, solverDebugFn) {
     this.size = size;
     this.solverDebugFn = solverDebugFn;
-    this.initPlayerBoard();
     this.initTargetBoard();
+    this.initPlayerBoard();
     window.waysToMake = this.waysToMake.bind(this);
   }
 
