@@ -1,4 +1,7 @@
+import { constants } from './constants';
+
 const TARGET_BOARD_FILL_RATIO = 0.60;
+
 
 export class GameModel {
   constructor(size, solverDebugFn) {
@@ -9,25 +12,25 @@ export class GameModel {
     this.state = {
       size,
       sigma: ((this.size) * (this.size + 1)) / 2,
-      targetRowSums: this.rowSums("targetBoard", "*"),
-      targetColSums: this.colSums("targetBoard", "*"),
+      targetRowSums: this.rowSums("targetBoard", constants.SQUARE_GREEN),
+      targetColSums: this.colSums("targetBoard", constants.SQUARE_GREEN),
 
       // What the current row/colums add up to.
       rowSums:     Array(this.size).fill(0),
       colSums:     Array(this.size).fill(0),
 
       // How much they need to complete green.
-      rowNeeded: this.rowSums("targetBoard", "*"),
-      colNeeded: this.colSums("targetBoard", "*"),
+      rowNeeded: this.rowSums("targetBoard", constants.SQUARE_GREEN),
+      colNeeded: this.colSums("targetBoard", constants.SQUARE_GREEN),
 
 
       ///////
-      antiTargetRowSums: this.rowSums("targetBoard", "x"),
-      antiTargetColSums: this.colSums("targetBoard", "x"),
+      antiTargetRowSums: this.rowSums("targetBoard", constants.SQUARE_RED),
+      antiTargetColSums: this.colSums("targetBoard", constants.SQUARE_RED),
       antiRowSums: Array(this.size).fill(0),
       antiColSums: Array(this.size).fill(0),
-      antiRowNeeded: this.rowSums("targetBoard", "x"),
-      antiColNeeded: this.colSums("targetBoard", "x"),
+      antiRowNeeded: this.rowSums("targetBoard", constants.SQUARE_RED),
+      antiColNeeded: this.colSums("targetBoard", constants.SQUARE_RED),
 
     };
 
@@ -51,9 +54,9 @@ export class GameModel {
       let row = [];
       for (let j = 0; j < this.size; j++) {
         if (Math.random() > (1 - TARGET_BOARD_FILL_RATIO)) {
-          row.push('*');
+          row.push(constants.SQUARE_GREEN);
         } else {
-          row.push('x');
+          row.push(constants.SQUARE_RED);
         }
       }
       this.targetBoard.push(row);
@@ -71,7 +74,7 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        row.push('');
+        row.push(constants.SQUARE_EMPTY);
       }
       this.playerBoard.push(row);
     }
@@ -133,13 +136,13 @@ export class GameModel {
 
     // Undo whats currently there!
     switch(this.getSquare(x,y)) {
-    case '*':
+    case constants.SQUARE_GREEN:
       this.state.rowSums[x]       -= (y+1);
       this.state.colSums[y]       -= (x+1);
       this.state.rowNeeded[x]     += (y+1);
       this.state.colNeeded[y]     += (x+1);
       break;
-    case 'x':
+    case constants.SQUARE_RED:
       this.state.antiRowSums[x]   -= (y+1);
       this.state.antiColSums[y]   -= (x+1);
       this.state.antiRowNeeded[x] += (y+1);
@@ -151,13 +154,13 @@ export class GameModel {
 
     // Put in the new piece!
     switch(val) {
-    case '*':
+    case constants.SQUARE_GREEN:
       this.state.rowSums[x]       += (y+1);
       this.state.colSums[y]       += (x+1);
       this.state.rowNeeded[x]     -= (y+1);
       this.state.colNeeded[y]     -= (x+1);
       break;
-    case 'x':
+    case constants.SQUARE_RED:
       this.state.antiRowSums[x]   += (y+1);
       this.state.antiColSums[y]   += (x+1);
       this.state.antiRowNeeded[x] -= (y+1);
@@ -173,14 +176,14 @@ export class GameModel {
 
   toggleSquare(x,y) {
     switch(this.playerBoard[x][y]) {
-    case '*':
-      this.markSquare(x,y, "x");
+    case constants.SQUARE_GREEN:
+      this.markSquare(x,y, constants.SQUARE_RED);
       break;
-    case 'x':
-      this.markSquare(x,y, "");
+    case constants.SQUARE_RED:
+      this.markSquare(x,y, constants.SQUARE_EMPTY);
       break;
     default:
-      this.markSquare(x,y, '*');
+      this.markSquare(x,y, constants.SQUARE_GREEN);
       break;
     }
   }

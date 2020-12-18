@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { constants } from './constants';
+
 
 function Square(props) {
   const content = props.viewState.playerBoard[props.row][props.col];
   let className = "";
-  if (content === "*") {
+  if (content === constants.SQUARE_GREEN) {
     className = "piece piece-on";
-  } else if (content === "x") {
+  } else if (content === constants.SQUARE_RED) {
     className = "piece piece-off";
   } else {
     className = "piece piece-blank"
