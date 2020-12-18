@@ -6,7 +6,7 @@ export class GameModel {
     this.solverDebugFn = solverDebugFn;
     this.initPlayerBoard();
     this.initTargetBoard();
-    this.meta = {
+    this.state = {
       size,
       sigma: ((this.size) * (this.size + 1)) / 2,
       targetRowSums: this.rowSums("targetBoard", "*"),
@@ -108,7 +108,7 @@ export class GameModel {
 
   export() {
     return {
-      ...this.meta,
+      ...this.state,
       playerBoard: this.playerBoard.map(x => x.slice(0)),
       wonGame: this.checkWin()
     }
@@ -134,16 +134,16 @@ export class GameModel {
     // Undo whats currently there!
     switch(this.getSquare(x,y)) {
     case '*':
-      this.meta.rowSums[x]       -= (y+1);
-      this.meta.colSums[y]       -= (x+1);
-      this.meta.rowNeeded[x]     += (y+1);
-      this.meta.colNeeded[y]     += (x+1);
+      this.state.rowSums[x]       -= (y+1);
+      this.state.colSums[y]       -= (x+1);
+      this.state.rowNeeded[x]     += (y+1);
+      this.state.colNeeded[y]     += (x+1);
       break;
     case 'x':
-      this.meta.antiRowSums[x]   -= (y+1);
-      this.meta.antiColSums[y]   -= (x+1);
-      this.meta.antiRowNeeded[x] += (y+1);
-      this.meta.antiColNeeded[y] += (x+1);
+      this.state.antiRowSums[x]   -= (y+1);
+      this.state.antiColSums[y]   -= (x+1);
+      this.state.antiRowNeeded[x] += (y+1);
+      this.state.antiColNeeded[y] += (x+1);
       break;
     default:
       break;
@@ -152,16 +152,16 @@ export class GameModel {
     // Put in the new piece!
     switch(val) {
     case '*':
-      this.meta.rowSums[x]       += (y+1);
-      this.meta.colSums[y]       += (x+1);
-      this.meta.rowNeeded[x]     -= (y+1);
-      this.meta.colNeeded[y]     -= (x+1);
+      this.state.rowSums[x]       += (y+1);
+      this.state.colSums[y]       += (x+1);
+      this.state.rowNeeded[x]     -= (y+1);
+      this.state.colNeeded[y]     -= (x+1);
       break;
     case 'x':
-      this.meta.antiRowSums[x]   += (y+1);
-      this.meta.antiColSums[y]   += (x+1);
-      this.meta.antiRowNeeded[x] -= (y+1);
-      this.meta.antiColNeeded[y] -= (x+1);
+      this.state.antiRowSums[x]   += (y+1);
+      this.state.antiColSums[y]   += (x+1);
+      this.state.antiRowNeeded[x] -= (y+1);
+      this.state.antiColNeeded[y] -= (x+1);
       break;
     default:
       break;
