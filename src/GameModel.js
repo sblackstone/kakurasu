@@ -16,8 +16,8 @@ export class GameModel {
       targetColSums: this.colSums("targetBoard", constants.SQUARE_GREEN),
 
       // What the current row/colums add up to.
-      rowSums:     Array(this.size).fill(0),
-      colSums:     Array(this.size).fill(0),
+      rowSums:      this.rowSums("playerBoard", constants.SQUARE_GREEN),
+      colSums:      this.colSums("playerBoard", constants.SQUARE_GREEN),
 
       // How much they need to complete green.
       rowNeeded: this.rowSums("targetBoard", constants.SQUARE_GREEN),
@@ -27,8 +27,12 @@ export class GameModel {
       ///////
       antiTargetRowSums: this.rowSums("targetBoard", constants.SQUARE_RED),
       antiTargetColSums: this.colSums("targetBoard", constants.SQUARE_RED),
-      antiRowSums: Array(this.size).fill(0),
-      antiColSums: Array(this.size).fill(0),
+
+
+
+
+      antiRowSums: this.rowSums("playerBoard", constants.SQUARE_RED),
+      antiColSums: this.rowSums("playerBoard", constants.SQUARE_RED),
       antiRowNeeded: this.rowSums("targetBoard", constants.SQUARE_RED),
       antiColNeeded: this.colSums("targetBoard", constants.SQUARE_RED),
 
