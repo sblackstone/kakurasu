@@ -47,15 +47,12 @@ export class GameModel {
   }
 
   initTargetBoard() {
-    this.state.targetBoard = [];
+    this.state.targetBoard = this.createBlankBoard();
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        if (Math.random() > (1 - TARGET_BOARD_FILL_RATIO)) {
-          row.push({ N: constants.SQUARE_GREEN });
-        } else {
-          row.push({ N: constants.SQUARE_RED });
-        }
+        const fillVal = (Math.random() > (1 - TARGET_BOARD_FILL_RATIO)) ? constants.SQUARE_GREEN : constants.SQUARE_RED;
+        this.state.targetBoard[i][j].N = fillVal;
       }
       this.state.targetBoard.push(row);
     }
@@ -67,33 +64,40 @@ export class GameModel {
     }
   }
 
+  initPlayerBoard() {
+    this.state.playerBoard = this.createBlankBoard();
+  }
+
   // We make the board an array of nxn objects
   // We then create cols as if they were additional rows
-  initPlayerBoard() {
-    this.state.playerBoard = [];
+  createBlankBoard() {
+    const result = [];
     for (let i = 0; i < this.size; i++) {
       const row = [];
       for (let j = 0; j < this.size; j++) {
         row.push({N: constants.SQUARE_EMPTY});
       }
-      this.state.playerBoard.push(row);
+      result.push(row);
     }
 
     for (let i = 0; i < this.size; i++) {
       const row = [];
       for (let j = 0; j < this.size; j++) {
-        row.push(this.state.playerBoard[j][i]);
+        row.push(result[j][i]);
       }
-      this.state.playerBoard.push(row);
+      result.push(row);
     }
+
+    return result;
+
   }
 
   rowSums(boardName, targetChar) {
     let result = [];
-    for (let i = 0; i < this.size; i++) {
+    for (let i = 0; i < this.size*2; i++) {
       let sum = 0;
       for (let j = 0; j < this.size; j++) {
-        if (this.state[boardName][i][j] === targetChar) {
+        if (this.state[boardName][i][j].N === targetChar) {
           sum += (j+1);
         }
       }
@@ -107,7 +111,7 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
       for (let j = 0; j < this.size; j++) {
-        if (this.state[boardName][j][i] === targetChar) {
+        if (this.state[boardName][j][i].N === targetChar) {
           sum += (j+1);
         }
       }
@@ -126,7 +130,7 @@ export class GameModel {
   }
 
   debug(boardName="playerBoard") {
-    for (let i = 0; i < this.size; i++) {
+    for (let i = 0; i < this.size*2; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
         row.push(this.state[boardName][i][j].N);
