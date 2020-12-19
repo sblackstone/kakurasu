@@ -67,6 +67,8 @@ export class GameModel {
     }
   }
 
+  // We make the board an array of nxn objects
+  // We then create cols as if they were additional rows
   initPlayerBoard() {
     this.state.playerBoard = [];
     for (let i = 0; i < this.size; i++) {
