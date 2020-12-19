@@ -12,30 +12,22 @@ export class GameModel {
     this.state = {
       size,
       sigma: ((this.size) * (this.size + 1)) / 2,
-      targetRowSums: this.rowSums("targetBoard", constants.SQUARE_GREEN),
-      targetColSums: this.colSums("targetBoard", constants.SQUARE_GREEN),
 
-      // What the current row/colums add up to.
-      rowSums:      this.rowSums("playerBoard", constants.SQUARE_GREEN),
-      colSums:      this.colSums("playerBoard", constants.SQUARE_GREEN),
-
-      // How much they need to complete green.
-      rowNeeded: this.rowSums("targetBoard", constants.SQUARE_GREEN),
-      colNeeded: this.colSums("targetBoard", constants.SQUARE_GREEN),
-
-
-      ///////
+      targetRowSums:     this.rowSums("targetBoard", constants.SQUARE_GREEN),
+      targetColSums:     this.colSums("targetBoard", constants.SQUARE_GREEN),
       antiTargetRowSums: this.rowSums("targetBoard", constants.SQUARE_RED),
       antiTargetColSums: this.colSums("targetBoard", constants.SQUARE_RED),
 
 
+      rowSums:           this.rowSums("playerBoard", constants.SQUARE_GREEN),
+      colSums:           this.colSums("playerBoard", constants.SQUARE_GREEN),
+      rowNeeded:         this.rowSums("targetBoard", constants.SQUARE_GREEN),
+      colNeeded:         this.colSums("targetBoard", constants.SQUARE_GREEN),
 
-
-      antiRowSums: this.rowSums("playerBoard", constants.SQUARE_RED),
-      antiColSums: this.rowSums("playerBoard", constants.SQUARE_RED),
-      antiRowNeeded: this.rowSums("targetBoard", constants.SQUARE_RED),
-      antiColNeeded: this.colSums("targetBoard", constants.SQUARE_RED),
-
+      antiRowSums:       this.rowSums("playerBoard", constants.SQUARE_RED),
+      antiColSums:       this.rowSums("playerBoard", constants.SQUARE_RED),
+      antiRowNeeded:     this.rowSums("targetBoard", constants.SQUARE_RED),
+      antiColNeeded:     this.colSums("targetBoard", constants.SQUARE_RED),
     };
 
   }
@@ -179,7 +171,7 @@ export class GameModel {
   }
 
   toggleSquare(x,y) {
-    switch(this.playerBoard[x][y]) {
+    switch(this.getSquare(x,y)) {
     case constants.SQUARE_GREEN:
       this.markSquare(x,y, constants.SQUARE_RED);
       break;
