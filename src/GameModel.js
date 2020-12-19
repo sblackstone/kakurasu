@@ -52,9 +52,9 @@ export class GameModel {
       let row = [];
       for (let j = 0; j < this.size; j++) {
         if (Math.random() > (1 - TARGET_BOARD_FILL_RATIO)) {
-          row.push(constants.SQUARE_GREEN);
+          row.push({ N: constants.SQUARE_GREEN });
         } else {
-          row.push(constants.SQUARE_RED);
+          row.push({ N: constants.SQUARE_RED });
         }
       }
       this.state.targetBoard.push(row);
