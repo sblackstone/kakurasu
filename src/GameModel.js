@@ -43,7 +43,7 @@ export class GameModel {
   }
 
   getSquare(x,y) {
-    return this.state.playerBoard[x][y];
+    return this.state.playerBoard[x][y].N;
   }
 
   initTargetBoard() {
@@ -70,9 +70,17 @@ export class GameModel {
   initPlayerBoard() {
     this.state.playerBoard = [];
     for (let i = 0; i < this.size; i++) {
-      let row = [];
+      const row = [];
       for (let j = 0; j < this.size; j++) {
-        row.push(constants.SQUARE_EMPTY);
+        row.push({N: constants.SQUARE_EMPTY});
+      }
+      this.state.playerBoard.push(row);
+    }
+
+    for (let i = 0; i < this.size; i++) {
+      const row = [];
+      for (let j = 0; j < this.size; j++) {
+        row.push(this.state.playerBoard[j][i]);
       }
       this.state.playerBoard.push(row);
     }
@@ -110,7 +118,7 @@ export class GameModel {
   export() {
     return {
       ...this.state,
-      playerBoard: this.state.playerBoard.map(x => x.slice(0)),
+      playerBoard: this.state.playerBoard.map(x => x.map(y => y.N)),
       wonGame: this.checkWin()
     }
   }
@@ -119,7 +127,7 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        row.push(this.state[boardName][i][j]);
+        row.push(this.state[boardName][i][j].N);
       }
       console.log(row);
     }
@@ -168,7 +176,7 @@ export class GameModel {
       break;
     }
 
-    this.state.playerBoard[x][y] = val; // THIS ONE IS OK!
+    this.state.playerBoard[x][y].N = val;
 
   }
 
