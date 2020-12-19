@@ -7,28 +7,30 @@ export class GameModel {
   constructor(size, solverDebugFn) {
     this.size = size;
     this.solverDebugFn = solverDebugFn;
-    this.initPlayerBoard();
-    this.initTargetBoard();
+    this.initState();
+  }
+
+
+  async initState() {
     this.state = {
-      size,
+      size: this.size,
       sigma: ((this.size) * (this.size + 1)) / 2,
-
-      targetRowSums:     this.rowSums("targetBoard", constants.SQUARE_GREEN),
-      targetColSums:     this.colSums("targetBoard", constants.SQUARE_GREEN),
-      antiTargetRowSums: this.rowSums("targetBoard", constants.SQUARE_RED),
-      antiTargetColSums: this.colSums("targetBoard", constants.SQUARE_RED),
-
-
-      rowSums:           this.rowSums("playerBoard", constants.SQUARE_GREEN),
-      colSums:           this.colSums("playerBoard", constants.SQUARE_GREEN),
-      rowNeeded:         this.rowSums("targetBoard", constants.SQUARE_GREEN),
-      colNeeded:         this.colSums("targetBoard", constants.SQUARE_GREEN),
-
-      antiRowSums:       this.rowSums("playerBoard", constants.SQUARE_RED),
-      antiColSums:       this.rowSums("playerBoard", constants.SQUARE_RED),
-      antiRowNeeded:     this.rowSums("targetBoard", constants.SQUARE_RED),
-      antiColNeeded:     this.colSums("targetBoard", constants.SQUARE_RED),
     };
+    this.initPlayerBoard();
+    this.initTargetBoard(); 
+    this.state.targetRowSums=     this.rowSums("targetBoard", constants.SQUARE_GREEN);
+    this.state.targetColSums=     this.colSums("targetBoard", constants.SQUARE_GREEN);
+    this.state.antiTargetRowSums= this.rowSums("targetBoard", constants.SQUARE_RED);
+    this.state.antiTargetColSums= this.colSums("targetBoard", constants.SQUARE_RED);
+    this.state.rowSums=           this.rowSums("playerBoard", constants.SQUARE_GREEN);
+    this.state.colSums=           this.colSums("playerBoard", constants.SQUARE_GREEN);
+    this.state.rowNeeded=         this.rowSums("targetBoard", constants.SQUARE_GREEN);
+    this.state.colNeeded=         this.colSums("targetBoard", constants.SQUARE_GREEN);
+    this.state.antiRowSums=       this.rowSums("playerBoard", constants.SQUARE_RED);
+    this.state.antiColSums=       this.rowSums("playerBoard", constants.SQUARE_RED);
+    this.state.antiRowNeeded=     this.rowSums("targetBoard", constants.SQUARE_RED);
+    this.state.antiColNeeded=     this.colSums("targetBoard", constants.SQUARE_RED);
+
 
   }
 
@@ -41,11 +43,11 @@ export class GameModel {
   }
 
   getSquare(x,y) {
-    return this.playerBoard[x][y];
+    return this.state.playerBoard[x][y];
   }
 
   initTargetBoard() {
-    this.targetBoard = [];
+    this.state.targetBoard = [];
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
@@ -55,7 +57,7 @@ export class GameModel {
           row.push(constants.SQUARE_RED);
         }
       }
-      this.targetBoard.push(row);
+      this.state.targetBoard.push(row);
     }
   }
 
@@ -66,13 +68,13 @@ export class GameModel {
   }
 
   initPlayerBoard() {
-    this.playerBoard = [];
+    this.state.playerBoard = [];
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
         row.push(constants.SQUARE_EMPTY);
       }
-      this.playerBoard.push(row);
+      this.state.playerBoard.push(row);
     }
   }
 
@@ -81,7 +83,7 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
       for (let j = 0; j < this.size; j++) {
-        if (this[boardName][i][j] === targetChar) {
+        if (this.state[boardName][i][j] === targetChar) {
           sum += (j+1);
         }
       }
@@ -95,7 +97,7 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       let sum = 0;
       for (let j = 0; j < this.size; j++) {
-        if (this[boardName][j][i] === targetChar) {
+        if (this.state[boardName][j][i] === targetChar) {
           sum += (j+1);
         }
       }
@@ -108,7 +110,7 @@ export class GameModel {
   export() {
     return {
       ...this.state,
-      playerBoard: this.playerBoard.map(x => x.slice(0)),
+      playerBoard: this.state.playerBoard.map(x => x.slice(0)),
       wonGame: this.checkWin()
     }
   }
@@ -117,7 +119,7 @@ export class GameModel {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        row.push(this[boardName][i][j]);
+        row.push(this.state[boardName][i][j]);
       }
       console.log(row);
     }
@@ -166,7 +168,7 @@ export class GameModel {
       break;
     }
 
-    this.playerBoard[x][y] = val; // THIS ONE IS OK!
+    this.state.playerBoard[x][y] = val; // THIS ONE IS OK!
 
   }
 
