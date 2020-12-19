@@ -4,6 +4,7 @@ import { NewGameScreen } from './NewGameScreen';
 import { PlayerWinScreen } from './PlayerWinScreen';
 import { GameModel } from './GameModel';
 import { useState } from 'react';
+import { Solver } from './Solver';
 
 
 let timeout = null;
@@ -31,6 +32,8 @@ function App() {
  
   const onNewGame = function(newSize) {
     const newGm = new GameModel(newSize, solverDebugFn);
+    const solver = new Solver(newGm);
+    window.solver = solver;
     setGm(newGm);
     setViewState(newGm.export());
     clearInterval(timeout);
