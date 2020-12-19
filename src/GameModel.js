@@ -107,18 +107,7 @@ export class GameModel {
   }
 
   colSums(boardName, targetChar) {
-    let result = [];
-    for (let i = 0; i < this.size; i++) {
-      let sum = 0;
-      for (let j = 0; j < this.size; j++) {
-        if (this.state[boardName][j][i].N === targetChar) {
-          sum += (j+1);
-        }
-      }
-      result.push(sum);
-    };
-    return result;
-
+    return(this.rowSums(boardName, targetChar).slice(this.size));
   }
 
   export() {
