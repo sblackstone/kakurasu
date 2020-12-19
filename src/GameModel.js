@@ -63,7 +63,7 @@ export class GameModel {
 
   markAllPoints(points, newValue) {
     for (let i = 0; i < points.length; i++) {
-      this.markSquare(points[i][0], points[i][1], newValue);
+      this.setSquare(points[i][0], points[i][1], newValue);
     }
   }
 
@@ -129,7 +129,7 @@ export class GameModel {
     return false;
   }
 
-  markSquare(x,y,val) {
+  setSquare(x,y,val) {
 
 
     // Undo whats currently there!
@@ -175,13 +175,13 @@ export class GameModel {
   toggleSquare(x,y) {
     switch(this.getSquare(x,y)) {
     case constants.SQUARE_GREEN:
-      this.markSquare(x,y, constants.SQUARE_RED);
+      this.setSquare(x,y, constants.SQUARE_RED);
       break;
     case constants.SQUARE_RED:
-      this.markSquare(x,y, constants.SQUARE_EMPTY);
+      this.setSquare(x,y, constants.SQUARE_EMPTY);
       break;
     default:
-      this.markSquare(x,y, constants.SQUARE_GREEN);
+      this.setSquare(x,y, constants.SQUARE_GREEN);
       break;
     }
   }
