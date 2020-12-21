@@ -11,10 +11,26 @@ export class GameModel {
   }
 
   initStats() {
-    this.state.stats = {
-      rows: [         
-      ]
-    }   
+    this.state.rows = [];
+  
+    const greenRowSums = this.rowSums("playerBoard", constants.SQUARE_GREEN); 
+    const redRowSums   = this.rowSums("playerBoard", constants.SQUARE_RED); 
+
+    const targetGreenRowSums = this.rowSums("targetBoard", constants.SQUARE_GREEN); 
+    const targetRedRowSums   = this.rowSums("targetBoard", constants.SQUARE_RED); 
+
+
+    for (let i = 0; i < this.size*2; i++) {
+      this.state.rows[i] = {
+        greenSum:        greenRowSums[i],
+        redSum:          redRowSums[i],
+        targetGreenSum:  targetGreenRowSums[i],
+        targetRedSum:    targetRedRowSums[i],
+        greenNeeded:     targetGreenRowSums[i],
+        redNeeded:       targetRedRowSums[i]
+      };      
+    }
+
   }
   
 
@@ -52,7 +68,6 @@ async initState() {
         const fillVal = (Math.random() > (1 - TARGET_BOARD_FILL_RATIO)) ? constants.SQUARE_GREEN : constants.SQUARE_RED;
         this.state.targetBoard[i][j].N = fillVal;
       }
-      this.state.targetBoard.push(row);
     }
   }
 
@@ -109,13 +124,9 @@ async initState() {
       sigma: this.state.sigma,
       size: this.state.size,
       playerBoard: this.state.playerBoard.map(x => x.map(y => y.N)),
+      rows: this.state.rows.map(x => Object.assign({}, x)),
       wonGame: this.checkWin()
     };
-
-    // Make the view work for now...
-    ["rowNeeded", "colNeeded", "antiRowNeeded", "antiColNeeded"].forEach(x => {
-        result[x] = Array(15).fill(0);
-    })
 
     return result;
 
@@ -136,6 +147,44 @@ async initState() {
   }
 
   setSquare(x,y,val) {
+    console.log(x,y,val);
+    switch(this.getSquare(x,y)) {
+    case constants.SQUARE_GREEN:
+      this.state.rows[x].greenSum                  -= (y+1);
+      this.state.rows[y+this.size].greenSum        -= (x+1);
+      this.state.rows[x].greenNeeded               += (y+1);
+      this.state.rows[y+this.size].greenNeeded     += (x+1);
+      break;
+    case constants.SQUARE_RED:
+      this.state.rows[x].redSum                    -= (y+1);
+      this.state.rows[y+this.size].redSum          -= (x+1);
+      this.state.rows[x].redNeeded                 += (y+1);
+      this.state.rows[y+this.size].redNeeded       += (x+1);
+      break;
+    default:
+      break;
+    }
+
+    // Put in the new piece!
+    switch(val) {
+    case constants.SQUARE_GREEN:
+      this.state.rows[x].greenSum                       += (y+1);
+      this.state.rows[y+this.size].greenSum              += (x+1);
+      this.state.rows[x].greenNeeded                     -= (y+1);
+      this.state.rows[y+this.size].greenNeeded           -= (x+1);
+      break;
+    case constants.SQUARE_RED:
+      this.state.rows[x].redSum                   += (y+1);
+      this.state.rows[y+this.size].redSum         += (x+1);
+      this.state.rows[x].redNeeded                -= (y+1);
+      this.state.rows[y+this.size].redNeeded      -= (x+1);
+      break;
+    default:
+      break;
+    }
+
+
+
     this.state.playerBoard[x][y].N = val;
   }
 

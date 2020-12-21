@@ -39,22 +39,15 @@ function HSquare(props) {
 function FSquare(props) {
   
   if (props.col >= 0 && (props.col < props.size)) {
-    if (props.boardMode) {
-      return (
-        <div className={`square footer-square square-${props.size}`}>
-          <div className="score-on">{props.viewState.colNeeded[props.col]}</div>
-        </div> 
-      );
-    
-    } else {
-      return (
-        <div className={`square footer-square square-${props.size}`}>
-          <div className="score-off">{props.viewState.antiColNeeded[props.col]}</div>
-        </div> 
-      );
-      
-    }
-    
+
+    const fillVal = props.boardMode ? "greenNeeded" : "redNeeded";
+    const klass   = props.boardMode ? "score-on" : "score-off";
+
+    return (
+      <div className={`square footer-square square-${props.size}`}>
+        <div className={klass}>{props.viewState.rows[props.size+props.col][fillVal]}</div>
+      </div> 
+    );    
   }
 
 
@@ -77,19 +70,15 @@ function RowStartSquare(props) {
 }
 
 function RowEndSquare(props) {
-  if (props.boardMode) {
+    const fillVal = props.boardMode ? "greenNeeded" : "redNeeded";
+    const klass   = props.boardMode ? "score-on" : "score-off";
+
     return (
       <div className={`square row-end-square square-${props.size}`}>
-        <div className="score-on">{props.viewState.rowNeeded[props.row]}</div>
+        <div className={klass}>{props.viewState.rows[props.row][fillVal]}</div>
       </div> 
     );    
-  } else {
-    return (
-      <div className={`square row-end-square square-${props.size}`}>
-        <div className="score-off">{props.viewState.antiRowNeeded[props.row]}</div>
-      </div> 
-    );        
-  }
+
 
 }
 
