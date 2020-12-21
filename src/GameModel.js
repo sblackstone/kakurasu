@@ -143,7 +143,7 @@ async initState() {
   }
 
   checkWin() {
-    return false;
+    return this.state.rows.every(x => (x.greenNeeded == 0 && x.redNeeded == 0));
   }
 
   setSquare(x,y,val) {
