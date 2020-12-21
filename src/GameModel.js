@@ -18,19 +18,6 @@ export class GameModel {
     };
     this.initPlayerBoard();
     this.initTargetBoard(); 
-    this.state.targetRowSums=     this.rowSums("targetBoard", constants.SQUARE_GREEN);
-    this.state.targetColSums=     this.colSums("targetBoard", constants.SQUARE_GREEN);
-    this.state.antiTargetRowSums= this.rowSums("targetBoard", constants.SQUARE_RED);
-    this.state.antiTargetColSums= this.colSums("targetBoard", constants.SQUARE_RED);
-    this.state.rowSums=           this.rowSums("playerBoard", constants.SQUARE_GREEN);
-    this.state.colSums=           this.colSums("playerBoard", constants.SQUARE_GREEN);
-    this.state.rowNeeded=         this.rowSums("targetBoard", constants.SQUARE_GREEN);
-    this.state.colNeeded=         this.colSums("targetBoard", constants.SQUARE_GREEN);
-    this.state.antiRowSums=       this.rowSums("playerBoard", constants.SQUARE_RED);
-    this.state.antiColSums=       this.rowSums("playerBoard", constants.SQUARE_RED);
-    this.state.antiRowNeeded=     this.rowSums("targetBoard", constants.SQUARE_RED);
-    this.state.antiColNeeded=     this.colSums("targetBoard", constants.SQUARE_RED);
-
 
   }
 
@@ -106,16 +93,21 @@ export class GameModel {
     return result;
   }
 
-  colSums(boardName, targetChar) {
-    return(this.rowSums(boardName, targetChar).slice(this.size));
-  }
-
   export() {
-    return {
-      ...this.state,
+    let result = {
+      sigma: this.state.sigma,
+      size: this.state.size,
       playerBoard: this.state.playerBoard.map(x => x.map(y => y.N)),
       wonGame: this.checkWin()
-    }
+    };
+
+    // Make the view work for now...
+    ["rowNeeded", "colNeeded", "antiRowNeeded", "antiColNeeded"].forEach(x => {
+        result[x] = Array(15).fill(0);
+    })
+
+    return result;
+
   }
 
   debug(boardName="playerBoard") {
@@ -133,46 +125,7 @@ export class GameModel {
   }
 
   setSquare(x,y,val) {
-
-
-    // Undo whats currently there!
-    switch(this.getSquare(x,y)) {
-    case constants.SQUARE_GREEN:
-      this.state.rowSums[x]       -= (y+1);
-      this.state.colSums[y]       -= (x+1);
-      this.state.rowNeeded[x]     += (y+1);
-      this.state.colNeeded[y]     += (x+1);
-      break;
-    case constants.SQUARE_RED:
-      this.state.antiRowSums[x]   -= (y+1);
-      this.state.antiColSums[y]   -= (x+1);
-      this.state.antiRowNeeded[x] += (y+1);
-      this.state.antiColNeeded[y] += (x+1);
-      break;
-    default:
-      break;
-    }
-
-    // Put in the new piece!
-    switch(val) {
-    case constants.SQUARE_GREEN:
-      this.state.rowSums[x]       += (y+1);
-      this.state.colSums[y]       += (x+1);
-      this.state.rowNeeded[x]     -= (y+1);
-      this.state.colNeeded[y]     -= (x+1);
-      break;
-    case constants.SQUARE_RED:
-      this.state.antiRowSums[x]   += (y+1);
-      this.state.antiColSums[y]   += (x+1);
-      this.state.antiRowNeeded[x] -= (y+1);
-      this.state.antiColNeeded[y] -= (x+1);
-      break;
-    default:
-      break;
-    }
-
     this.state.playerBoard[x][y].N = val;
-
   }
 
   toggleSquare(x,y) {
