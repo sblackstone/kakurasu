@@ -10,15 +10,22 @@ export class GameModel {
     this.initState();
   }
 
+  initStats() {
+    this.state.stats = {
+      rows: [         
+      ]
+    }   
+  }
+  
 
-  async initState() {
+async initState() {
     this.state = {
       size: this.size,
       sigma: ((this.size) * (this.size + 1)) / 2,
     };
     this.initPlayerBoard();
     this.initTargetBoard(); 
-
+    this.initStats();
   }
 
   async debugDraw() {
@@ -27,6 +34,10 @@ export class GameModel {
       setTimeout(()=> { resolve(); }, 5);
     });
 
+  }
+
+  getTargetSquare(x,y) {
+    return this.state.targetBoard[x][y].N;
   }
 
   getSquare(x,y) {
