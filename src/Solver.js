@@ -1,5 +1,28 @@
 import { constants } from './constants';
 
+const arrayIntersection = (arrays) => {
+  let data = {};
+
+  for (let i = 0; i < arrays.length; i++) {
+    for (let j = 0; j < arrays[i].length; j++) {
+      const v = arrays[i][j];
+      data[v] = data[v] || 0;
+      data[v] += 1;
+    }
+  }
+
+  let result = [];
+  for (const [k,v] of Object.entries(data)) {
+    if (v === arrays.length) {
+      result.push(+k);
+    }
+  }
+
+
+  return result;
+
+}
+
 export class Solver {
   constructor(gm) {
     this.size = gm.size;
@@ -48,8 +71,25 @@ export class Solver {
     }
   }
 
+
+  // needs to be checked... should be good?
+  fillBoard2() {
+    for (let i = 0; i < this.size*2; i++) {
+      const data = this.waysToCompleteRow(i);
+      const common = arrayIntersection(data.red);
+      if (common.length === 1) {
+        common.forEach(j => this.gm.setSquare(i,j-1, constants.SQUARE_RED));
+      }
+      const common2 = arrayIntersection(data.green);
+      if (common2.length === 1) {
+        common2.forEach(j => this.gm.setSquare(i,j-1, constants.SQUARE_GREEN));
+      }
+    }
+  }
+
   solve() {
     this.fillBoardMinMax();
+    this.fillBoard2();
   }
   
   waysToCompleteRow(i, j=0, candidate = [], curSum=0, solutions = { red: [], green: []}) {
@@ -58,14 +98,16 @@ export class Solver {
     if (curSum === this.gm.state.rows[i].greenNeeded) {
       solutions.green.push(candidate.slice(0));
       solved = true;
+      return solutions;
     }
     if (curSum === this.gm.state.rows[i].redNeeded) {
       solutions.red.push(candidate.slice(0));
       solved = true;
+      return solutions;
     }
 
     if (solved || j === this.size) {
-      return;
+      return solutions;
     }
 
     if (this.gm.getSquare(i,j) === constants.SQUARE_EMPTY) {
