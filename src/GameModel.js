@@ -161,11 +161,11 @@ async initState() {
 
   setSquare(x,y,val) {
     if (x >= this.size) {
-      console.log(`Mapping (${x},${y}) to (${y},${x-this.size}) = ${val}`);
+      //console.log(`Mapping (${x},${y}) to (${y},${x-this.size}) = ${val}`);
       return this.setSquare(y, x - this.size, val);
     }
 
-    console.log(`Setting (${x},${y}) = ${val}`);
+    //console.log(`Setting (${x},${y}) = ${val}`);
     switch(this.getSquare(x,y)) {
     case constants.SQUARE_GREEN:
       this.state.rows[x].greenSum                  -= (y+1);
