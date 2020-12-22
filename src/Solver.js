@@ -74,6 +74,7 @@ export class Solver {
 
   // needs to be checked... should be good?
   fillBoard2() {
+/*
     for (let i = 0; i < this.size*2; i++) {
       const data = this.waysToCompleteRow(i);
       const common = arrayIntersection(data.red);
@@ -85,6 +86,7 @@ export class Solver {
         common2.forEach(j => this.gm.setSquare(i,j-1, constants.SQUARE_GREEN));
       }
     }
+*/
   }
 
   solve() {
