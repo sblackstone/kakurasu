@@ -29,7 +29,7 @@ export class Solver {
     this.gm = gm;
   }
   
-  solveFillSquare(i,j) {
+  fillMinMaxSquare(i,j) {
       if (this.gm.getSquare(i,j) === constants.SQUARE_EMPTY) {
         const v = j+1;
         //console.log(`Inspecting ${i},${j}`);
@@ -48,10 +48,10 @@ export class Solver {
       return false;
   }
 
-  solveFillRow(i) {
+  fillMinMaxRow(i) {
     const points = [];
     for (let j = 0; j < this.size; j++) {
-      if (this.solveFillSquare(i,j)) {
+      if (this.fillMinMaxSquare(i,j)) {
         points.push([i,j]);
       }
     }
@@ -61,7 +61,7 @@ export class Solver {
   fillBoardMinMax() {
     let points = [];
     for (let i = 0; i < this.size*2; i++) {
-      points = points.concat(this.solveFillRow(i));
+      points = points.concat(this.fillMinMaxRow(i));
     }
     
     if (points.length > 0) {
@@ -100,12 +100,10 @@ export class Solver {
     if (curSum === this.gm.state.rows[i].greenNeeded) {
       solutions.green.push(candidate.slice(0));
       solved = true;
-      return solutions;
     }
     if (curSum === this.gm.state.rows[i].redNeeded) {
       solutions.red.push(candidate.slice(0));
       solved = true;
-      return solutions;
     }
 
     if (solved || j === this.size) {
@@ -121,33 +119,5 @@ export class Solver {
       return solutions;
     }
   }
-
-
-
 }
 
-
-/*
-
-  waysToMake(available, target, curSum = 0, candidiate = [], solutions = []) {
-
-    if (curSum === target) {
-      solutions.push([ ...candidiate ]);
-      return;
-    }
-
-    if (available.length === 0 || curSum > target) {
-      return candidiate.length === 0 ? [] : null;
-    }
-
-    const cur = available.pop();
-
-    this.waysToMake(available, target, curSum+cur, [ ...candidiate, cur], solutions );
-    this.waysToMake(available, target, curSum,     [ ...candidiate     ], solutions );
-
-    available.push(cur);
-
-    return solutions
-  }
-
-*/
