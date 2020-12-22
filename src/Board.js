@@ -40,7 +40,7 @@ function FSquare(props) {
   
   if (props.col >= 0 && (props.col < props.size)) {
 
-    const fillVal = props.boardMode ? "greenNeeded" : "redNeeded";
+    const fillVal = props.boardMode ? "targetGreenSum" : "targetRedSum";
     const klass   = props.boardMode ? "score-on" : "score-off";
 
     return (
@@ -70,7 +70,7 @@ function RowStartSquare(props) {
 }
 
 function RowEndSquare(props) {
-    const fillVal = props.boardMode ? "greenNeeded" : "redNeeded";
+    const fillVal = props.boardMode ? "targetGreenSum" : "targetRedSum";
     const klass   = props.boardMode ? "score-on" : "score-off";
 
     return (
