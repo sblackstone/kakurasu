@@ -35,21 +35,21 @@ export class Solver {
     return points;
   }
 
-  fillBoard() {
+  fillBoardMinMax() {
     let points = [];
     for (let i = 0; i < this.size*2; i++) {
       points = points.concat(this.solveFillRow(i));
     }
     
     if (points.length > 0) {
-      return points.concat(this.fillBoard());
+      return points.concat(this.fillBoardMinMax());
     } else {
       return points;
     }
   }
 
   solve() {
-    this.fillBoard();
+    this.fillBoardMinMax();
   }
 
 }
