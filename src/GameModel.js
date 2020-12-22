@@ -161,7 +161,7 @@ async initState() {
 
   setSquare(x,y,val) {
     if (x >= this.size) {
-      console.log(`Mapping (${x},${y}) to (${y},${x-this.size}) = ${this.size-val}`);
+      console.log(`Mapping (${x},${y}) to (${y},${x-this.size}) = ${val}`);
       return this.setSquare(y, x - this.size, val);
     }
 
@@ -204,8 +204,8 @@ async initState() {
 
 
     this.state.playerBoard[x][y].N = val;
-    console.log('needed');
-    this.state.rows.forEach((x,i) => console.log([i, x.greenNeeded, x.redNeeded]))
+    //console.log('needed');
+    //this.state.rows.forEach((x,i) => console.log([i, x.greenNeeded, x.redNeeded]))
   }
 
   toggleSquare(x,y) {
