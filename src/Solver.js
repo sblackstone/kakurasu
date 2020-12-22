@@ -51,5 +51,59 @@ export class Solver {
   solve() {
     this.fillBoardMinMax();
   }
+  
+  waysToCompleteRow(i, j=0, candidate = [], curSum=0, solutions = { red: [], green: []}) {
+
+    let solved = false;
+    if (curSum === this.gm.state.rows[i].greenNeeded) {
+      solutions.green.push(candidate.slice(0));
+      solved = true;
+    }
+    if (curSum === this.gm.state.rows[i].redNeeded) {
+      solutions.red.push(candidate.slice(0));
+      solved = true;
+    }
+
+    if (solved || j === this.size) {
+      return;
+    }
+
+    if (this.gm.getSquare(i,j) === constants.SQUARE_EMPTY) {
+      this.waysToCompleteRow(i, j+1, [...candidate, (j+1)], curSum+(j+1), solutions);
+    }
+
+    this.waysToCompleteRow(i, j+1, candidate, curSum, solutions);
+    if (j === 0) {
+      return solutions;
+    }
+  }
+
+
 
 }
+
+
+/*
+
+  waysToMake(available, target, curSum = 0, candidiate = [], solutions = []) {
+
+    if (curSum === target) {
+      solutions.push([ ...candidiate ]);
+      return;
+    }
+
+    if (available.length === 0 || curSum > target) {
+      return candidiate.length === 0 ? [] : null;
+    }
+
+    const cur = available.pop();
+
+    this.waysToMake(available, target, curSum+cur, [ ...candidiate, cur], solutions );
+    this.waysToMake(available, target, curSum,     [ ...candidiate     ], solutions );
+
+    available.push(cur);
+
+    return solutions
+  }
+
+*/
