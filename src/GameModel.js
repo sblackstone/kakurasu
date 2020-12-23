@@ -27,7 +27,7 @@ export class GameModel {
         targetGreenSum:  targetGreenRowSums[i],
         targetRedSum:    targetRedRowSums[i],
         greenNeeded:     targetGreenRowSums[i],
-        redNeeded:       targetRedRowSums[i]
+        redNeeded:       targetRedRowSums[i],
       };      
     }
 

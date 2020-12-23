@@ -1,11 +1,13 @@
 import { constants } from './constants';
 
-const arrayIntersection = (arrays) => {
+const arrayIntersectionUnused = (arrays, size) => {
   let data = {};
+  let unseen = Array(size + 1).fill(true);
 
   for (let i = 0; i < arrays.length; i++) {
     for (let j = 0; j < arrays[i].length; j++) {
       const v = arrays[i][j];
+      unseen[v] = false;
       data[v] = data[v] || 0;
       data[v] += 1;
     }
@@ -18,10 +20,18 @@ const arrayIntersection = (arrays) => {
     }
   }
 
-
-  return result;
+  let unseenResult = [];
+  for (let i = 1; i <= size; i++) {
+    if (unseen[i]) {
+      unseenResult.push(i);
+    }
+  }
+  return [ result, unseenResult ];
 
 }
+
+
+window.arrayIntersectionUnused = arrayIntersectionUnused;
 
 export class Solver {
   constructor(gm) {
@@ -83,7 +93,8 @@ export class Solver {
     for (let i = 0; i < this.size*2; i++) {
       const data = this.waysToCompleteRow(i);
       for (const [color,squareToken] of Object.entries(params)) {
-        const common = arrayIntersection(data[color]);
+        const [common, unused ] = arrayIntersectionUnused(data[color], this.size);
+        console.log(unused);
         for (let j = 0; j < common.length; j++) {
             this.gm.setSquare(i, common[j]-1, squareToken);
         }
