@@ -80,9 +80,9 @@ export class Solver {
       "red": constants.SQUARE_RED
     };
 
-    for (const [color,squareToken] of Object.entries(params)) {
-      for (let i = 0; i < this.size*2; i++) {
-        const data = this.waysToCompleteRow(i);
+    for (let i = 0; i < this.size*2; i++) {
+      const data = this.waysToCompleteRow(i);
+      for (const [color,squareToken] of Object.entries(params)) {
         if (data[color].length === 1) {
           for (let j = 0; j < data[color][0].length; j++) {
             this.gm.setSquare(i, data[color][0][j]-1, squareToken);
