@@ -65,28 +65,31 @@ export class Solver {
     }
     
     if (points.length > 0) {
-      return points.concat(this.fillBoardMinMax());
-    } else {
-      return points;
+      points = points.concat(this.fillBoardMinMax());
     }
+    return points;
+
   }
 
 
   // needs to be checked... should be good?
   fillBoard2() {
-/*
-    for (let i = 0; i < this.size*2; i++) {
-      const data = this.waysToCompleteRow(i);
-      const common = arrayIntersection(data.red);
-      if (common.length === 1) {
-        common.forEach(j => this.gm.setSquare(i,j-1, constants.SQUARE_RED));
-      }
-      const common2 = arrayIntersection(data.green);
-      if (common2.length === 1) {
-        common2.forEach(j => this.gm.setSquare(i,j-1, constants.SQUARE_GREEN));
+
+    const params = {
+      "green": constants.SQUARE_GREEN,
+      "red": constants.SQUARE_RED
+    };
+
+    for (const [color,squareToken] of Object.entries(params)) {
+      for (let i = 0; i < this.size*2; i++) {
+        const data = this.waysToCompleteRow(i);
+        if (data[color].length === 1) {
+          for (let j = 0; j < data[color][0].length; j++) {
+            this.gm.setSquare(i, data[color][0][j]-1, squareToken);
+          }
+        }
       }
     }
-*/
   }
 
   solve() {
@@ -95,18 +98,14 @@ export class Solver {
   }
   
   waysToCompleteRow(i, j=0, candidate = [], curSum=0, solutions = { red: [], green: []}) {
-
-    let solved = false;
     if (curSum === this.gm.state.rows[i].greenNeeded) {
       solutions.green.push(candidate.slice(0));
-      solved = true;
     }
     if (curSum === this.gm.state.rows[i].redNeeded) {
       solutions.red.push(candidate.slice(0));
-      solved = true;
     }
 
-    if (solved || j === this.size) {
+    if (j === this.size) {
       return solutions;
     }
 

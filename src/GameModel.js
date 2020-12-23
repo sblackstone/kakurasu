@@ -33,6 +33,10 @@ export class GameModel {
 
   }
   
+async restart() {
+  this.initPlayerBoard();
+  this.initStats();
+}
 
 async initState() {
     this.state = {
@@ -42,7 +46,7 @@ async initState() {
     this.initPlayerBoard();
     this.initTargetBoard(); 
     this.initStats();
-  }
+}
 
   async debugDraw() {
     this.solverDebugFn(this);
