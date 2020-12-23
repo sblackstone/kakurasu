@@ -1,8 +1,5 @@
 import { constants } from './constants';
 
-const TARGET_BOARD_FILL_RATIO = 0.70;
-
-
 export class GameModel {
   constructor(size, solverDebugFn) {
     this.size = size;
@@ -33,21 +30,40 @@ export class GameModel {
 
   }
   
-async restart() {
+restart() {
   this.initPlayerBoard();
   this.initStats();
 }
 
-async initState() {
+initState() {
     this.state = {
       size: this.size,
       sigma: ((this.size) * (this.size + 1)) / 2,
     };
+
+    this.target_fill_ratio = [
+      0,    // 0x0
+      0,    // 1x1
+      0,    // 2x2
+      0.45, // 3x3
+      0.45, // 4x4
+      0.45, // 5x5
+      0.45, // 6x6
+      0.45, // 7x7
+      0.45, // 8x8
+      0.45, // 9x9
+      0.45, // 10x10
+      0.45, // 11x11
+      0.45, // 12x12
+      0.45, // 13x13
+    ][this.size];
+  
     this.initPlayerBoard();
     this.initTargetBoard(); 
     this.initStats();
 }
 
+/*
   async debugDraw() {
     this.solverDebugFn(this);
     return new Promise((resolve,reject)=> {
@@ -55,7 +71,7 @@ async initState() {
     });
 
   }
-
+*/
   getTargetSquare(x,y) {
     return this.state.targetBoard[x][y].N;
   }
@@ -81,7 +97,7 @@ async initState() {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        const fillVal = (Math.random() > (1 - TARGET_BOARD_FILL_RATIO)) ? constants.SQUARE_GREEN : constants.SQUARE_RED;
+        const fillVal = (Math.random() > (1 - this.target_fill_ratio)) ? constants.SQUARE_GREEN : constants.SQUARE_RED;
         this.state.targetBoard[i][j].N = fillVal;
       }
     }

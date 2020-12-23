@@ -1,5 +1,9 @@
 import { constants } from './constants';
 
+const oppositeToken = function(token) {
+  return (token === 1) ? 2 : 1;
+};
+
 const arrayIntersectionUnused = (arrays, size) => {
   let data = {};
   let unseen = Array(size + 1).fill(true);
@@ -89,22 +93,33 @@ export class Solver {
       "green": constants.SQUARE_GREEN,
       "red": constants.SQUARE_RED
     };
+    
+
+
 
     for (let i = 0; i < this.size*2; i++) {
       const data = this.waysToCompleteRow(i);
       for (const [color,squareToken] of Object.entries(params)) {
         const [common, unused ] = arrayIntersectionUnused(data[color], this.size);
-        console.log(unused);
         for (let j = 0; j < common.length; j++) {
             this.gm.setSquare(i, common[j]-1, squareToken);
+        }
+        for (let j = 0; j < unused.length; j++) {
+            const j_real = unused[j]-1;
+            if (this.gm.getSquare(i, j_real) === constants.SQUARE_EMPTY) {
+              console.log("unseen");
+              this.gm.setSquare(i, j_real, oppositeToken(squareToken));
+            }
         }
       }
     }
   }
 
   solve() {
-    this.fillBoardMinMax();
-    this.fillBoard2();
+    for (let i = 0; i < 10; i++) {
+      this.fillBoardMinMax();
+      this.fillBoard2();
+    }
   }
   
   waysToCompleteRow(i, j=0, candidate = [], curSum=0, solutions = { red: [], green: []}) {
