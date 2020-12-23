@@ -83,10 +83,9 @@ export class Solver {
     for (let i = 0; i < this.size*2; i++) {
       const data = this.waysToCompleteRow(i);
       for (const [color,squareToken] of Object.entries(params)) {
-        if (data[color].length === 1) {
-          for (let j = 0; j < data[color][0].length; j++) {
-            this.gm.setSquare(i, data[color][0][j]-1, squareToken);
-          }
+        const common = arrayIntersection(data[color]);
+        for (let j = 0; j < common.length; j++) {
+            this.gm.setSquare(i, common[j]-1, squareToken);
         }
       }
     }
