@@ -60,7 +60,7 @@ button, select {
   border: 1px solid rgba(255,255,255,0.15);
   box-sizing: border-box;
   color: #fff;
-
+  font-size: 35px;
 }
 
 
@@ -72,6 +72,8 @@ button, select {
 };
 
 .sigma-square {
+  font-size: 20px;
+  color: #bbb !important;
   border-radius: 0 15px 0 0;
 }
 
@@ -94,13 +96,13 @@ button, select {
 /* These are the one for the reference values.. */
 .header-square,
 .row-start-square {
-  background-color: rgba(255,255,255,0.15);
+  //background-color: rgba(255,255,255,0.15);
   border: 0;
 }
 
 .footer-square,
 .row-end-square {
-  background-color: rgba(255,255,255, 0.15);
+  //background-color: rgba(255,255,255, 0.15);
   border: 0;
 }
 
@@ -119,13 +121,14 @@ button, select {
 }
 
 .sigma-square {
-  color: #111;
+  color: #fff;
 }
 
 .score-on {
   color: #90EE90;
   padding: 3px;
   text-align: center;
+  backgbround-color: #90ee90;
 }
 
 .score-off {
