@@ -88,7 +88,7 @@ function RowEndSquare(props) {
 
 function SigmaSquare(props) {
   return (
-    <div className={`square sigma-square row-end-square header-square square-${props.size}`}>&#9776;</div>    
+    <div onClick={props.onMenuOpenClick} className={`square sigma-square row-end-square header-square square-${props.size}`}>&#9881;</div>    
   );
 }
 

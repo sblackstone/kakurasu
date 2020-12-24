@@ -1,8 +1,8 @@
 @import './squares.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 
-$player1_color: #12b296;
-$player2_color: #027a9f;
+$player1_color: #fc6e22;
+$player2_color: #3b55ce;
 $point_value_color: rgba(255,255,255,0.15);
 
 body, html {
@@ -41,6 +41,7 @@ button, select {
   align-content: space-between;
 }
 
+.ingame-menu-screen,
 .player-win-screen,
 .new-game-screen {
   flex-direction: column;
@@ -71,7 +72,7 @@ button, select {
   border: 1px solid rgba(255,255,255,0.15);
   box-sizing: border-box;
   color: $point_value_color;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 
@@ -85,6 +86,7 @@ button, select {
 .sigma-square {
   color: rgba(255,255,255, 0.50) !important;
   border-radius: 0 15px 0 0;
+  cursor: pointer;
 }
 
 
@@ -160,7 +162,7 @@ button, select {
     border-radius: 30%;
     height: 20px;
     width: 20px;
-    opacity: 25%;
+    opacity: 90%;
     &:hover {
       opacity: 100%;
     }

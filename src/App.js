@@ -1,6 +1,7 @@
 import './App.scss';
 import { Board } from './Board';
 import { NewGameScreen } from './NewGameScreen';
+import { InGameMenu } from './InGameMenu';
 import { PlayerWinScreen } from './PlayerWinScreen';
 import { GameModel } from './GameModel';
 import { useState } from 'react';
@@ -13,8 +14,14 @@ function App() {
   const model = null;
   const [ gm, setGm ] = useState(null);
   const [ viewState, setViewState ] = useState(null);
-
+  const [ menuState, setMenuState ] = useState(false);
   window.App = gm;
+
+
+  const onMenuOpenClick = function() {
+    console.log("YO");
+    setMenuState(true);
+  }
 
   const onGotoNewGameClick = function() {
     setGm(null);
@@ -48,6 +55,16 @@ function App() {
       </div>
     );
   }
+
+  if (menuState) {
+    return (
+      <div className="container">
+        <InGameMenu viewState={viewState} onNewGame={onNewGame} />
+      </div>
+      
+    )
+  }
+
   
   if (viewState.wonGame) {
     return (
@@ -60,7 +77,7 @@ function App() {
   
   return (
     <div className="container">
-      <Board size={viewState.size} onSquareClick={onSquareClick} viewState={viewState} />
+      <Board size={viewState.size} onSquareClick={onSquareClick} viewState={viewState} onMenuOpenClick={onMenuOpenClick} />
     </div>
   );
 }
