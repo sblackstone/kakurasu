@@ -1,6 +1,9 @@
 @import './squares.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 
+$player1_color: #03dddc;
+$player2_color: #fef900;
+
 body, html {
   background: #000;
   overflow: none;
@@ -20,7 +23,7 @@ button, select {
 .board {
   display: flex;
   margin: 1vmin auto;  
-  width: 98vmin;
+  width: 90vmin;
   height: 98vmin;
   flex-wrap: wrap;
   flex-direction: row;
@@ -38,8 +41,7 @@ button, select {
   margin: 2.5vmin auto;  
   width: 90vmin;
   height: 90vmin;
-  color: #fff;
-  border: 1px dashed #fff !important;
+  color: #f8f8ff;
 
   button, select {
     font-size: 200%;
@@ -59,7 +61,7 @@ button, select {
   align-items: center;
   border: 1px solid rgba(255,255,255,0.15);
   box-sizing: border-box;
-  color: #fff;
+  color: #f8f8ff;
   font-size: 35px;
 }
 
@@ -113,30 +115,40 @@ button, select {
 }
 
 .piece-on {
-  background-color: #90EE90;
+  background-color: $player1_color
 }
 
 .piece-off {
-  background-color:  rgba(255, 64, 0, 1.0);
+  background-color:  $player2_color;
 }
 
 .sigma-square {
-  color: #fff;
+  color: #f8f8ff;
 }
 
+.delta-on {
+color: $player1_color;
+}
+
+.delta-off {
+color: $player2_color;
+}
+
+
 .score-on {
-  color: #90EE90;
+  color: $player1_color;
   padding: 3px;
   text-align: center;
   backgbround-color: #90ee90;
 }
 
 .score-off {
-  text-align: center;
+  color: $player2_color;
   padding: 3px;
-  color: rgba(255, 64, 0, 1.0);
+  text-align: center;
 }
 
 .flipper-square  {
+  font-size: 25px;
   cursor: pointer;
 }
