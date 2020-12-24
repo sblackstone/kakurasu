@@ -31,7 +31,12 @@ function HSquare(props) {
   } else {
     const klass = !props.boardMode ? "delta-on" : "delta-off";
     return (
-      <div onClick={props.toggleBoardMode} className={`square ${klass} flipper-square header-square row-start-square square-${props.size}`}><div className="flipper"></div></div>
+      <div onClick={props.toggleBoardMode} className={`square ${klass} flipper-square header-square row-start-square square-${props.size}`}>
+        <div className="flipper">
+            <div className="flipper-top">&#x293A;</div>
+            <div className="flipper-bottom">&#x293B;</div>
+        </div>
+      </div>
     );    
   }
 }
