@@ -83,8 +83,7 @@ button, select {
 };
 
 .sigma-square {
-  font-size: 20px;
-  color: #bbb !important;
+  color: rgba(255,255,255, 0.50) !important;
   border-radius: 0 15px 0 0;
 }
 
@@ -131,9 +130,6 @@ button, select {
   background-color:  $player2_color;
 }
 
-.sigma-square {
-  color: #f8f8ff;
-}
 
 .delta-on .flipper {
   background-color: $player1_color;
@@ -162,8 +158,8 @@ button, select {
   cursor: pointer;
   .flipper {
     border-radius: 100%;
-    height: 25px;
-    width: 25px;
+    height: 20px;
+    width: 20px;
     opacity: 85%;
     &:hover {
       opacity: 100%;

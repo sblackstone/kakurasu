@@ -83,10 +83,12 @@ function RowEndSquare(props) {
 
 }
 
+  //  <div className={`square sigma-square row-end-square header-square square-${props.size}`}>&Sigma;{props.viewState.sigma}</div>    
+
 
 function SigmaSquare(props) {
   return (
-    <div className={`square sigma-square row-end-square header-square square-${props.size}`}>&Sigma;{props.viewState.sigma}</div>    
+    <div className={`square sigma-square row-end-square header-square square-${props.size}`}>&#9776;</div>    
   );
 }
 
