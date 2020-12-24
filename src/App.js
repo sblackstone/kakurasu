@@ -7,20 +7,18 @@ import { GameModel } from './GameModel';
 import { useState } from 'react';
 import { Solver } from './Solver';
 
-
-let timeout = null;
-
 function App() {
   const [ gm, setGm ] = useState(null);
   const [ viewState, setViewState ] = useState(null);
   const [ menuState, setMenuState ] = useState(false);
-  
+
   const draw = () => { 
     if (gm) { 
       setViewState(gm.export());  
     } 
   };
 
+  window.draw = draw.bind(this);
 
   const onMenuOpenClick = function() {
     setMenuState(true);
@@ -54,16 +52,15 @@ function App() {
   const onNewGame = function(newSize) {
     let newGm = new GameModel(newSize, solverDebugFn);
     let solver = new Solver(newGm);
+    setMenuState(false);  
     while (!solver.hasSolution()) {
       console.log("No Solution");
       newGm = new GameModel(newSize, solverDebugFn);
       solver = new Solver(newGm);
     }
 
-    window.solver = solver;
     setGm(newGm);
-    draw();
-    clearInterval(timeout);
+    setViewState(newGm.export());
   }
    
   window.gm = gm;
