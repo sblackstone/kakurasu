@@ -1,18 +1,16 @@
 @import './squares.scss';
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap');
 
-$player1_color: #fc6e22;
-$player2_color: #3b55ce;
-$point_value_color: rgba(255,255,255,0.15);
+$player1_color: rgb(153,119,208);
+$player1_color: rgb(15,77,1		);
+$player2_color: rgb(235,83,129);
+$point_value_color: rgba(255,255,255,0.2);
+$score_color: rgba(255,255,255,0.9);
 
 body, html {
   background: #000;
   overflow: none;
-  font-family: 'Lato', sans-serif;
-}
-
-button, select {
-  font-family: 'Lato', sans-serif;  
+  font-family: 'Rubik', sans-serif;
 }
 
 .container {
@@ -24,8 +22,6 @@ button, select {
   justify-content: center;
   align-items: center;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 .board {
   border: 1px solid rgba(255,255,255,0.15);
@@ -54,7 +50,7 @@ button, select {
   color: #f8f8ff;
 
   button, select {
-    font-size: 200%;
+    font-size: 120%;
   }
   button {
     margin-top: 15px;
@@ -141,16 +137,25 @@ button, select {
   background-color: $player2_color;
 }
 
+.score {
+  line-height: 25px;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  font-size: 16px;
+}
 
 .score-on {
-  color: $player1_color;
+  color: $score_color;
+  background-color: $player1_color;
   padding: 3px;
   text-align: center;
   backgbround-color: #90ee90;
 }
 
 .score-off {
-  color: $player2_color;
+  color: $score_color;
+  background-color: $player2_color;
   padding: 3px;
   text-align: center;
 }

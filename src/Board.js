@@ -42,8 +42,8 @@ function FSquare(props) {
   if (props.col >= 0 && (props.col < props.size)) {
 
     const fillVal = props.boardMode ? "greenNeeded" : "redNeeded";
-    const klass   = props.boardMode ? "score-on" : "score-off";
-
+    const klass   = props.boardMode ? "score score-on" : "score score-off";
+    
     return (
       <div className={`square footer-square square-${props.size}`}>
         <div className={klass}>{props.viewState.rows[props.size+props.col][fillVal]}</div>
@@ -72,7 +72,7 @@ function RowStartSquare(props) {
 
 function RowEndSquare(props) {
     const fillVal = props.boardMode ? "greenNeeded" : "redNeeded";
-    const klass   = props.boardMode ? "score-on" : "score-off";
+    const klass   = props.boardMode ? "score score-on" : "score score-off";
 
     return (
       <div className={`square row-end-square square-${props.size}`}>

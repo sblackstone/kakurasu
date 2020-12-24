@@ -2,8 +2,7 @@ export function InGameMenu (props) {
 
   return (
     <div className="ingame-menu-screen">
-      You found the in game menu.
-      fix the class name.
+      <a href="#" onClick={props.onCloseInGameMenuScreen}>Close the 2In Game Menu Screen</a>
     </div>
   )
 }

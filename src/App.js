@@ -11,7 +11,6 @@ import { Solver } from './Solver';
 let timeout = null;
 
 function App() {
-  const model = null;
   const [ gm, setGm ] = useState(null);
   const [ viewState, setViewState ] = useState(null);
   const [ menuState, setMenuState ] = useState(false);
@@ -19,8 +18,12 @@ function App() {
 
 
   const onMenuOpenClick = function() {
-    console.log("YO");
     setMenuState(true);
+  }
+
+  const onCloseInGameMenuScreen = function() {
+    alert("BLARG");
+    setMenuState(false);  
   }
 
   const onGotoNewGameClick = function() {
@@ -59,7 +62,7 @@ function App() {
   if (menuState) {
     return (
       <div className="container">
-        <InGameMenu viewState={viewState} onNewGame={onNewGame} />
+        <InGameMenu viewState={viewState} onCloseInGameMenuScreen={onCloseInGameMenuScreen} onNewGame={onNewGame} />
       </div>
       
     )
