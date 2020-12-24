@@ -14,7 +14,12 @@ function App() {
   const [ gm, setGm ] = useState(null);
   const [ viewState, setViewState ] = useState(null);
   const [ menuState, setMenuState ] = useState(false);
-  window.App = gm;
+  
+  const draw = () => { 
+    if (gm) { 
+      setViewState(gm.export());  
+    } 
+  };
 
 
   const onMenuOpenClick = function() {
@@ -22,7 +27,6 @@ function App() {
   }
 
   const onCloseInGameMenuScreen = function() {
-    alert("BLARG");
     setMenuState(false);  
   }
 
@@ -33,21 +37,33 @@ function App() {
   const onSquareClick = function(i,j) {
     gm.toggleSquare(i,j);
     gm.debug();
-    setViewState(gm.export());
+    draw();
   } 
  
   const solverDebugFn = (passedGm) => {
-    setViewState(passedGm.export());    
+    draw();   
   };
  
+  const onRestart = () => {
+    console.log("Calling GM.restart()");
+    gm.restart();
+    setMenuState(false);  
+    setViewState(gm.export());
+  }
+
   const onNewGame = function(newSize) {
-    const newGm = new GameModel(newSize, solverDebugFn);
-    const solver = new Solver(newGm);
+    let newGm = new GameModel(newSize, solverDebugFn);
+    let solver = new Solver(newGm);
+    while (!solver.hasSolution()) {
+      console.log("No Solution");
+      newGm = new GameModel(newSize, solverDebugFn);
+      solver = new Solver(newGm);
+    }
+
     window.solver = solver;
     setGm(newGm);
-    setViewState(newGm.export());
+    draw();
     clearInterval(timeout);
-    timeout = setInterval(() => { setViewState(newGm.export()); }, 500);
   }
    
   window.gm = gm;
@@ -62,7 +78,7 @@ function App() {
   if (menuState) {
     return (
       <div className="container">
-        <InGameMenu viewState={viewState} onCloseInGameMenuScreen={onCloseInGameMenuScreen} onNewGame={onNewGame} />
+        <InGameMenu viewState={viewState} onCloseInGameMenuScreen={onCloseInGameMenuScreen} onGotoNewGameClick={onGotoNewGameClick} onRestart={onRestart} />
       </div>
       
     )

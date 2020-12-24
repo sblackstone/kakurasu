@@ -107,7 +107,6 @@ export class Solver {
         for (let j = 0; j < unused.length; j++) {
             const j_real = unused[j]-1;
             if (this.gm.getSquare(i, j_real) === constants.SQUARE_EMPTY) {
-              console.log("unseen");
               this.gm.setSquare(i, j_real, oppositeToken(squareToken));
             }
         }
@@ -121,6 +120,23 @@ export class Solver {
       this.fillBoard2();
     }
   }
+
+
+  hasSolution() {
+    for (let i = 0; i < 10; i++) {
+      this.fillBoardMinMax();
+      this.fillBoard2();
+      if (this.gm.checkWin()) {
+        this.gm.restart();
+        return true;
+      }
+    }
+    this.gm.restart();
+    return false;
+
+  }
+
+
   
   waysToCompleteRow(i, j=0, candidate = [], curSum=0, solutions = { red: [], green: []}) {
     if (curSum === this.gm.state.rows[i].greenNeeded) {

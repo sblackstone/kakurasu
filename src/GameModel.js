@@ -50,11 +50,11 @@ initState() {
       0.45, // 5x5
       0.60, // 6x6
       0.45, // 7x7
-      0.45, // 8x8
+      0.65, // 8x8
       0.45, // 9x9
       0.45, // 10x10
-      0.45, // 11x11
-      0.45, // 12x12
+      0.75, // 11x11
+      0.85, // 12x12
     ][this.size];
   
     this.initPlayerBoard();
@@ -175,7 +175,7 @@ initState() {
 
   checkWin() {
     if (this.state.rows.every(x => (x.greenNeeded == 0 && x.redNeeded == 0))) {
-      console.log("checkWin: WIN!");
+      return true;
     }
     return false;
 
