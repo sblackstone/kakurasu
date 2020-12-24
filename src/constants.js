@@ -2,5 +2,5 @@ const TARGET_BOARD_FILL_RATIO = 0.60;
 const SQUARE_EMPTY  = 0;
 const SQUARE_GREEN  = 1;
 const SQUARE_RED    = 2;
-
-export const constants = { TARGET_BOARD_FILL_RATIO, SQUARE_EMPTY, SQUARE_GREEN, SQUARE_RED };
+const MAX_LEVEL     = 12;
+export const constants = { TARGET_BOARD_FILL_RATIO, SQUARE_EMPTY, SQUARE_GREEN, SQUARE_RED, MAX_LEVEL };

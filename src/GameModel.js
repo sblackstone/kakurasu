@@ -55,7 +55,6 @@ initState() {
       0.45, // 10x10
       0.45, // 11x11
       0.45, // 12x12
-      0.45, // 13x13
     ][this.size];
   
     this.initPlayerBoard();
