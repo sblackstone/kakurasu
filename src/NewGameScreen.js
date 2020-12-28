@@ -37,7 +37,7 @@ export function NewGameScreen(props) {
 
   return (
     <div className="new-game-screen">
-    <h1>New Game</h1>
+    <h1>Kakurasu++</h1>
     <NewGameForm {...props} />
     </div>
 
