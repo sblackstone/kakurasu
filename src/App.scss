@@ -1,9 +1,8 @@
 @import './squares.scss';
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap');
 
-$player1_color: rgb(153,119,208);
 $player1_color: rgb(15,77,1		);
-$player2_color: rgb(235,83,129);
+$player2_color: #c02739;
 $point_value_color: rgba(255,255,255,0.2);
 $score_color: rgba(255,255,255,0.9);
 
@@ -176,8 +175,8 @@ body, html {
 
 
 .flipper-top {
-  font-size: 150%;
-  margin-bottom: -15px;
+  font-size: 120%;
+  margin-bottom: -30px;
 
 }
 
@@ -188,7 +187,7 @@ body, html {
 
 
 .flipper-square  {
-  font-size: 25px;
+  font-size: 50px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
