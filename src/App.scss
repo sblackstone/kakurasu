@@ -6,6 +6,8 @@ $player1_color: rgb(72,	184,	170	);// green
 $player2_color: rgb(233,	86	,82); // red
 $point_value_color: rgba(255,255,255,0.2);
 $score_color: rgba(255,255,255,0.9);
+$border_color: rgba(255,255,255, 0.15);
+
 
 body, html {
   background: rgba(15,15,15,1);
@@ -24,7 +26,7 @@ body, html {
 }
 
 .board {
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid $border_color;
   border-radius: 25px;
   display: flex;
   margin: 1vmin auto;  
@@ -67,6 +69,31 @@ body, html {
 }
 
 
+.game-square {
+  border-top: 1px solid $border_color;
+  border-left: 1px solid $border_color;
+}
+
+.footer-square {
+  border-top: 1px solid $border_color;
+}
+
+.row-end-square {
+  border-top: 0;
+  border-left: 1px solid $border_color;
+}
+
+.footer-square {
+  border-left: 0;  
+}
+
+.header-square {
+  border-left: 0;
+}
+
+.row-start-square {
+  border-top: 0;
+}
 
 // Outside radius
 
