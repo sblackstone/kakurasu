@@ -153,26 +153,38 @@ body, html {
   text-align: center;
 }
 
-.delta-on .flipper {
-  //background-color: $player1_color;
+.delta-on .flipper-top {
+  color: $player1_color;
 }
 
-.delta-off .flipper {
-  //background-color: $player2_color;
+.delta-on .flipper-bottom {
+  color: $player2_color;
 }
 
-  .flipper {
-      font-size: 55%;
-  }
+.delta-off .flipper-top {
+  color: $player2_color;
+}
+
+.delta-off .flipper-bottom {
+  color: $player1_color;
+}
+
+.flipper {
+    font-size: 55%;
+    text-align: center;
+}
+
 
 .flipper-top {
-  background-color: #000;
+  font-size: 150%;
+  margin-bottom: -15px;
 
 }
 
 .flipper-bottom {
-  background-color: #000;
 }
+
+
 
 
 .flipper-square  {
