@@ -173,16 +173,28 @@ body, html {
   color: $player1_color;
 }
 
+.flipper-square {
+  display: flex;
+}
+
+
 .flipper {
-    text-align: center;
+  width: 100%;
+  text-align: center;
 }
 
 
 .flipper-top {
-
+  width: 100%;
+  font-size: 150%;
+  margin-bottom: -10%;
+  flex-grow: 1;
 }
 
 .flipper-bottom {
+  margin-top: -10%;
+  font-size: 125%;
+  flex-grow: 1;
 }
 
 

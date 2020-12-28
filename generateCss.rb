@@ -7,6 +7,7 @@ def printCss(i)
   .square-#{i} {
     width:  calc(calc(100% - calc(100% / #{i+2})) / #{i});
     height: calc(calc(100% - calc(100% / #{i+2})) / #{i});
+    font-size: calc(100%);
     &.footer-square,
     &.header-square {
       height: calc(100% / #{(i+2)*2}) !important;
