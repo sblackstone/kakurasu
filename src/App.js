@@ -61,6 +61,8 @@ function App() {
 
     setGm(newGm);
     setViewState(newGm.export());
+    window.solver = solver;
+
   }
    
   window.gm = gm;
