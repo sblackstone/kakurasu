@@ -62,7 +62,6 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(255,255,255,0.15);
   box-sizing: border-box;
   color: $point_value_color;
 }
@@ -92,23 +91,6 @@ body, html {
 .square:last-child {
   border-radius: 0 0 15px 0;
 };
-
-
-
-
-
-/* These are the one for the reference values.. */
-.header-square,
-.row-start-square {
-  //background-color: rgba(255,255,255,0.15);
-  border: 0;
-}
-
-.footer-square,
-.row-end-square {
-  //background-color: rgba(255,255,255, 0.15);
-  border: 0;
-}
 
 .piece {
   border-radius: 75%;

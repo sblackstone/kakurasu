@@ -14,7 +14,7 @@ function Square(props) {
   }
 
   return (
-    <div onClick={()=> { props.onSquareClick(props.row, props.col)}} className={`square square-${props.size}`}>
+    <div onClick={()=> { props.onSquareClick(props.row, props.col)}} className={`square game-square square-${props.size}`}>
       <div className={`piece ${className}`}></div>
     </div> 
   );
@@ -109,7 +109,7 @@ function Header(props) {
 function Footer(props) {
   let result = [];
   for (let i = 0; i < props.size +2; i++) {
-    result.push(<FSquare key={`fs${i}`} col={i-1} {...props} />);
+    result.push(<FSquare key={`fs${i}`} col={i-1} i={i} {...props} />);
   }
   return result;
 };
