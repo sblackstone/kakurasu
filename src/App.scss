@@ -1,13 +1,14 @@
 @import './squares.scss';
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap');
 
-$player1_color: rgb(15,77,1		);
-$player2_color: #c02739;
+
+$player1_color: rgb(72,	184,	170	);// green
+$player2_color: rgb(233,	86	,82); // red
 $point_value_color: rgba(255,255,255,0.2);
 $score_color: rgba(255,255,255,0.9);
 
 body, html {
-  background: #000;
+  background: rgba(15,15,15,1);
   overflow: none;
   font-family: 'Rubik', sans-serif;
 }
@@ -117,6 +118,7 @@ body, html {
   border-radius: 75%;
   width: 65%;
   height: 65%;  
+  box-shadow: 3px 0 0 #000;
 }
 
 .piece-on {
@@ -135,6 +137,8 @@ body, html {
   height: 25px;
   border-radius: 100%;
   font-size: 16px;
+  text-shadow: 2px 2px #000;
+
 }
 
 .score-on {
