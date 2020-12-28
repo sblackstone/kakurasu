@@ -50,12 +50,15 @@ function App() {
   }
 
   const onNewGame = function(newSize) {
-    let newGm = new GameModel(newSize, solverDebugFn);
+    let target_fill_ratio = 0.45;
+    let newGm = new GameModel(newSize, solverDebugFn, target_fill_ratio);
     let solver = new Solver(newGm);
     setMenuState(false);  
     while (!solver.hasSolution()) {
       console.log("No Solution");
-      newGm = new GameModel(newSize, solverDebugFn);
+      target_fill_ratio += 0.01;
+      console.log(`tfr = ${target_fill_ratio}`);
+      newGm = new GameModel(newSize, solverDebugFn, target_fill_ratio);
       solver = new Solver(newGm);
     }
 

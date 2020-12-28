@@ -1,9 +1,10 @@
 import { constants } from './constants';
 
 export class GameModel {
-  constructor(size, solverDebugFn) {
+  constructor(size, solverDebugFn, target_fill_ratio) {
     this.size = size;
     this.solverDebugFn = solverDebugFn;
+    this.target_fill_ratio = target_fill_ratio;
     this.initState();
   }
 
@@ -40,37 +41,13 @@ initState() {
       size: this.size,
       sigma: ((this.size) * (this.size + 1)) / 2,
     };
-
-    this.target_fill_ratio = [
-      0,    // 0x0
-      0,    // 1x1
-      0,    // 2x2
-      0.45, // 3x3
-      0.45, // 4x4
-      0.45, // 5x5
-      0.60, // 6x6
-      0.45, // 7x7
-      0.65, // 8x8
-      0.45, // 9x9
-      0.45, // 10x10
-      0.75, // 11x11
-      0.85, // 12x12
-    ][this.size];
   
     this.initPlayerBoard();
     this.initTargetBoard(); 
     this.initStats();
 }
 
-/*
-  async debugDraw() {
-    this.solverDebugFn(this);
-    return new Promise((resolve,reject)=> {
-      setTimeout(()=> { resolve(); }, 5);
-    });
 
-  }
-*/
   getTargetSquare(x,y) {
     return this.state.targetBoard[x][y].N;
   }
