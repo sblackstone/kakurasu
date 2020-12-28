@@ -120,10 +120,9 @@ body, html {
 };
 
 .piece {
-  border-radius: 75%;
+  border-radius: 100%;
   width: 65%;
   height: 65%;  
-  box-shadow: 3px 0 0 #000;
 }
 
 .piece-on {
@@ -134,14 +133,12 @@ body, html {
   background-color:  $player2_color;
 }
 
-
-
 .score {
   line-height: 25px;
   width: 25px;
   height: 25px;
   border-radius: 100%;
-  text-shadow: 2px 2px #000;
+  text-shadow: 1px 1px #000;
   opacity: 0.75;
 }
 
