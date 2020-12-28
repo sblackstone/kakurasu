@@ -17,6 +17,7 @@ def printCss(i)
     &.row-end-square {
       width: calc(100% / #{(i+2)*2}) !important;
     }  
+    
   }
 
 EOF

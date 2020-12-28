@@ -26,7 +26,7 @@ function HSquare(props) {
   if (props.i > 0 && (props.i < props.size+1)) {
     content = props.i;
     return (
-      <div className={`square header-square square-${props.size}`}>{content}</div>
+      <div className={`square header-square square-${props.size}`}><div className="value-container">{content}</div></div>
     );
   } else {
     const klass = !props.boardMode ? "delta-on" : "delta-off";
@@ -71,7 +71,7 @@ function FSquare(props) {
 
 function RowStartSquare(props) {
   return (
-    <div className={`square row-start-square square-${props.size}`}>{props.i}</div> 
+    <div className={`square row-start-square square-${props.size}`}><div className="value-container">{props.i}</div></div>
   );
 }
 
